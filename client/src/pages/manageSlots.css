@@ -1,0 +1,220 @@
+/* ================= MAIN CONTAINER ================= */
+.slots-container {
+  padding: 40px;
+  background: #f9fafc;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ================= TEMPLE DROPDOWN ================= */
+.slots-container select {
+  padding: 10px 14px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: 0.3s ease;
+  font-size: 14px;
+}
+
+.slots-container select:focus {
+  border-color: #ff5d5d;
+  box-shadow: 0 0 5px rgba(255, 93, 93, 0.3);
+}
+
+/* ================= FORM ================= */
+.slot-form {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 35px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.slot-form input,
+.slot-form select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  min-width: 160px;
+  transition: 0.3s ease;
+}
+
+.slot-form input:focus,
+.slot-form select:focus {
+  border-color: #ff5d5d;
+  box-shadow: 0 0 5px rgba(255, 93, 93, 0.2);
+}
+
+/* ================= GENERATE BUTTON ================= */
+.slot-form button {
+  background: #ff5d5d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.slot-form button:hover {
+  background: #e04a4a;
+  transform: translateY(-2px);
+}
+
+/* ================= TABLE WRAPPER ================= */
+.slot-table {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+}
+
+/* ================= TABLE ================= */
+.slot-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Header */
+.slot-table th {
+  background: #ff5d5d;
+  color: white;
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* Body */
+.slot-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.slot-table tr:hover {
+  background: #fafafa;
+  transition: 0.2s ease;
+}
+
+/* ================= STATUS BADGE ================= */
+.badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge.active {
+  background: #28a745;
+}
+
+.badge.full {
+  background: #ff9800;
+}
+
+.badge.closed {
+  background: #6c757d;
+}
+
+/* ================= CROWD LEVEL ================= */
+.crowd {
+  font-weight: 600;
+}
+
+.crowd.low {
+  color: #28a745;
+}
+
+.crowd.medium {
+  color: #ff9800;
+}
+
+.crowd.high {
+  color: #f44336;
+}
+
+/* ================= ACTION BUTTONS ================= */
+.slot-table button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: 0.3s ease;
+  font-size: 13px;
+}
+
+/* Edit */
+.slot-table button:first-child {
+  background: #4caf50;
+  color: white;
+}
+
+.slot-table button:first-child:hover {
+  background: #3e9443;
+  transform: translateY(-2px);
+}
+
+/* Delete */
+.slot-table button:last-child {
+  background: #f44336;
+  color: white;
+}
+
+.slot-table button:last-child:hover {
+  background: #d32f2f;
+  transform: translateY(-2px);
+}
+
+/* Save (Edit Mode) */
+.slot-table button:only-child {
+  background: #2196f3;
+  color: white;
+}
+
+.slot-table button:only-child:hover {
+  background: #1976d2;
+  transform: translateY(-2px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .slot-form {
+    flex-direction: column;
+  }
+
+  .slot-table table,
+  .slot-table thead,
+  .slot-table tbody,
+  .slot-table th,
+  .slot-table td,
+  .slot-table tr {
+    display: block;
+  }
+
+  .slot-table tr {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .slot-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .slot-table td::before {
+    position: absolute;
+    left: 15px;
+    font-weight: bold;
+  }
+}

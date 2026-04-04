@@ -1,0 +1,104 @@
+/* MAIN CONTAINER */
+.create-gate-container {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* CARD */
+.create-gate-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px;
+  transition: 0.3s ease;
+}
+
+.create-gate-card:hover {
+  transform: translateY(-3px);
+}
+
+/* TITLE */
+.create-gate-card h2 {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #FF5D5D;
+  font-weight: 600;
+}
+
+/* FORM */
+.gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* INPUT */
+.gate-form input,
+.gate-form select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s ease;
+  outline: none;
+}
+
+.gate-form input:focus,
+.gate-form select:focus {
+  border-color: #FF5D5D;
+  box-shadow: 0 0 0 2px rgba(255, 93, 93, 0.15);
+}
+
+/* BUTTON */
+.gate-form button {
+  background: #FF5D5D;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.gate-form button:hover {
+  background: #e04a4a;
+  transform: translateY(-2px);
+}
+
+.gate-form button:active {
+  transform: scale(0.98);
+}
+
+/* SUCCESS MESSAGE */
+.success-message {
+  background: #e6f7ee;
+  color: #2e7d32;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ERROR MESSAGE */
+.error-message {
+  background: #fdecea;
+  color: #c62828;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .create-gate-card {
+    padding: 20px;
+  }
+}

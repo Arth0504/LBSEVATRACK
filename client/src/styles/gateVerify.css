@@ -1,0 +1,91 @@
+.gate-container {
+  padding: 60px 100px;
+  background: #fff5f5;
+  min-height: 100vh;
+}
+
+.gate-container h2 {
+  color: #e04a4a;
+}
+
+button {
+  background: #e04a4a;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.scanner-box {
+  margin-top: 30px;
+  max-width: 400px;
+}
+
+.result-card {
+  margin-top: 40px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(224, 74, 74, 0.2);
+}
+
+.user-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.member-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.member-box {
+  width: 120px;
+  text-align: center;
+}
+
+.member-box img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.child {
+  background: orange;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+}
+
+.adult {
+  background: #e04a4a;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+}
+.manual-box {
+  margin-top: 20px;
+}
+
+.manual-box input {
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.manual-box button {
+  background: #e04a4a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+}

@@ -1,0 +1,97 @@
+/* RESET SAFE */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  min-height: 85px;            /* FIX: height collapse nahi hoga */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8%;
+  background-color: #ffffff;
+  border-bottom: 3px solid #f3f3f3;
+  position: relative;          /* sticky hata diya temporarily */
+  z-index: 1000;
+}
+
+/* LOGO */
+.logo {
+  font-size: 30px;
+  font-weight: 800;
+  color: #FF5D5D;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  line-height: 1;              /* IMPORTANT */
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* NORMAL LINKS */
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+}
+
+/* UNDERLINE */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background-color: #FF5D5D;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a:hover {
+  color: #FF5D5D;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background-color: #FF5D5D;
+  color: white !important;
+  padding: 8px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+}
+
+.btn-outline {
+  border: 2px solid #FF5D5D;
+  padding: 6px 18px;
+  border-radius: 25px;
+  color: #FF5D5D !important;
+  font-weight: 600;
+}
+
+.btn-logout {
+  background-color: #FF5D5D;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+}

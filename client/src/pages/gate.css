@@ -1,0 +1,178 @@
+/* ===== WRAPPER ===== */
+.gate-wrapper {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background: #fdf6f6;
+}
+
+/* ===== SIDEBAR ===== */
+.gate-sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #ff5d5d, #e64545);
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.08);
+}
+
+.gate-logo {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+/* ===== SIDEBAR ITEMS ===== */
+.gate-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.gate-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
+}
+
+.gate-item.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.gate-item.logout {
+  margin-top: 30px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.gate-item.logout:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ===== MAIN CONTENT ===== */
+.gate-content {
+  flex: 1;
+  padding: 40px;
+  background: #fff6f6;
+  min-height: 100vh;
+}
+
+.gate-content h2 {
+  margin-bottom: 25px;
+  color: #ff5d5d;
+  font-weight: 600;
+}
+
+/* ===== INPUTS ===== */
+.gate-content input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.gate-content input:focus {
+  outline: none;
+  border-color: #ff5d5d;
+  box-shadow: 0 0 5px rgba(255, 93, 93, 0.3);
+}
+
+/* ===== BUTTON ===== */
+.gate-content button {
+  padding: 10px 18px;
+  background: #ff5d5d;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.gate-content button:hover {
+  background: #e64545;
+  transform: translateY(-2px);
+}
+
+/* ===== VERIFY CARD ===== */
+.verify-card {
+  background: white;
+  padding: 25px;
+  margin-top: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(255, 93, 93, 0.15);
+  animation: fadeIn 0.4s ease;
+}
+
+.verify-card h3 {
+  color: green;
+  margin-bottom: 15px;
+}
+
+.verify-card p {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* ===== TABLE ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(255, 93, 93, 0.12);
+}
+
+th,
+td {
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: #ffeaea;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background: #fff9f9;
+}
+
+/* ===== ACTIVITY CARD ===== */
+.activity-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(255, 93, 93, 0.15);
+  margin-top: 20px;
+}
+
+.activity-card p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

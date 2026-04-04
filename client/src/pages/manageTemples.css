@@ -1,0 +1,86 @@
+.admin-manage-container {
+  padding: 40px 60px;
+  background: #f9fafc;
+  min-height: 100vh;
+}
+
+.admin-temple-list {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.admin-temple-card {
+  width: 250px;
+  height: 250px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(255, 93, 93, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+.admin-temple-card:hover {
+  transform: translateY(-5px);
+}
+
+.admin-temple-card button {
+  margin-top: 12px;
+  background: #ff5d5d;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admin-editor-section {
+  margin-top: 40px;
+  background: #fff6f6;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.admin-form button {
+  background: #ff5d5d;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.admin-aarti-card {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-aarti-card button {
+  background: transparent;
+  border: none;
+  color: #ff5d5d;
+  cursor: pointer;
+}

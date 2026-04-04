@@ -1,0 +1,115 @@
+.temples-container {
+  padding: 100px 120px;
+  background: #f4f6f9;
+  min-height: 100vh;
+}
+
+/* NAV */
+
+.temple-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 80px;
+}
+
+.temple-navbar h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 38px;
+  color: #222;
+  font-weight: 600;
+}
+
+/* 🔥 GRID FIXED FOR 3 IN ONE ROW */
+
+.temple-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* 🔥 3 temples in 1 row */
+  gap: 50px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* CARD */
+
+.temple-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* 🔥 Perfect square */
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease;
+}
+
+.temple-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+}
+
+/* IMAGE */
+
+.temple-image {
+  height: 65%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* CONTENT */
+
+.temple-content {
+  height: 35%;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.temple-content h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.temple-content p {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 18px;
+}
+
+/* BUTTON */
+
+.main-btn {
+  padding: 10px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.main-btn:hover {
+  background: #000;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+  .temple-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .temples-container {
+    padding: 40px 20px;
+  }
+
+  .temple-grid {
+    grid-template-columns: 1fr;
+  }
+}

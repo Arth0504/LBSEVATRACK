@@ -1,0 +1,110 @@
+/* 🔥 MAIN WRAPPER */
+.admin-notes {
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 🔥 HEADING */
+.admin-notes h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 🔥 FORM CARD */
+.note-form {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+/* 🔥 INPUTS */
+.note-form input,
+.note-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.note-form input:focus,
+.note-form textarea:focus {
+  border-color: #ff5d5d;
+  outline: none;
+}
+
+/* 🔥 BUTTON */
+.note-form button {
+  background: #ff5d5d;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.note-form button:hover {
+  background: #e14c4c;
+}
+
+/* 🔥 NOTE LIST */
+.note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔥 NOTE CARD */
+.note-item {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #eee;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  transition: 0.3s;
+}
+
+.note-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* 🔥 TITLE */
+.note-item h4 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+/* 🔥 MESSAGE */
+.note-item p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 🔥 DELETE BUTTON */
+.note-item button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.note-item button:hover {
+  background: #d93c3c;
+}

@@ -1,0 +1,240 @@
+/* ================= GOOGLE FONT IMPORT ================= */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap");
+
+/* ================= MAIN CONTAINER ================= */
+.temple-details {
+  font-family: "Poppins", sans-serif;
+  background: #f9fafc;
+  color: #333;
+  line-height: 1.7;
+}
+
+/* ================= BACK BUTTON ================= */
+.back-container {
+  padding: 25px 50px;
+}
+
+.back-btn {
+  background: #1e1e1e;
+  color: #fff;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #e04a4a;
+  transform: translateY(-2px);
+}
+
+/* ================= HERO SECTION ================= */
+.hero-section {
+  height: 420px;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url("/hero-combined.jpg")
+      center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero-overlay h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 48px;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.hero-overlay p {
+  color: #ddd;
+  font-size: 18px;
+}
+
+.hero-btn {
+  margin-top: 20px;
+  padding: 12px 28px;
+  background: #e04a4a;
+  border: none;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: #c43737;
+  transform: translateY(-3px);
+}
+
+/* ================= INFO SECTION ================= */
+.info-section {
+  padding: 70px 40px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.info-section h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #e04a4a;
+}
+
+.info-section p {
+  font-size: 17px;
+  margin-bottom: 18px;
+  color: #555;
+}
+
+/* ================= AARTI SECTION ================= */
+.aarti-section {
+  padding: 60px 40px;
+  background: #ffffff;
+}
+
+.aarti-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  color: #e04a4a;
+}
+
+.aarti-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+
+.aarti-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.aarti-card:hover {
+  transform: translateY(-6px);
+}
+
+.aarti-card h4 {
+  color: #e04a4a;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+/* ================= CALENDAR ================= */
+.calendar-section {
+  padding: 60px 40px;
+  text-align: center;
+  background: #f3f4f6;
+}
+
+.calendar-section h2 {
+  margin-bottom: 20px;
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  color: #e04a4a;
+}
+
+.calendar-section input[type="date"] {
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.calendar-section input[type="date"]:focus {
+  outline: none;
+  border-color: #e04a4a;
+}
+
+/* ================= SLOTS ================= */
+.slots-section {
+  padding: 60px 40px;
+}
+
+.slots-section h2 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  color: #e04a4a;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.slot-card {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+}
+
+.slot-card:hover {
+  transform: translateY(-6px);
+}
+
+.slot-card p {
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #555;
+}
+
+.book-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  background: #e04a4a;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background: #c43737;
+  transform: translateY(-2px);
+}
+
+.book-btn:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .hero-overlay h1 {
+    font-size: 32px;
+  }
+
+  .hero-section {
+    height: 280px;
+  }
+
+  .info-section,
+  .aarti-section,
+  .slots-section,
+  .calendar-section {
+    padding: 35px 20px;
+  }
+}
