@@ -1,4 +1,5 @@
-const puppeteer = require("puppeteer");
+const chromium = require("chrome-aws-lambda");
+const puppeteer = require("puppeteer-core");
 const Booking = require("../models/Booking");
 
 exports.downloadReceipt = async (req, res) => {
@@ -131,11 +132,11 @@ exports.downloadReceipt = async (req, res) => {
     </html>
     `;
 
-    // 🔥 FIXED Puppeteer Launch (Render Compatible)
+    // 🔥 FINAL FIX (Render Compatible)
     const browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
