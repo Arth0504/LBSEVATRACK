@@ -13,7 +13,6 @@ exports.downloadReceipt = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    // 🔒 Authorization
     if (
       booking.user._id.toString() !== req.user._id.toString() &&
       req.user.role !== "admin"
@@ -21,7 +20,7 @@ exports.downloadReceipt = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // 🔥 ONLY DATA (NO PDF)
+    // ✅ Only send data
     res.json(booking);
 
   } catch (error) {

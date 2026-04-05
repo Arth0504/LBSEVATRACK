@@ -21,20 +21,28 @@ const MyBookings = () => {
   };
 
   const handleCancel = async (id) => {
-    const confirmCancel = window.confirm("Cancel this booking?");
-    if (!confirmCancel) return;
+    if (!window.confirm("Cancel booking?")) return;
 
     try {
       await API.put(`/bookings/cancel/${id}`);
-      alert("Booking Cancelled");
       fetchBookings();
-    } catch (error) {
+    } catch {
       alert("Cancel failed");
     }
   };
 
-  // 🔥 PROFESSIONAL PDF
-  const downloadReceipt = (data) => {
+  // 🔥 QR loader
+  const loadImage = (url) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.src = url;
+      img.onload = () => resolve(img);
+    });
+  };
+
+  // 🔥 FINAL PDF
+  const downloadReceipt = async (data) => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
@@ -83,20 +91,44 @@ const MyBookings = () => {
       y += 8;
     });
 
+    // 📱 QR
+    y += 10;
+    doc.setFontSize(14);
+    doc.text("Scan QR at Entry", 105, y, { align: "center" });
+
+    if (data.qrCode) {
+      const img = await loadImage(data.qrCode);
+      doc.addImage(img, "PNG", 80, y + 5, 50, 50);
+    }
+
+    // 📦 Instructions
+    y += 70;
+    doc.setFillColor(255, 243, 205);
+    doc.rect(20, y - 5, 170, 35, "F");
+
+    doc.setFontSize(12);
+    doc.text("Instructions:", 25, y);
+
+    y += 8;
+    ["Arrive early", "Carry ID", "Show QR"].forEach((t) => {
+      doc.text("• " + t, 25, y);
+      y += 6;
+    });
+
     doc.save(`SevaTrack_${data.bookingId}.pdf`);
   };
 
   return (
-    <div style={{ padding: "40px" }}>
+    <div style={{ padding: 40 }}>
       <button onClick={() => navigate(-1)}>← Back</button>
 
       <h2>My Bookings</h2>
 
       {bookings.map((b) => (
         <div key={b._id} style={{ border: "1px solid #ddd", padding: 20 }}>
-          <p><strong>ID:</strong> {b.bookingId}</p>
-          <p><strong>Temple:</strong> {b.slot?.temple?.name}</p>
-          <p><strong>Date:</strong> {new Date(b.slot?.date).toLocaleDateString()}</p>
+          <p><b>ID:</b> {b.bookingId}</p>
+          <p><b>Temple:</b> {b.slot?.temple?.name}</p>
+          <p><b>Date:</b> {new Date(b.slot?.date).toLocaleDateString()}</p>
 
           <button onClick={() => downloadReceipt(b)}>
             Download Receipt
