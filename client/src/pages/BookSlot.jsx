@@ -6,123 +6,164 @@ import { toast } from "react-toastify";
 
 const BookSlot = () => {
 
-const { slotId } = useParams();
-const navigate = useNavigate();
+  const { slotId } = useParams();
+  const navigate = useNavigate();
 
-const [members, setMembers] = useState([
-{ fullName: "", age: "", gender: "male", photo: null, preview: null },
-]);
+  const [members, setMembers] = useState([
+    { fullName: "", age: "", gender: "male", photo: null, preview: null },
+  ]);
 
-const handleChange = (index, field, value) => {
-const updated = [...members];
-updated[index][field] = value;
-setMembers(updated);
-};
+  // 🔄 Input Change
+  const handleChange = (index, field, value) => {
+    const updated = [...members];
+    updated[index][field] = value;
+    setMembers(updated);
+  };
 
-const handleImageChange = (index, file) => {
-const updated = [...members];
-updated[index].photo = file;
-updated[index].preview = URL.createObjectURL(file);
-setMembers(updated);
-};
+  // 📷 Image Upload
+  const handleImageChange = (index, file) => {
+    const updated = [...members];
+    updated[index].photo = file;
+    updated[index].preview = URL.createObjectURL(file);
+    setMembers(updated);
+  };
 
-const addMember = () => {
-if (members.length >= 5) {
-toast.warning("Maximum 5 members allowed ⚠️");
-return;
-}
+  // ➕ Add Member
+  const addMember = () => {
+    if (members.length >= 5) {
+      toast.warning("Maximum 5 members allowed ⚠️");
+      return;
+    }
 
-setMembers([...members,
-{ fullName: "", age: "", gender: "male", photo: null, preview: null },
-]);
-};
+    setMembers([
+      ...members,
+      { fullName: "", age: "", gender: "male", photo: null, preview: null },
+    ]);
+  };
 
-const removeMember = (index) => {
-const updated = members.filter((_, i) => i !== index);
-setMembers(updated);
-};
+  // ❌ Remove Member
+  const removeMember = (index) => {
+    const updated = members.filter((_, i) => i !== index);
+    setMembers(updated);
+  };
 
-const handleBooking = async () => {
-try {
+  // 🚀 FINAL BOOKING FUNCTION
+  const handleBooking = async () => {
+    try {
 
-const formData = new FormData();
-formData.append("slotId", slotId);
+      // 🔥 VALIDATION
+      for (let m of members) {
+        if (!m.fullName || !m.age) {
+          toast.error("Please fill all member details ❌");
+          return;
+        }
+      }
 
-const memberData = members.map((m) => ({
-fullName: m.fullName,
-age: Number(m.age),
-gender: m.gender,
-}));
+      const formData = new FormData();
+      formData.append("slotId", slotId);
 
-formData.append("members", JSON.stringify(memberData));
+      const memberData = members.map((m) => ({
+        fullName: m.fullName,
+        age: Number(m.age),
+        gender: m.gender,
+      }));
 
-members.forEach((m) => {
-if (m.photo) formData.append("images", m.photo);
-});
+      formData.append("members", JSON.stringify(memberData));
 
-await API.post("/bookings", formData, {
-headers: { "Content-Type": "multipart/form-data" },
-});
+      members.forEach((m) => {
+        if (m.photo) {
+          formData.append("images", m.photo);
+        }
+      });
 
-toast.success("Booking Successful 🙏");
+      console.log("🔥 API CALL START");
 
-setTimeout(()=>{
-navigate("/my-bookings");
-},1500);
+      await API.post("/bookings", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-} catch (error) {
-toast.error(error.response?.data?.message || "Booking Failed ❌");
-}
-};
+      console.log("✅ SUCCESS");
 
-return (
-<div className="book-container">
-<h2>Book Your Darshan Slot</h2>
+      toast.success("Booking Successful 🙏");
 
-{members.map((member, index) => {
+      setTimeout(() => {
+        navigate("/my-bookings");
+      }, 1500);
 
-const isChild = member.age && Number(member.age) < 18;
+    } catch (error) {
+      console.log("❌ ERROR:", error);
+      toast.error(error.response?.data?.message || "Booking Failed ❌");
+    }
+  };
 
-return (
-<div key={index} className="member-card">
+  return (
+    <div className="book-container">
 
-<h4>Member {index + 1}</h4>
+      <h2>Book Your Darshan Slot</h2>
 
-<input type="text" placeholder="Full Name"
-value={member.fullName}
-onChange={(e)=>handleChange(index,"fullName",e.target.value)}/>
+      {members.map((member, index) => {
 
-<input type="number" placeholder="Age"
-value={member.age}
-onChange={(e)=>handleChange(index,"age",e.target.value)}/>
+        return (
+          <div key={index} className="member-card">
 
-<select value={member.gender}
-onChange={(e)=>handleChange(index,"gender",e.target.value)}>
-<option value="male">Male</option>
-<option value="female">Female</option>
-<option value="other">Other</option>
-</select>
+            <h4>Member {index + 1}</h4>
 
-<input type="file" accept="image/*"
-onChange={(e)=>handleImageChange(index,e.target.files[0])}/>
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={member.fullName}
+              onChange={(e) => handleChange(index, "fullName", e.target.value)}
+            />
 
-{member.preview && (
-<img src={member.preview} className="preview-img"/>
-)}
+            <input
+              type="number"
+              placeholder="Age"
+              value={member.age}
+              onChange={(e) => handleChange(index, "age", e.target.value)}
+            />
 
-{index>0 && (
-<button onClick={()=>removeMember(index)}>Remove</button>
-)}
+            <select
+              value={member.gender}
+              onChange={(e) => handleChange(index, "gender", e.target.value)}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
 
-</div>
-);
-})}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(index, e.target.files[0])}
+            />
 
-<button onClick={addMember}>+ Add Member</button>
-<button onClick={handleBooking}>Confirm Booking</button>
+            {member.preview && (
+              <img
+                src={member.preview}
+                alt="preview"
+                className="preview-img"
+              />
+            )}
 
-</div>
-);
+            {index > 0 && (
+              <button onClick={() => removeMember(index)}>
+                Remove
+              </button>
+            )}
+
+          </div>
+        );
+      })}
+
+      <button onClick={addMember}>+ Add Member</button>
+
+      {/* 🔥 IMPORTANT FIX */}
+      <button type="button" onClick={handleBooking}>
+        Confirm Booking
+      </button>
+
+    </div>
+  );
 };
 
 export default BookSlot;
