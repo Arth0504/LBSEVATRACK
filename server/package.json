@@ -19,7 +19,7 @@
     "mongoose": "^9.1.6",
     "multer": "^2.0.2",
     "nodemailer": "^8.0.4",
-    "puppeteer": "^24.37.1",
+    "puppeteer": "^24.40.0",
     "qrcode": "^1.5.4",
     "react-qr-reader": "^3.0.0-beta-1"
   },
