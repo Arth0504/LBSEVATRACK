@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import jsPDF from "jspdf";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -34,24 +35,46 @@ const MyBookings = () => {
     }
   };
 
-  const downloadReceipt = async (id, bookingId) => {
+  // 🔥 NEW PDF FUNCTION (NO BACKEND NEEDED)
+  const downloadReceipt = async (id) => {
     try {
-      const response = await API.get(`/receipts/${id}`, {
-        responseType: "blob",
+      const res = await API.get(`/receipts/${id}`);
+      const data = res.data;
+
+      const doc = new jsPDF();
+
+      doc.setFontSize(18);
+      doc.text("SevaTrack Darshan Receipt", 20, 20);
+
+      doc.setFontSize(12);
+      doc.text(`Booking ID: ${data.bookingId}`, 20, 30);
+      doc.text(`Temple: ${data.slot?.temple?.name || "N/A"}`, 20, 40);
+      doc.text(`Location: ${data.slot?.temple?.location || "N/A"}`, 20, 50);
+      doc.text(
+        `Date: ${new Date(data.slot?.date).toDateString()}`,
+        20,
+        60
+      );
+      doc.text(`Total Members: ${data.totalMembers}`, 20, 70);
+      doc.text(`Status: ${data.status}`, 20, 80);
+
+      // Members list
+      let y = 100;
+      doc.text("Members:", 20, 90);
+
+      data.members?.forEach((m, index) => {
+        doc.text(
+          `${index + 1}. ${m.fullName} | Age: ${m.age} | ${m.gender}`,
+          20,
+          y
+        );
+        y += 10;
       });
 
-      const url = window.URL.createObjectURL(
-        new Blob([response.data])
-      );
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `SevaTrack_${bookingId}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      doc.save(`SevaTrack_${data.bookingId}.pdf`);
 
     } catch (error) {
+      console.log(error);
       alert("Receipt download failed");
     }
   };
@@ -115,7 +138,7 @@ const MyBookings = () => {
 
             <div style={{ marginTop: "10px" }}>
               <button
-                onClick={() => downloadReceipt(b._id, b.bookingId)}
+                onClick={() => downloadReceipt(b._id)}
                 style={{
                   background: "#e04a4a",
                   color: "white",
