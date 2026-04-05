@@ -23,138 +23,70 @@ exports.downloadReceipt = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
+    // 🧪 DEBUG FIRST (IMPORTANT)
+    const execPath = await chromium.executablePath;
+    console.log("Executable Path:", execPath);
+
+    // ❌ Agar chromium nahi mila → crash avoid karo
+    if (!execPath) {
+      return res.status(500).json({
+        error: "Chromium not available on server",
+      });
+    }
+
     // 🔥 Members Table
     const membersHTML = booking.members
       .map(
         (m) => `
         <tr>
-          <td style="padding:8px;border-bottom:1px solid #eee;">
-            ${m.fullName}
-          </td>
-          <td style="padding:8px;border-bottom:1px solid #eee;">
-            ${m.age}
-          </td>
-          <td style="padding:8px;border-bottom:1px solid #eee;">
-            ${m.gender}
-          </td>
-          <td style="padding:8px;border-bottom:1px solid #eee;">
-            <span style="
-              padding:4px 10px;
-              border-radius:20px;
-              font-size:12px;
-              color:white;
-              background:${m.category === "child" ? "#f77f00" : "#d62828"};
-            ">
-              ${m.category}
-            </span>
-          </td>
+          <td>${m.fullName}</td>
+          <td>${m.age}</td>
+          <td>${m.gender}</td>
+          <td>${m.category}</td>
         </tr>
-        `
+      `
       )
       .join("");
 
     const html = `
-    <!DOCTYPE html>
     <html>
-    <head>
-      <meta charset="UTF-8">
-      <style>
-        body { font-family: Arial; padding:40px; }
-        .card {
-          max-width:800px;
-          margin:auto;
-          padding:30px;
-          border-radius:12px;
-          border:1px solid #ddd;
-        }
-        h1 { color:#d62828; text-align:center; }
-        table { width:100%; border-collapse:collapse; margin-top:20px; }
-        td, th { padding:10px; border-bottom:1px solid #eee; text-align:left; }
-        .label { font-weight:bold; width:35%; }
-        .qr { text-align:center; margin-top:30px; }
-        .badge {
-          display:inline-block;
-          padding:6px 12px;
-          background:#28a745;
-          color:white;
-          border-radius:20px;
-          font-size:12px;
-        }
-        .instructions {
-          margin-top:30px;
-          background:#fff3cd;
-          padding:15px;
-          border-radius:8px;
-          font-size:14px;
-        }
-      </style>
-    </head>
     <body>
-      <div class="card">
-        <h1>SevaTrack Darshan Receipt</h1>
+      <h2>SevaTrack Receipt</h2>
+      <p><b>Booking ID:</b> ${booking.bookingId}</p>
+      <p><b>Temple:</b> ${booking.slot?.temple?.name || "N/A"}</p>
+      <p><b>Date:</b> ${new Date(booking.slot?.date).toDateString()}</p>
 
-        <table>
-          <tr><td class="label">Booking ID</td><td>${booking.bookingId}</td></tr>
-          <tr><td class="label">Temple</td><td>${booking.slot?.temple?.name || "N/A"}</td></tr>
-          <tr><td class="label">Location</td><td>${booking.slot?.temple?.location || "N/A"}</td></tr>
-          <tr><td class="label">Darshan Date</td><td>${new Date(booking.slot?.date).toDateString()}</td></tr>
-          <tr><td class="label">Slot Time</td><td>${booking.slot?.startTime} - ${booking.slot?.endTime}</td></tr>
-          <tr><td class="label">Total Members</td><td>${booking.totalMembers}</td></tr>
-          <tr><td class="label">Status</td><td><span class="badge">${booking.status}</span></td></tr>
-        </table>
-
-        <h3>Devotee Details</h3>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Category</th>
-          </tr>
-          ${membersHTML}
-        </table>
-
-        <div class="qr">
-          <h3>Scan QR at Entry</h3>
-          <img src="${booking.qrCode}" width="150" />
-        </div>
-
-        <div class="instructions">
-          <strong>Instructions:</strong>
-          <ul>
-            <li>Please arrive 15 minutes before slot time.</li>
-            <li>Carry valid ID proof.</li>
-            <li>Show QR code at entry gate.</li>
-          </ul>
-        </div>
-      </div>
+      <h3>Members</h3>
+      <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Category</th>
+        </tr>
+        ${membersHTML}
+      </table>
     </body>
     </html>
     `;
 
-    // 🔥 FINAL FIX (IMPORTANT)
-    console.log("Executable Path:", await chromium.executablePath);
-
+    // 🚀 Launch browser
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath:
-        (await chromium.executablePath) || "/usr/bin/chromium-browser",
+      executablePath: execPath,
       headless: true,
     });
 
     const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: "networkidle0" });
+    await page.setContent(html);
 
-    const pdfBuffer = await page.pdf({
-      format: "A4",
-      printBackground: true,
-    });
+    const pdfBuffer = await page.pdf({ format: "A4" });
 
     await browser.close();
 
     res.set({
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename=SevaTrack_${booking.bookingId}.pdf`,
+      "Content-Disposition": `attachment; filename=receipt.pdf`,
     });
 
     res.send(pdfBuffer);
