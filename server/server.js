@@ -21,8 +21,6 @@ const adminRoutes = require("./routes/adminRoutes");
 const receiptRoutes = require("./routes/receiptRoutes");
 const slotRoutes = require("./routes/slotRoutes");
 const queryRoutes = require("./routes/queryRoutes");
-
-// 🔥 NEW NOTE ROUTE
 const noteRoutes = require("./routes/noteRoutes");
 
 // ================= ROUTES =================
@@ -34,8 +32,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/receipts", receiptRoutes);
 app.use("/api/slots", slotRoutes);
 app.use("/api/query", queryRoutes);
-
-// 🔥 NOTE BOARD ROUTE ADD
 app.use("/api/notes", noteRoutes);
 
 // ================= ROOT TEST =================
@@ -44,14 +40,24 @@ app.get("/", (req, res) => {
 });
 
 // ================= DATABASE =================
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error(" MONGO_URI is missing in environment variables");
+  process.exit(1);
+}
+
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(MONGO_URI) 
   .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((err) => console.log("MongoDB Error:", err));
+  .catch((err) => {
+    console.error("MongoDB Connection Error:", err);
+    process.exit(1);
+  });
 
 // ================= SERVER =================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

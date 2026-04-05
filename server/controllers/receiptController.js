@@ -22,7 +22,7 @@ exports.downloadReceipt = async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // 🔥 Member Table
+    // 🔥 Members Table
     const membersHTML = booking.members
       .map(
         (m) => `
@@ -94,10 +94,10 @@ exports.downloadReceipt = async (req, res) => {
 
         <table>
           <tr><td class="label">Booking ID</td><td>${booking.bookingId}</td></tr>
-          <tr><td class="label">Temple</td><td>${booking.slot.temple.name}</td></tr>
-          <tr><td class="label">Location</td><td>${booking.slot.temple.location}</td></tr>
-          <tr><td class="label">Darshan Date</td><td>${new Date(booking.slot.date).toDateString()}</td></tr>
-          <tr><td class="label">Slot Time</td><td>${booking.slot.startTime} - ${booking.slot.endTime}</td></tr>
+          <tr><td class="label">Temple</td><td>${booking.slot?.temple?.name || "N/A"}</td></tr>
+          <tr><td class="label">Location</td><td>${booking.slot?.temple?.location || "N/A"}</td></tr>
+          <tr><td class="label">Darshan Date</td><td>${new Date(booking.slot?.date).toDateString()}</td></tr>
+          <tr><td class="label">Slot Time</td><td>${booking.slot?.startTime} - ${booking.slot?.endTime}</td></tr>
           <tr><td class="label">Total Members</td><td>${booking.totalMembers}</td></tr>
           <tr><td class="label">Status</td><td><span class="badge">${booking.status}</span></td></tr>
         </table>
@@ -131,10 +131,11 @@ exports.downloadReceipt = async (req, res) => {
     </html>
     `;
 
-    // 🔥 Puppeteer Launch (Windows Safe)
+    // 🔥 FIXED Puppeteer Launch (Render Compatible)
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: "new",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
     });
 
     const page = await browser.newPage();
@@ -155,7 +156,7 @@ exports.downloadReceipt = async (req, res) => {
     res.send(pdfBuffer);
 
   } catch (error) {
-    console.error(error);
+    console.error("❌ Receipt Error:", error);
     res.status(500).json({ error: "Receipt generation failed" });
   }
 };
