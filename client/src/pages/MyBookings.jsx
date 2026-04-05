@@ -35,54 +35,42 @@ const MyBookings = () => {
     }
   };
 
-  // 🔥 NEW PDF FUNCTION (NO BACKEND NEEDED)
-  const downloadReceipt = async (id) => {
-    try {
-      const res = await API.get(`/receipts/${id}`);
-      const data = res.data;
+  // 🔥 FINAL PDF FUNCTION (NO BACKEND CALL)
+  const downloadReceipt = (data) => {
+    const doc = new jsPDF();
 
-      const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("SevaTrack Darshan Receipt", 20, 20);
 
-      doc.setFontSize(18);
-      doc.text("SevaTrack Darshan Receipt", 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Booking ID: ${data.bookingId}`, 20, 30);
+    doc.text(`Temple: ${data.slot?.temple?.name || "N/A"}`, 20, 40);
+    doc.text(`Location: ${data.slot?.temple?.location || "N/A"}`, 20, 50);
+    doc.text(
+      `Date: ${new Date(data.slot?.date).toDateString()}`,
+      20,
+      60
+    );
+    doc.text(`Total Members: ${data.totalMembers}`, 20, 70);
+    doc.text(`Status: ${data.status}`, 20, 80);
 
-      doc.setFontSize(12);
-      doc.text(`Booking ID: ${data.bookingId}`, 20, 30);
-      doc.text(`Temple: ${data.slot?.temple?.name || "N/A"}`, 20, 40);
-      doc.text(`Location: ${data.slot?.temple?.location || "N/A"}`, 20, 50);
+    let y = 100;
+    doc.text("Members:", 20, 90);
+
+    data.members?.forEach((m, index) => {
       doc.text(
-        `Date: ${new Date(data.slot?.date).toDateString()}`,
+        `${index + 1}. ${m.fullName} | Age: ${m.age} | ${m.gender}`,
         20,
-        60
+        y
       );
-      doc.text(`Total Members: ${data.totalMembers}`, 20, 70);
-      doc.text(`Status: ${data.status}`, 20, 80);
+      y += 10;
+    });
 
-      // Members list
-      let y = 100;
-      doc.text("Members:", 20, 90);
-
-      data.members?.forEach((m, index) => {
-        doc.text(
-          `${index + 1}. ${m.fullName} | Age: ${m.age} | ${m.gender}`,
-          20,
-          y
-        );
-        y += 10;
-      });
-
-      doc.save(`SevaTrack_${data.bookingId}.pdf`);
-
-    } catch (error) {
-      console.log(error);
-      alert("Receipt download failed");
-    }
+    doc.save(`SevaTrack_${data.bookingId}.pdf`);
   };
 
   return (
     <div style={{ padding: "40px" }}>
-
-      {/* 🔙 BACK BUTTON */}
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -138,7 +126,7 @@ const MyBookings = () => {
 
             <div style={{ marginTop: "10px" }}>
               <button
-                onClick={() => downloadReceipt(b._id)}
+                onClick={() => downloadReceipt(b)}  // 🔥 CHANGE HERE
                 style={{
                   background: "#e04a4a",
                   color: "white",
@@ -174,7 +162,5 @@ const MyBookings = () => {
     </div>
   );
 };
-// deploy fix
-export default MyBookings;
 
-// force deploy 123// force deploy 123
+export default MyBookings;
