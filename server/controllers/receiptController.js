@@ -132,11 +132,14 @@ exports.downloadReceipt = async (req, res) => {
     </html>
     `;
 
-    // 🔥 FINAL FIX (Render Compatible)
+    // 🔥 FINAL FIX (IMPORTANT)
+    console.log("Executable Path:", await chromium.executablePath);
+
     const browser = await puppeteer.launch({
       args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      executablePath:
+        (await chromium.executablePath) || "/usr/bin/chromium-browser",
+      headless: true,
     });
 
     const page = await browser.newPage();
