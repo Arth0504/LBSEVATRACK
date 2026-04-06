@@ -41,17 +41,13 @@ const MyBookings = () => {
     });
   };
 
-  // 🔥 PREMIUM PDF
+  // ✅ SAME RECEIPT (NO CHANGE)
   const downloadReceipt = async (data) => {
     const doc = new jsPDF();
 
-    // Header
-    doc.setFillColor(214, 40, 40);
-    doc.rect(0, 0, 210, 30, "F");
-
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.text("SevaTrack Darshan Receipt", 105, 18, { align: "center" });
+    doc.setFontSize(20);
+    doc.setTextColor(200, 0, 0);
+    doc.text("SevaTrack Darshan Receipt", 105, 20, { align: "center" });
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
@@ -59,10 +55,9 @@ const MyBookings = () => {
     let y = 40;
 
     const line = (label, value) => {
-      doc.text(label, 20, y);
-      doc.text(":", 80, y);
+      doc.text(`${label}:`, 20, y);
       doc.text(String(value || "N/A"), 90, y);
-      y += 8;
+      y += 10;
     };
 
     line("Booking ID", data.bookingId);
@@ -70,50 +65,50 @@ const MyBookings = () => {
     line("Location", data.slot?.temple?.location);
     line("Date", new Date(data.slot?.date).toDateString());
     line("Members", data.totalMembers);
-    line("Status", data.status.toUpperCase());
+    line("Status", data.status);
 
     y += 5;
     doc.line(20, y, 190, y);
     y += 10;
 
-    // Devotee
     doc.setFontSize(14);
     doc.text("Devotee Details", 20, y);
-    y += 8;
+    y += 10;
 
     doc.setFontSize(12);
+    doc.text("Name", 20, y);
+    doc.text("Age", 90, y);
+    doc.text("Gender", 130, y);
 
-    data.members?.forEach((m, i) => {
-      doc.text(`${i + 1}. ${m.fullName} (${m.age}, ${m.gender})`, 20, y);
-      y += 7;
+    y += 5;
+    doc.line(20, y, 190, y);
+    y += 8;
+
+    data.members?.forEach((m) => {
+      doc.text(m.fullName, 20, y);
+      doc.text(String(m.age), 90, y);
+      doc.text(m.gender, 130, y);
+      y += 8;
     });
 
-    // QR Section
     y += 10;
-    doc.setFontSize(13);
+    doc.setFontSize(14);
     doc.text("Scan QR at Entry", 105, y, { align: "center" });
 
     if (data.qrCode) {
       const img = await loadImage(data.qrCode);
-      doc.addImage(img, "PNG", 75, y + 5, 60, 60);
+      doc.addImage(img, "PNG", 80, y + 5, 50, 50);
     }
 
-    // Instructions Box
-    y += 75;
+    y += 70;
     doc.setFillColor(255, 243, 205);
-    doc.roundedRect(20, y - 5, 170, 35, 5, 5, "F");
+    doc.rect(20, y - 5, 170, 35, "F");
 
     doc.setFontSize(12);
     doc.text("Instructions:", 25, y);
 
     y += 8;
-    const instructions = [
-      "Arrive 15 minutes early",
-      "Carry valid ID proof",
-      "Show QR at entry gate",
-    ];
-
-    instructions.forEach((t) => {
+    ["Arrive early", "Carry ID", "Show QR"].forEach((t) => {
       doc.text("• " + t, 25, y);
       y += 6;
     });
@@ -123,6 +118,7 @@ const MyBookings = () => {
 
   return (
     <div className="my-bookings">
+
       <button className="back-btn" onClick={() => navigate(-1)}>
         ← Back
       </button>
@@ -133,14 +129,17 @@ const MyBookings = () => {
         {bookings.map((b) => (
           <div key={b._id} className="booking-card">
 
-            <h3>{b.slot?.temple?.name}</h3>
+            <div className="card-header">
+              <h3>{b.slot?.temple?.name}</h3>
+              <span className={`status ${b.status}`}>
+                {b.status}
+              </span>
+            </div>
 
-            <p>📅 {new Date(b.slot?.date).toLocaleDateString()}</p>
-            <p>🆔 {b.bookingId}</p>
-
-            <span className={`status ${b.status}`}>
-              {b.status}
-            </span>
+            <div className="card-body">
+              <p>📅 {new Date(b.slot?.date).toLocaleDateString()}</p>
+              <p>🆔 {b.bookingId}</p>
+            </div>
 
             <div className="card-buttons">
               <button
