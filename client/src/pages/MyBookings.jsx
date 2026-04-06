@@ -41,7 +41,7 @@ const MyBookings = () => {
     });
   };
 
-  // ✅ SAME RECEIPT (NO CHANGE)
+  // ✅ SAME RECEIPT (MATCHES YOUR DESIGN)
   const downloadReceipt = async (data) => {
     const doc = new jsPDF();
 
@@ -63,8 +63,9 @@ const MyBookings = () => {
     line("Booking ID", data.bookingId);
     line("Temple", data.slot?.temple?.name);
     line("Location", data.slot?.temple?.location);
-    line("Date", new Date(data.slot?.date).toDateString());
-    line("Members", data.totalMembers);
+    line("Darshan Date", new Date(data.slot?.date).toDateString());
+    line("Slot Time", data.slot?.time);
+    line("Total Members", data.totalMembers);
     line("Status", data.status);
 
     y += 5;
@@ -77,8 +78,9 @@ const MyBookings = () => {
 
     doc.setFontSize(12);
     doc.text("Name", 20, y);
-    doc.text("Age", 90, y);
-    doc.text("Gender", 130, y);
+    doc.text("Age", 80, y);
+    doc.text("Gender", 120, y);
+    doc.text("Category", 160, y);
 
     y += 5;
     doc.line(20, y, 190, y);
@@ -86,8 +88,9 @@ const MyBookings = () => {
 
     data.members?.forEach((m) => {
       doc.text(m.fullName, 20, y);
-      doc.text(String(m.age), 90, y);
-      doc.text(m.gender, 130, y);
+      doc.text(String(m.age), 80, y);
+      doc.text(m.gender, 120, y);
+      doc.text(m.category || "adult", 160, y);
       y += 8;
     });
 
@@ -108,7 +111,11 @@ const MyBookings = () => {
     doc.text("Instructions:", 25, y);
 
     y += 8;
-    ["Arrive early", "Carry ID", "Show QR"].forEach((t) => {
+    [
+      "Please arrive 15 minutes before slot time.",
+      "Carry valid ID proof.",
+      "Show QR code at entry gate."
+    ].forEach((t) => {
       doc.text("• " + t, 25, y);
       y += 6;
     });
@@ -119,6 +126,7 @@ const MyBookings = () => {
   return (
     <div className="my-bookings">
 
+      {/* 🔥 FIXED BACK BUTTON */}
       <button className="back-btn" onClick={() => navigate(-1)}>
         ← Back
       </button>
