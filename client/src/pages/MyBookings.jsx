@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import jsPDF from "jspdf";
+import "./myBookings.css";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -31,7 +32,6 @@ const MyBookings = () => {
     }
   };
 
-  // 🔥 QR loader
   const loadImage = (url) => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -41,13 +41,17 @@ const MyBookings = () => {
     });
   };
 
-  // 🔥 FINAL PDF
+  // 🔥 PREMIUM PDF
   const downloadReceipt = async (data) => {
     const doc = new jsPDF();
 
-    doc.setFontSize(20);
-    doc.setTextColor(200, 0, 0);
-    doc.text("SevaTrack Darshan Receipt", 105, 20, { align: "center" });
+    // Header
+    doc.setFillColor(214, 40, 40);
+    doc.rect(0, 0, 210, 30, "F");
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.text("SevaTrack Darshan Receipt", 105, 18, { align: "center" });
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(12);
@@ -55,9 +59,10 @@ const MyBookings = () => {
     let y = 40;
 
     const line = (label, value) => {
-      doc.text(`${label}:`, 20, y);
+      doc.text(label, 20, y);
+      doc.text(":", 80, y);
       doc.text(String(value || "N/A"), 90, y);
-      y += 10;
+      y += 8;
     };
 
     line("Booking ID", data.bookingId);
@@ -65,52 +70,50 @@ const MyBookings = () => {
     line("Location", data.slot?.temple?.location);
     line("Date", new Date(data.slot?.date).toDateString());
     line("Members", data.totalMembers);
-    line("Status", data.status);
+    line("Status", data.status.toUpperCase());
 
     y += 5;
     doc.line(20, y, 190, y);
     y += 10;
 
+    // Devotee
     doc.setFontSize(14);
     doc.text("Devotee Details", 20, y);
-    y += 10;
-
-    doc.setFontSize(12);
-    doc.text("Name", 20, y);
-    doc.text("Age", 90, y);
-    doc.text("Gender", 130, y);
-
-    y += 5;
-    doc.line(20, y, 190, y);
     y += 8;
 
-    data.members?.forEach((m) => {
-      doc.text(m.fullName, 20, y);
-      doc.text(String(m.age), 90, y);
-      doc.text(m.gender, 130, y);
-      y += 8;
+    doc.setFontSize(12);
+
+    data.members?.forEach((m, i) => {
+      doc.text(`${i + 1}. ${m.fullName} (${m.age}, ${m.gender})`, 20, y);
+      y += 7;
     });
 
-    // 📱 QR
+    // QR Section
     y += 10;
-    doc.setFontSize(14);
+    doc.setFontSize(13);
     doc.text("Scan QR at Entry", 105, y, { align: "center" });
 
     if (data.qrCode) {
       const img = await loadImage(data.qrCode);
-      doc.addImage(img, "PNG", 80, y + 5, 50, 50);
+      doc.addImage(img, "PNG", 75, y + 5, 60, 60);
     }
 
-    // 📦 Instructions
-    y += 70;
+    // Instructions Box
+    y += 75;
     doc.setFillColor(255, 243, 205);
-    doc.rect(20, y - 5, 170, 35, "F");
+    doc.roundedRect(20, y - 5, 170, 35, 5, 5, "F");
 
     doc.setFontSize(12);
     doc.text("Instructions:", 25, y);
 
     y += 8;
-    ["Arrive early", "Carry ID", "Show QR"].forEach((t) => {
+    const instructions = [
+      "Arrive 15 minutes early",
+      "Carry valid ID proof",
+      "Show QR at entry gate",
+    ];
+
+    instructions.forEach((t) => {
       doc.text("• " + t, 25, y);
       y += 6;
     });
@@ -119,26 +122,45 @@ const MyBookings = () => {
   };
 
   return (
-    <div style={{ padding: 40 }}>
-      <button onClick={() => navigate(-1)}>← Back</button>
+    <div className="my-bookings">
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
 
       <h2>My Bookings</h2>
 
-      {bookings.map((b) => (
-        <div key={b._id} style={{ border: "1px solid #ddd", padding: 20 }}>
-          <p><b>ID:</b> {b.bookingId}</p>
-          <p><b>Temple:</b> {b.slot?.temple?.name}</p>
-          <p><b>Date:</b> {new Date(b.slot?.date).toLocaleDateString()}</p>
+      <div className="booking-grid">
+        {bookings.map((b) => (
+          <div key={b._id} className="booking-card">
 
-          <button onClick={() => downloadReceipt(b)}>
-            Download Receipt
-          </button>
+            <h3>{b.slot?.temple?.name}</h3>
 
-          <button onClick={() => handleCancel(b._id)}>
-            Cancel
-          </button>
-        </div>
-      ))}
+            <p>📅 {new Date(b.slot?.date).toLocaleDateString()}</p>
+            <p>🆔 {b.bookingId}</p>
+
+            <span className={`status ${b.status}`}>
+              {b.status}
+            </span>
+
+            <div className="card-buttons">
+              <button
+                className="download-btn"
+                onClick={() => downloadReceipt(b)}
+              >
+                Download
+              </button>
+
+              <button
+                className="cancel-btn"
+                onClick={() => handleCancel(b._id)}
+              >
+                Cancel
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
