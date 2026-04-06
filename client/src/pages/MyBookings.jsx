@@ -41,7 +41,7 @@ const MyBookings = () => {
     });
   };
 
-  // ✅ SAME RECEIPT (MATCHES YOUR DESIGN)
+  // 🔥 FINAL RECEIPT
   const downloadReceipt = async (data) => {
     const doc = new jsPDF();
 
@@ -60,11 +60,19 @@ const MyBookings = () => {
       y += 10;
     };
 
+    // 🔥 SLOT TIME FIX
+    const slotTime =
+      data.slot?.time ||
+      data.slot?.slotTime ||
+      (data.slot?.startTime && data.slot?.endTime
+        ? `${data.slot.startTime} - ${data.slot.endTime}`
+        : null);
+
     line("Booking ID", data.bookingId);
     line("Temple", data.slot?.temple?.name);
     line("Location", data.slot?.temple?.location);
     line("Darshan Date", new Date(data.slot?.date).toDateString());
-    line("Slot Time", data.slot?.time);
+    line("Slot Time", slotTime || "N/A");
     line("Total Members", data.totalMembers);
     line("Status", data.status);
 
@@ -72,6 +80,7 @@ const MyBookings = () => {
     doc.line(20, y, 190, y);
     y += 10;
 
+    // DEVOTEE
     doc.setFontSize(14);
     doc.text("Devotee Details", 20, y);
     y += 10;
@@ -94,6 +103,7 @@ const MyBookings = () => {
       y += 8;
     });
 
+    // QR
     y += 10;
     doc.setFontSize(14);
     doc.text("Scan QR at Entry", 105, y, { align: "center" });
@@ -103,6 +113,7 @@ const MyBookings = () => {
       doc.addImage(img, "PNG", 80, y + 5, 50, 50);
     }
 
+    // INSTRUCTIONS
     y += 70;
     doc.setFillColor(255, 243, 205);
     doc.rect(20, y - 5, 170, 35, "F");
@@ -126,7 +137,6 @@ const MyBookings = () => {
   return (
     <div className="my-bookings">
 
-      {/* 🔥 FIXED BACK BUTTON */}
       <button className="back-btn" onClick={() => navigate(-1)}>
         ← Back
       </button>
