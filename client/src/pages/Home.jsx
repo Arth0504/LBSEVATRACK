@@ -405,7 +405,7 @@ export default function Home() {
           <p>© {new Date().getFullYear()} SevaTrack. All Rights Reserved.</p>
           <p className="madeby">Made by LB INFOTECH</p>
         </div>
-      </footer>
+      </footer> 
     </>
   );
 }
