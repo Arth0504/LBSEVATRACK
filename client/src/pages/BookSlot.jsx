@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import "../styles/bookSlot.css";
-import { toast } from "react-toastify";
 
 const BookSlot = () => {
   const { slotId } = useParams();
@@ -11,6 +10,8 @@ const BookSlot = () => {
   const [members, setMembers] = useState([
     { fullName: "", age: "", gender: "male", photo: null, preview: null },
   ]);
+
+  const [loading, setLoading] = useState(false);
 
   // INPUT CHANGE
   const handleChange = (index, field, value) => {
@@ -30,7 +31,7 @@ const BookSlot = () => {
   // ADD MEMBER
   const addMember = () => {
     if (members.length >= 5) {
-      toast.warning("Maximum 5 members allowed ⚠️");
+      alert("Maximum 5 members allowed ⚠️");
       return;
     }
 
@@ -46,20 +47,21 @@ const BookSlot = () => {
     setMembers(updated);
   };
 
-  // 🔥 FINAL BOOKING FUNCTION (FIXED)
+  // 🔥 FINAL BOOKING FUNCTION
   const handleBooking = async () => {
-    console.log("🔥 Button Clicked");
-
     try {
+      if (loading) return; // prevent double click
+      setLoading(true);
+
       // VALIDATION
       for (let m of members) {
         if (!m.fullName || !m.age) {
-          toast.error("Please fill all member details ❌");
+          alert("Please fill all details ❌");
+          setLoading(false);
           return;
         }
       }
 
-      // FORM DATA
       const formData = new FormData();
       formData.append("slotId", slotId);
 
@@ -71,7 +73,6 @@ const BookSlot = () => {
 
       formData.append("members", JSON.stringify(memberData));
 
-      // IMAGES
       members.forEach((m) => {
         if (m.photo) {
           formData.append("images", m.photo);
@@ -79,30 +80,33 @@ const BookSlot = () => {
       });
 
       console.log("📤 Sending:", memberData);
+      console.log("📤 SlotId:", slotId);
 
-      const res = await API.post("/bookings", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await API.post("/bookings", formData);
 
-      console.log("✅ Success:", res.data);
+      alert("🙏 Booking Successful!");
 
-      toast.success("Booking Successful 🙏");
-
-      setTimeout(() => {
-        navigate("/my-bookings");
-      }, 1500);
+      navigate("/my-bookings");
 
     } catch (error) {
-      console.log("❌ Error:", error);
+      console.log("❌ FULL ERROR:", error.response?.data);
 
-      const msg =
-        error.response?.data?.message ||
-        error.message ||
-        "Booking Failed ❌";
+      const msg = error.response?.data?.message;
 
-      toast.error(msg);
+      if (msg?.includes("already")) {
+        alert("⚠️ You already booked this slot");
+      } else if (msg?.includes("capacity")) {
+        alert("⚠️ Slot is full");
+      } else if (msg?.includes("Invalid age")) {
+        alert("⚠️ Invalid age entered");
+      } else if (msg?.includes("senior")) {
+        alert("⚠️ This slot is only for senior citizens");
+      } else {
+        alert(msg || "Booking Failed ❌");
+      }
+
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -171,8 +175,9 @@ const BookSlot = () => {
 
       <button onClick={addMember}>+ Add Member</button>
 
-      <button type="button" onClick={handleBooking}>
-        Confirm Booking
+      {/* 🔥 FIXED BUTTON */}
+      <button onClick={handleBooking} disabled={loading}>
+        {loading ? "Booking..." : "Confirm Booking"}
       </button>
 
     </div>
