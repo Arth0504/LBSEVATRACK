@@ -13,14 +13,12 @@ const BookSlot = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // INPUT CHANGE
   const handleChange = (index, field, value) => {
     const updated = [...members];
     updated[index][field] = value;
     setMembers(updated);
   };
 
-  // IMAGE UPLOAD
   const handleImageChange = (index, file) => {
     const updated = [...members];
     updated[index].photo = file;
@@ -28,7 +26,6 @@ const BookSlot = () => {
     setMembers(updated);
   };
 
-  // ADD MEMBER
   const addMember = () => {
     if (members.length >= 5) {
       alert("Maximum 5 members allowed ⚠️");
@@ -41,19 +38,16 @@ const BookSlot = () => {
     ]);
   };
 
-  // REMOVE MEMBER
   const removeMember = (index) => {
     const updated = members.filter((_, i) => i !== index);
     setMembers(updated);
   };
 
-  // 🔥 FINAL BOOKING FUNCTION
   const handleBooking = async () => {
     try {
-      if (loading) return; // prevent double click
+      if (loading) return;
       setLoading(true);
 
-      // VALIDATION
       for (let m of members) {
         if (!m.fullName || !m.age) {
           alert("Please fill all details ❌");
@@ -79,112 +73,121 @@ const BookSlot = () => {
         }
       });
 
-      console.log("📤 Sending:", memberData);
-      console.log("📤 SlotId:", slotId);
+      await API.post("/bookings", formData);
 
-      const res = await API.post("/bookings", formData);
-
-      alert("🙏 Booking Successful!");
-
-      navigate("/my-bookings");
+      setTimeout(() => {
+        alert("🙏 Booking Successful!");
+        navigate("/my-bookings");
+      }, 800);
 
     } catch (error) {
-      console.log("❌ FULL ERROR:", error.response?.data);
-
       const msg = error.response?.data?.message;
 
-      if (msg?.includes("already")) {
-        alert("⚠️ You already booked this slot");
-      } else if (msg?.includes("capacity")) {
-        alert("⚠️ Slot is full");
-      } else if (msg?.includes("Invalid age")) {
-        alert("⚠️ Invalid age entered");
-      } else if (msg?.includes("senior")) {
-        alert("⚠️ This slot is only for senior citizens");
-      } else {
-        alert(msg || "Booking Failed ❌");
-      }
+      setTimeout(() => {
+        if (msg?.includes("already")) {
+          alert("⚠️ You already booked this slot");
+        } else if (msg?.includes("capacity")) {
+          alert("⚠️ Slot is full");
+        } else if (msg?.includes("Invalid age")) {
+          alert("⚠️ Invalid age entered");
+        } else if (msg?.includes("senior")) {
+          alert("⚠️ This slot is only for senior citizens");
+        } else {
+          alert(msg || "Booking Failed ❌");
+        }
+      }, 800);
 
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
     }
   };
 
   return (
-    <div className="book-container">
-
-      <h2>Book Your Darshan Slot</h2>
-
-      {members.map((member, index) => (
-        <div key={index} className="member-card">
-
-          <h4>Member {index + 1}</h4>
-
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={member.fullName}
-            onChange={(e) =>
-              handleChange(index, "fullName", e.target.value)
-            }
-          />
-
-          <input
-            type="number"
-            placeholder="Age"
-            value={member.age}
-            onChange={(e) =>
-              handleChange(index, "age", e.target.value)
-            }
-          />
-
-          <select
-            value={member.gender}
-            onChange={(e) =>
-              handleChange(index, "gender", e.target.value)
-            }
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) =>
-              handleImageChange(index, e.target.files[0])
-            }
-          />
-
-          {member.preview && (
-            <img
-              src={member.preview}
-              alt="preview"
-              className="preview-img"
-            />
-          )}
-
-          {index > 0 && (
-            <button onClick={() => removeMember(index)}>
-              Remove
-            </button>
-          )}
+    <>
+      {/* 🔥 FULL SCREEN LOADER */}
+      {loading && (
+        <div className="full-loader">
+          <div className="loader-box">
+            <div className="spinner"></div>
+            <h3>Please wait a moment...</h3>
+            <p>Your booking is being processed</p>
+          </div>
         </div>
-      ))}
+      )}
 
-      <button onClick={addMember}>+ Add Member</button>
+      <div className="book-container">
 
-      {/* 🔥 FIXED BUTTON */}
-      <button onClick={handleBooking} disabled={loading}>
-        {loading ? "Booking..." : "Confirm Booking"}
-      </button>
+        <h2>Book Your Darshan Slot</h2>
 
-    </div>
+        {members.map((member, index) => (
+          <div key={index} className="member-card">
+
+            <h4>Member {index + 1}</h4>
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={member.fullName}
+              onChange={(e) =>
+                handleChange(index, "fullName", e.target.value)
+              }
+            />
+
+            <input
+              type="number"
+              placeholder="Age"
+              value={member.age}
+              onChange={(e) =>
+                handleChange(index, "age", e.target.value)
+              }
+            />
+
+            <select
+              value={member.gender}
+              onChange={(e) =>
+                handleChange(index, "gender", e.target.value)
+              }
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                handleImageChange(index, e.target.files[0])
+              }
+            />
+
+            {member.preview && (
+              <img
+                src={member.preview}
+                alt="preview"
+                className="preview-img"
+              />
+            )}
+
+            {index > 0 && (
+              <button onClick={() => removeMember(index)}>
+                Remove
+              </button>
+            )}
+          </div>
+        ))}
+
+        <button onClick={addMember}>+ Add Member</button>
+
+        <button onClick={handleBooking} disabled={loading}>
+          Confirm Booking
+        </button>
+
+      </div>
+    </>
   );
 };
 
 export default BookSlot;
-
-
-
