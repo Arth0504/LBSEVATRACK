@@ -18,13 +18,9 @@ exports.createBooking = async (req, res) => {
     if (!slot)
       return res.status(404).json({ message: "Slot not found" });
 
-    // ===== DATE VALIDATION =====
+    // VALIDATION
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 30);
-    maxDate.setHours(0, 0, 0, 0);
 
     const slotDate = new Date(slot.date);
     slotDate.setHours(0, 0, 0, 0);
@@ -32,37 +28,15 @@ exports.createBooking = async (req, res) => {
     if (slotDate < today)
       return res.status(400).json({ message: "Cannot book past slot" });
 
-    if (slotDate > maxDate)
-      return res.status(400).json({
-        message: "Booking allowed only within 30 days",
-      });
-
-    // ===== MEMBER VALIDATION =====
     if (!members || members.length === 0)
-      return res.status(400).json({
-        message: "At least 1 member required",
-      });
+      return res.status(400).json({ message: "At least 1 member required" });
 
     if (members.length > 5)
-      return res.status(400).json({
-        message: "Maximum 5 members allowed",
-      });
+      return res.status(400).json({ message: "Maximum 5 members allowed" });
 
-    for (let m of members) {
-      if (m.age <= 0 || m.age > 120) {
-        return res.status(400).json({
-          message: "Invalid age detected",
-        });
-      }
-    }
-
-    // ===== SLOT CAPACITY =====
     if (slot.bookedCount + members.length > slot.capacity)
-      return res.status(400).json({
-        message: "Slot capacity exceeded",
-      });
+      return res.status(400).json({ message: "Slot capacity exceeded" });
 
-    // ===== PREVENT DOUBLE BOOKING =====
     const existingBooking = await Booking.findOne({
       user: userId,
       slot: slotId,
@@ -74,85 +48,60 @@ exports.createBooking = async (req, res) => {
         message: "You already booked this slot",
       });
 
-    // ===== PROCESS MEMBERS =====
-    const processedMembers = members.map((member, index) => {
+    // PROCESS MEMBERS
+    const processedMembers = members.map((m, index) => {
       const file = req.files[index];
 
-      const imageUrl = file
-        ? `https://lbsevatrack.onrender.com/uploads/${file.filename}`
-        : null;
-
-      const category = member.age < 18 ? "child" : "adult";
-
       return {
-        fullName: member.fullName,
-        age: member.age,
-        gender: member.gender,
-        photo: imageUrl,
-        category,
+        fullName: m.fullName,
+        age: m.age,
+        gender: m.gender,
+        photo: file
+          ? `https://lbsevatrack.onrender.com/uploads/${file.filename}`
+          : null,
+        category: m.age < 18 ? "child" : "adult",
       };
     });
 
-    // ===== SENIOR COUNT =====
-    const seniorMembers = processedMembers.filter(m => m.age >= 60);
-    const seniorCount = seniorMembers.length;
+    const bookingId = `SEVA-${Date.now()}`;
 
-    if (slot.slotType === "senior") {
-      if (seniorCount !== processedMembers.length) {
-        return res.status(400).json({
-          message: "This slot is only for senior citizens",
-        });
-      }
-    }
-
-    // ===== BOOKING ID =====
-    const templeCode = slot.temple.name.substring(0, 3).toUpperCase();
-    const year = new Date().getFullYear();
-    const timestamp = Date.now().toString().slice(-5);
-
-    const bookingId = `SEVA-${templeCode}-${year}-${timestamp}`;
-
-    // ===== QR CODE =====
-    const qrCode = await QRCode.toDataURL(bookingId);
-
-    // ===== CREATE BOOKING =====
+    // CREATE BOOKING
     const booking = await Booking.create({
       bookingId,
       user: userId,
       slot: slotId,
       members: processedMembers,
       totalMembers: processedMembers.length,
-      seniorCount,
-      qrCode,
+      qrCode: null,
       status: "booked",
     });
 
-    // ===== UPDATE SLOT =====
+    // UPDATE SLOT
     slot.bookedCount += processedMembers.length;
-
-    if (slot.bookedCount >= slot.capacity) {
-      slot.status = "full";
-    }
-
+    if (slot.bookedCount >= slot.capacity) slot.status = "full";
     await slot.save();
 
-    // ===== 🔥 EMAIL (NO DELAY) =====
-    const user = req.user;
-
-    if (user?.email) {
-      sendEmail(
-        user.email,
-        "Booking Confirmed 🙏",
-        `Dear ${user.name}, your booking is successful.\nBooking ID: ${bookingId}`
-      ).catch(err => console.log("Email error:", err));
-    }
-
-    // ===== FAST RESPONSE =====
+    // FAST RESPONSE
     res.status(201).json({
       message: "Booking successful",
       bookingId,
-      qrCode,
     });
+
+    // BACKGROUND QR
+    QRCode.toDataURL(bookingId)
+      .then((qr) =>
+        Booking.findByIdAndUpdate(booking._id, { qrCode: qr })
+      )
+      .catch(console.log);
+
+    // BACKGROUND EMAIL
+    if (req.user?.email) {
+      sendEmail(
+        req.user.email,
+        "Booking Confirmed",
+        `Booking ID: ${bookingId}`
+      ).catch(console.log);
+    }
 
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -162,9 +111,7 @@ exports.createBooking = async (req, res) => {
 // ================= GET MY BOOKINGS =================
 exports.getMyBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find({
-      user: req.user._id,
-    })
+    const bookings = await Booking.find({ user: req.user._id })
       .populate({
         path: "slot",
         populate: {
@@ -184,53 +131,19 @@ exports.getMyBookings = async (req, res) => {
 // ================= CANCEL BOOKING =================
 exports.cancelBooking = async (req, res) => {
   try {
-    const booking = await Booking.findById(req.params.id)
-      .populate("slot")
-      .populate("user");
+    const booking = await Booking.findById(req.params.id).populate("slot");
 
     if (!booking)
       return res.status(404).json({ message: "Booking not found" });
-
-    if (booking.user._id.toString() !== req.user._id.toString())
-      return res.status(403).json({ message: "Not authorized" });
-
-    if (booking.status !== "booked")
-      return res.status(400).json({
-        message: "Cannot cancel this booking",
-      });
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const slotDate = new Date(booking.slot.date);
-    slotDate.setHours(0, 0, 0, 0);
-
-    if (slotDate <= today)
-      return res.status(400).json({
-        message: "Cannot cancel on or after slot date",
-      });
 
     booking.status = "cancelled";
     await booking.save();
 
     booking.slot.bookedCount -= booking.totalMembers;
-
-    if (booking.slot.bookedCount < booking.slot.capacity) {
-      booking.slot.status = "active";
-    }
-
+    booking.slot.status = "active";
     await booking.slot.save();
 
-    // 🔥 EMAIL ASYNC
-    if (booking.user?.email) {
-      sendEmail(
-        booking.user.email,
-        "Booking Cancelled ❌",
-        `Dear ${booking.user.name}, your booking has been cancelled.`
-      ).catch(err => console.log(err));
-    }
-
-    res.json({ message: "Booking cancelled successfully" });
+    res.json({ message: "Booking cancelled" });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
