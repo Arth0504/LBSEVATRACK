@@ -4,16 +4,20 @@ const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
 const upload = require("../middleware/upload");
 
+// 🔥 IMPORTANT FIX (correct import)
+const {
+  createBooking,
+  getMyBookings,
+  cancelBooking
+} = require("../controllers/bookingController");
 
-const bookingController = require("../controllers/bookingController");
+// ✅ CREATE BOOKING
+router.post("/", protect, upload.any(), createBooking);
 
-// Create booking
-router.post("/", protect, upload.any(), bookingController.createBooking);
+// ✅ GET MY BOOKINGS
+router.get("/my", protect, getMyBookings);
 
-// Get my bookings
-router.get("/my", protect, bookingController.getMyBookings);
-
-// Cancel booking
-router.put("/cancel/:id", protect, bookingController.cancelBooking);
+// ✅ CANCEL BOOKING
+router.put("/cancel/:id", protect, cancelBooking);
 
 module.exports = router;

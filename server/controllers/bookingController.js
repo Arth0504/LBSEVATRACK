@@ -136,7 +136,7 @@ exports.createBooking = async (req, res) => {
 
     await slot.save();
 
-    // ===== 🔥 EMAIL FIX (NO DELAY) =====
+    // ===== 🔥 EMAIL (NO DELAY) =====
     const user = req.user;
 
     if (user?.email) {
@@ -147,12 +147,90 @@ exports.createBooking = async (req, res) => {
       ).catch(err => console.log("Email error:", err));
     }
 
-    // 🔥 RESPONSE FAST
+    // ===== FAST RESPONSE =====
     res.status(201).json({
       message: "Booking successful",
       bookingId,
       qrCode,
     });
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// ================= GET MY BOOKINGS =================
+exports.getMyBookings = async (req, res) => {
+  try {
+    const bookings = await Booking.find({
+      user: req.user._id,
+    })
+      .populate({
+        path: "slot",
+        populate: {
+          path: "temple",
+          select: "name location",
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    res.json(bookings);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// ================= CANCEL BOOKING =================
+exports.cancelBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id)
+      .populate("slot")
+      .populate("user");
+
+    if (!booking)
+      return res.status(404).json({ message: "Booking not found" });
+
+    if (booking.user._id.toString() !== req.user._id.toString())
+      return res.status(403).json({ message: "Not authorized" });
+
+    if (booking.status !== "booked")
+      return res.status(400).json({
+        message: "Cannot cancel this booking",
+      });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const slotDate = new Date(booking.slot.date);
+    slotDate.setHours(0, 0, 0, 0);
+
+    if (slotDate <= today)
+      return res.status(400).json({
+        message: "Cannot cancel on or after slot date",
+      });
+
+    booking.status = "cancelled";
+    await booking.save();
+
+    booking.slot.bookedCount -= booking.totalMembers;
+
+    if (booking.slot.bookedCount < booking.slot.capacity) {
+      booking.slot.status = "active";
+    }
+
+    await booking.slot.save();
+
+    // 🔥 EMAIL ASYNC
+    if (booking.user?.email) {
+      sendEmail(
+        booking.user.email,
+        "Booking Cancelled ❌",
+        `Dear ${booking.user.name}, your booking has been cancelled.`
+      ).catch(err => console.log(err));
+    }
+
+    res.json({ message: "Booking cancelled successfully" });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
