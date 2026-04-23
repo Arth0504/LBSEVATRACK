@@ -271,24 +271,9 @@ body {
   z-index: 0;
 }
 
-/* Stat colors (Coral, Blue, Red, Orange, Green, Purple) */
-.stat-coral .stat-icon-wrapper { background: #ffebeb; color: #e55353; }
-.stat-coral .stat-glow { background: #e55353; }
-
-.stat-blue .stat-icon-wrapper { background: #eef2ff; color: #4f46e5; }
-.stat-blue .stat-glow { background: #4f46e5; }
-
-.stat-red .stat-icon-wrapper { background: #fef2f2; color: #dc2626; }
-.stat-red .stat-glow { background: #dc2626; }
-
-.stat-var(--color-primary) .stat-icon-wrapper { background: #fff7ed; color: #ea580c; }
-.stat-var(--color-primary) .stat-glow { background: #ea580c; }
-
-.stat-green .stat-icon-wrapper { background: #f0fdf4; color: #16a34a; }
-.stat-green .stat-glow { background: #16a34a; }
-
-.stat-purple .stat-icon-wrapper { background: #faf5ff; color: #9333ea; }
-.stat-purple .stat-glow { background: #9333ea; }
+/* Stat colors */
+.stat-primary .stat-icon-wrapper { background: var(--color-primary-light); color: var(--color-primary-dark); }
+.stat-primary .stat-glow { background: var(--color-primary); }
 
 /* MAIN GRID (TABLE + SIDE PANEL) */
 .dashboard-main-grid {

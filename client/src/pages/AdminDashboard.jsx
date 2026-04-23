@@ -66,12 +66,12 @@ const AdminDashboard = () => {
 
             {/* STATS */}
             <div className="stats-grid">
-              <Stat title="Today's Bookings" value={stats?.totalBookingsToday} type="stat-coral"/>
-              <Stat title="Visitors Today" value={stats?.totalVisitorsToday} type="stat-blue"/>
-              <Stat title="Cancelled Today" value={stats?.cancelledToday} type="stat-red"/>
-              <Stat title="Full Slots" value={stats?.fullSlots} type="stat-var(--color-primary)"/>
-              <Stat title="Active Slots" value={stats?.activeSlots} type="stat-green"/>
-              <Stat title="Members Today" value={stats?.totalMembersToday} type="stat-purple"/>
+              <Stat title="Today's Bookings" value={stats?.totalBookingsToday} type="stat-primary"/>
+              <Stat title="Visitors Today" value={stats?.totalVisitorsToday} type="stat-primary"/>
+              <Stat title="Cancelled Today" value={stats?.cancelledToday} type="stat-primary"/>
+              <Stat title="Full Slots" value={stats?.fullSlots} type="stat-primary"/>
+              <Stat title="Active Slots" value={stats?.activeSlots} type="stat-primary"/>
+              <Stat title="Members Today" value={stats?.totalMembersToday} type="stat-primary"/>
             </div>
 
             {/* MAIN GRID */}
