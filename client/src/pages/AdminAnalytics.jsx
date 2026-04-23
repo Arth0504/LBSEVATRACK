@@ -84,17 +84,17 @@ const AdminAnalytics = () => {
       {
         label: "Visitors",
         data: Object.values(stats).map((s) => s.visitors),
-        backgroundColor: "rgba(74, 144, 226, 0.7)",
+        backgroundColor: "rgba(207, 75, 82, 0.7)",
       },
       {
         label: "Cancelled",
         data: Object.values(stats).map((s) => s.cancelled),
-        backgroundColor: "rgba(74, 144, 226, 0.4)",
+        backgroundColor: "rgba(207, 75, 82, 0.4)",
       },
       {
         label: "Total Members",
         data: Object.values(stats).map((s) => s.members),
-        backgroundColor: "rgba(74, 144, 226, 0.15)",
+        backgroundColor: "rgba(207, 75, 82, 0.15)",
       },
     ],
   };

@@ -165,13 +165,13 @@ const TempleDetails = () => {
                   const occupancy = slot.bookedCount / slot.capacity;
                   
                   let densityLabel = "Low";
-                  let densityColor = "rgba(74, 144, 226, 0.3)"; // soft primary
+                  let densityColor = "rgba(207, 75, 82, 0.3)"; // soft primary
                   if (occupancy >= 0.8) {
                     densityLabel = "High";
                     densityColor = "var(--color-primary)"; // strong primary
                   } else if (occupancy >= 0.5) {
                     densityLabel = "Medium";
-                    densityColor = "rgba(74, 144, 226, 0.7)"; // medium primary
+                    densityColor = "rgba(207, 75, 82, 0.7)"; // medium primary
                   }
 
                 const isDisabled =

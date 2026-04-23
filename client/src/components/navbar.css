@@ -11,54 +11,61 @@ html, body {
 /* NAVBAR */
 .navbar {
   width: 100%;
-  min-height: 85px;            /* FIX: height collapse nahi hoga */
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 8%;
-  background-color: #ffffff;
-  border-bottom: 3px solid #f3f3f3;
-  position: relative;          /* sticky hata diya temporarily */
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  transition: all var(--transition);
 }
 
 /* LOGO */
 .logo {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   cursor: pointer;
   display: flex;
   align-items: center;
-  line-height: 1;              /* IMPORTANT */
+  line-height: 1;
+  letter-spacing: -0.5px;
 }
 
 /* NAV LINKS */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 35px;
 }
 
 /* NORMAL LINKS */
 .nav-links a {
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--text-main);
   font-weight: 500;
-  font-size: 16px;
+  font-size: 15px;
   position: relative;
+  padding-bottom: 4px;
 }
 
 /* UNDERLINE */
 .nav-links a::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -5px;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
   width: 0%;
   height: 2px;
   background-color: var(--color-primary);
-  transition: 0.3s ease;
+  transition: width var(--transition);
 }
 
 .nav-links a:hover::after,
@@ -74,24 +81,37 @@ html, body {
 .btn-primary {
   background-color: var(--color-primary);
   color: white !important;
-  padding: 8px 20px;
-  border-radius: 25px;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
 }
 
 .btn-outline {
-  border: 2px solid var(--color-primary);
-  padding: 6px 18px;
-  border-radius: 25px;
+  border: 1px solid var(--color-primary);
+  padding: 8px 22px;
+  border-radius: var(--radius-sm);
   color: var(--color-primary) !important;
   font-weight: 600;
+  background: transparent;
+  transition: all var(--transition);
+}
+
+.btn-outline:hover {
+  background: var(--color-primary-light);
 }
 
 .btn-logout {
-  background-color: var(--color-primary);
-  border: none;
-  padding: 8px 20px;
-  border-radius: 25px;
-  color: white;
+  background-color: var(--color-primary-light);
+  border: 1px solid transparent;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-dark);
+  font-weight: 600;
   cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-logout:hover {
+  background-color: var(--color-primary);
+  color: white;
 }
