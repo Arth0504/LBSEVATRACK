@@ -178,13 +178,12 @@ const GateVerify = () => {
 const styles = {
   container: {
     padding: "40px",
-    background: "var(--bg-main)",
+    background: "#fafafa",
     minHeight: "100vh",
   },
   heading: {
-    color: "var(--color-primary)",
+    color: "#c7ad88",
     marginBottom: "20px",
-    fontWeight: "700"
   },
   inputBox: {
     display: "flex",
@@ -198,32 +197,23 @@ const styles = {
     border: "1px solid #ccc",
   },
   button: {
-    background: "var(--color-primary)",
+    background: "#c7ad88",
     color: "white",
     border: "none",
     padding: "8px 15px",
-    borderRadius: "var(--radius-md)",
-    fontWeight: "500",
-    cursor: "pointer",
-    transition: "all var(--transition-fast)"
+    borderRadius: "6px",
   },
   scanBtn: {
-    background: "var(--text-primary)",
+    background: "#333",
     color: "white",
     padding: "8px 15px",
-    borderRadius: "var(--radius-md)",
-    fontWeight: "500",
-    cursor: "pointer",
-    border: "none"
+    borderRadius: "6px",
   },
   stopBtn: {
-    background: "var(--color-danger)",
+    background: "red",
     color: "white",
     padding: "8px 15px",
-    borderRadius: "var(--radius-md)",
-    fontWeight: "500",
-    cursor: "pointer",
-    border: "none"
+    borderRadius: "6px",
   },
   error: {
     color: "red",

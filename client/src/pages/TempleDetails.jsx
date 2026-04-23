@@ -165,13 +165,13 @@ const TempleDetails = () => {
                   const occupancy = slot.bookedCount / slot.capacity;
                   
                   let densityLabel = "Low";
-                  let densityColor = "var(--color-success)"; // soft green
+                  let densityColor = "#28a745"; // soft green
                   if (occupancy >= 0.8) {
                     densityLabel = "High";
-                    densityColor = "var(--color-danger)"; // soft pink/red
+                    densityColor = "#d62828"; // red
                   } else if (occupancy >= 0.5) {
                     densityLabel = "Medium";
-                    densityColor = "var(--color-primary)"; // champagne/gold
+                    densityColor = "#ff9800"; // orange
                   }
 
                 const isDisabled =
@@ -237,17 +237,18 @@ const TempleDetails = () => {
                       disabled={isDisabled}
                       style={{
                         background: isDisabled
-                          ? "var(--border-color)"
-                          : "var(--color-primary)",
-                        color: isDisabled ? "var(--text-muted)" : "white",
-                        cursor: isDisabled ? "not-allowed" : "pointer",
+                          ? "gray"
+                          : "#c7ad88",
+                        cursor: isDisabled
+                          ? "not-allowed"
+                          : "pointer",
                         border: "none",
-                        padding: "12px",
-                        borderRadius: "var(--radius-md)",
-                        marginTop: "15px",
-                        fontWeight: "500",
-                        width: "100%",
-                        transition: "all var(--transition-fast)"
+                        color: "white",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        marginTop: "10px",
+                        fontWeight: "bold",
+                        width: "100%"
                       }}
                       onClick={() =>
                         navigate(`/book/${slot._id}`)

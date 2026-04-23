@@ -1,13 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 .auth-container {
   display: flex;
-  min-height: 100vh;
-  background-color: var(--bg-main);
+  height: 100vh;
 }
 
 /* LEFT SIDE */
 .auth-left {
   flex: 1;
-  background: url("https://images.unsplash.com/photo-1544644181-1484b3f8c8b3?auto=format&fit=crop&q=80") center/cover no-repeat;
+  background: url("https://images.unsplash.com/photo-1609947017136-9daf32a5eb16")
+    center/cover no-repeat;
   position: relative;
   display: flex;
   align-items: center;
@@ -15,21 +22,16 @@
 }
 
 .auth-left .overlay {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 60px;
-  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 50px;
+  color: white;
   text-align: center;
-  border-radius: var(--radius-lg);
-  max-width: 80%;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-color-soft);
+  border-radius: 15px;
 }
 
 .auth-left h2 {
-  font-size: 2.2rem;
+  font-size: 32px;
   margin-bottom: 15px;
-  color: var(--color-primary-dark);
 }
 
 /* RIGHT SIDE */
@@ -38,119 +40,85 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-main);
-  padding: 40px;
+  background: #fafafa;
 }
 
 .auth-card {
-  background: var(--bg-card);
-  padding: 50px 40px;
-  width: 100%;
-  max-width: 400px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-color);
+  background: white;
+  padding: 40px;
+  width: 350px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(199, 173, 136, 0.2);
 }
 
 .auth-card h3 {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-align: center;
-  color: var(--color-primary-dark);
-  font-size: 1.8rem;
+  color: #c7ad88;
 }
 
 /* FORM */
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  font-size: 0.95rem;
+  font-size: 14px;
   display: block;
-  margin-bottom: 8px;
-  color: var(--text-secondary);
-  font-weight: 500;
+  margin-bottom: 6px;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-main);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
   outline: none;
-  transition: all var(--transition-fast);
-  color: var(--text-primary);
-  font-size: 1rem;
+  transition: 0.3s;
 }
 
 .form-group input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(197, 168, 128, 0.1);
-  background-color: var(--bg-card);
+  border-color: #c7ad88;
+  box-shadow: 0 0 8px rgba(199, 173, 136, 0.3);
 }
 
 /* BUTTON */
 .auth-btn {
   width: 100%;
-  padding: 14px;
-  background-color: var(--color-primary);
+  padding: 12px;
+  background: #c7ad88;
   border: none;
   color: white;
-  font-weight: 500;
-  font-size: 1rem;
-  border-radius: var(--radius-full);
+  font-weight: 600;
+  border-radius: 25px;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  margin-top: 10px;
+  transition: 0.3s;
 }
 
 .auth-btn:hover {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  background: #c7ad88;
 }
 
 /* SWITCH TEXT */
 .switch-text {
-  margin-top: 25px;
-  font-size: 0.95rem;
+  margin-top: 20px;
+  font-size: 14px;
   text-align: center;
-  color: var(--text-secondary);
 }
 
 .switch-text a {
-  color: var(--color-primary-dark);
-  font-weight: 500;
+  color: #c7ad88;
+  font-weight: 600;
   text-decoration: none;
-  transition: color var(--transition-fast);
 }
+/* LOADING SCREEN */
 
-.switch-text a:hover {
-  color: var(--color-primary);
-  text-decoration: underline;
+.om-screen{
+height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+background:black;
+color:white;
 }
-
-/* OM LOADING SCREEN (Cleaned up) */
-.om-screen {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-main);
-  color: var(--text-primary);
-}
-
-.om-symbol {
-  font-size: 80px;
-  color: var(--color-primary);
-  opacity: 0.8;
-  animation: pulseOm 3s ease-in-out infinite;
-}
-
-@keyframes pulseOm {
-  0% { transform: scale(0.95); opacity: 0.6; }
-  50% { transform: scale(1.05); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.6; }
-}

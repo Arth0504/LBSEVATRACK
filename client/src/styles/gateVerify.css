@@ -1,15 +1,15 @@
 .gate-container {
   padding: 60px 100px;
-  background: #fff5f5;
+  background: #fafafa;
   min-height: 100vh;
 }
 
 .gate-container h2 {
-  color: var(--color-primary);
+  color: #c7ad88;
 }
 
 button {
-  background: var(--color-primary);
+  background: #c7ad88;
   color: white;
   border: none;
   padding: 10px 25px;
@@ -28,7 +28,7 @@ button {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(224, 74, 74, 0.2);
+  box-shadow: 0 6px 20px rgba(199, 173, 136, 0.2);
 }
 
 .user-photo {
@@ -67,7 +67,7 @@ button {
 }
 
 .adult {
-  background: var(--color-primary);
+  background: #c7ad88;
   padding: 4px 10px;
   border-radius: 20px;
   color: white;
@@ -83,7 +83,7 @@ button {
 }
 
 .manual-box button {
-  background: var(--color-primary);
+  background: #c7ad88;
   color: white;
   border: none;
   padding: 10px 20px;

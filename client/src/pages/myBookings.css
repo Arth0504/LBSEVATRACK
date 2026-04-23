@@ -10,7 +10,7 @@
   background: #fff;
   padding: 18px;
   border-radius: 12px;
-  border-left: 5px solid #d62828;
+  border-left: 5px solid #c7ad88;
   box-shadow: 0 6px 15px rgba(0,0,0,0.08);
   transition: 0.3s;
 }
@@ -26,7 +26,7 @@
 }
 
 .card-header h3 {
-  color: #d62828;
+  color: #c7ad88;
   font-size: 18px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .download-btn {
-  background: #d62828;
+  background: #c7ad88;
   color: white;
   border: none;
   padding: 7px 12px;
@@ -89,5 +89,5 @@
 }
 
 .back-btn:hover {
-  color: #d62828;        /* 🔥 hover effect */
+  color: #c7ad88;        /* 🔥 hover effect */
 }

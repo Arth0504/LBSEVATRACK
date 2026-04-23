@@ -79,17 +79,17 @@ const AdminAnalytics = () => {
       {
         label: "Bookings",
         data: Object.values(stats).map((s) => s.bookings),
-        backgroundColor: "var(--color-primary)", // saffron
+        backgroundColor: "#c7ad88", // primary
       },
       {
         label: "Visitors",
         data: Object.values(stats).map((s) => s.visitors),
-        backgroundColor: "var(--color-success)",
+        backgroundColor: "#28a745",
       },
       {
         label: "Cancelled",
         data: Object.values(stats).map((s) => s.cancelled),
-        backgroundColor: "var(--color-warning)",
+        backgroundColor: "#ff9800",
       },
       {
         label: "Total Members",

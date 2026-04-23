@@ -43,7 +43,7 @@ email:formData.email,
 password:formData.password
 });
 
-alert("Registration successful!");
+alert("🌸 Shubh Yatra! Registration successful");
 
 navigate("/login");
 
@@ -65,8 +65,8 @@ className="auth-animation"
 src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png"
 />
 
-<h2>Create Account</h2>
-<p className="subtitle">Begin your spiritual journey</p>
+<h2>🌸 Shubh Yatra</h2>
+<p className="subtitle">Apni pavitra yatra shuru kare</p>
 
 <h3>Register</h3>
 

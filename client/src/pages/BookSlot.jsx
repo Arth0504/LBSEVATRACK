@@ -172,22 +172,18 @@ const BookSlot = () => {
             )}
 
             {index > 0 && (
-              <button 
-                onClick={() => removeMember(index)}
-                style={{ alignSelf: 'flex-start', color: 'var(--color-danger)', fontWeight: '500', marginTop: '10px' }}
-              >
-                — Remove Member
+              <button onClick={() => removeMember(index)}>
+                Remove
               </button>
             )}
           </div>
         ))}
 
-        <div className="action-buttons">
-          <button className="btn btn-secondary" onClick={addMember}>+ Add Another Member</button>
-          <button className="btn btn-primary" onClick={handleBooking} disabled={loading}>
-            Confirm Booking
-          </button>
-        </div>
+        <button onClick={addMember}>+ Add Member</button>
+
+        <button onClick={handleBooking} disabled={loading}>
+          Confirm Booking
+        </button>
 
       </div>
     </>

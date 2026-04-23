@@ -26,7 +26,7 @@
 }
 
 .back-btn:hover {
-  background: var(--color-primary);
+  background: #c7ad88;
   transform: translateY(-2px);
 }
 
@@ -62,7 +62,7 @@
 .hero-btn {
   margin-top: 20px;
   padding: 12px 28px;
-  background: var(--color-primary);
+  background: #c7ad88;
   border: none;
   color: white;
   border-radius: 30px;
@@ -72,7 +72,7 @@
 }
 
 .hero-btn:hover {
-  background: #c43737;
+  background: #c7ad88;
   transform: translateY(-3px);
 }
 
@@ -87,7 +87,7 @@
   font-family: "Playfair Display", serif;
   font-size: 32px;
   margin-bottom: 20px;
-  color: var(--color-primary);
+  color: #c7ad88;
 }
 
 .info-section p {
@@ -107,7 +107,7 @@
   margin-bottom: 40px;
   font-family: "Playfair Display", serif;
   font-size: 30px;
-  color: var(--color-primary);
+  color: #c7ad88;
 }
 
 .aarti-grid {
@@ -129,7 +129,7 @@
 }
 
 .aarti-card h4 {
-  color: var(--color-primary);
+  color: #c7ad88;
   margin-bottom: 8px;
   font-size: 18px;
 }
@@ -145,7 +145,7 @@
   margin-bottom: 20px;
   font-family: "Playfair Display", serif;
   font-size: 28px;
-  color: var(--color-primary);
+  color: #c7ad88;
 }
 
 .calendar-section input[type="date"] {
@@ -159,7 +159,7 @@
 
 .calendar-section input[type="date"]:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: #c7ad88;
 }
 
 /* ================= SLOTS ================= */
@@ -172,7 +172,7 @@
   margin-bottom: 35px;
   font-family: "Playfair Display", serif;
   font-size: 30px;
-  color: var(--color-primary);
+  color: #c7ad88;
 }
 
 .slot-grid {
@@ -204,7 +204,7 @@
   padding: 10px 20px;
   border-radius: 30px;
   border: none;
-  background: var(--color-primary);
+  background: #c7ad88;
   color: white;
   cursor: pointer;
   font-weight: 500;
@@ -212,7 +212,7 @@
 }
 
 .book-btn:hover {
-  background: #c43737;
+  background: #c7ad88;
   transform: translateY(-2px);
 }
 

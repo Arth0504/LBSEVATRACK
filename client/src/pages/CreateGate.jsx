@@ -124,11 +124,11 @@ const CreateGate = () => {
 const styles = {
   container: {
     padding: "60px",
-    background: "#fff5f5",
+    background: "#fafafa",
     minHeight: "100vh",
   },
   heading: {
-    color: "var(--color-primary)",
+    color: "#c7ad88",
     marginBottom: "30px",
   },
   form: {
@@ -148,7 +148,7 @@ const styles = {
     border: "1px solid #ccc",
   },
   button: {
-    background: "var(--color-primary)",
+    background: "#c7ad88",
     color: "white",
     border: "none",
     padding: "10px",

@@ -1,6 +1,6 @@
 .notfound-container {
   height: 100vh;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background: linear-gradient(135deg, #c7ad88, #b83232);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,12 +34,12 @@
   border: none;
   border-radius: 30px;
   background: white;
-  color: var(--color-primary);
+  color: #c7ad88;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s ease;
 }
 
 .home-btn:hover {
-  background: #ffe5e5;
+  background: #fafafa;
 }

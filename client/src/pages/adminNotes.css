@@ -37,13 +37,13 @@
 
 .note-form input:focus,
 .note-form textarea:focus {
-  border-color: var(--color-primary);
+  border-color: #c7ad88;
   outline: none;
 }
 
 /* 🔥 BUTTON */
 .note-form button {
-  background: var(--color-primary);
+  background: #c7ad88;
   color: white;
   border: none;
   padding: 10px 18px;
