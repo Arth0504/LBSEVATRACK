@@ -157,50 +157,26 @@ exports.getBookingsByDate = async (req, res) => {
       return res.status(400).json({ message: "Date is required" });
     }
 
-    const selectedDate = new Date(date);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    const nextDay = new Date(selectedDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    const bookings = await Booking.find()
-      .populate("user", "name")
-      .populate({
-        path: "slot",
-        populate: { path: "temple", select: "name date startTime endTime" },
-      });
-
-    const filtered = bookings.filter((b) => {
-      if (!b.slot?.date) return false;
-
-      const slotDate = new Date(b.slot.date);
-      slotDate.setHours(0, 0, 0, 0);
-
-      return slotDate.getTime() === selectedDate.getTime();
-    });
-
-    res.json(filtered);
-
-  } catch (error) {
-    res.status(500).json({ message: "Booking fetch error" });
-  }
-};
-exports.getBookingsByDate = async (req, res) => {
-  try {
-    const { date } = req.query;
-
-    if (!date) {
-      return res.status(400).json({ message: "Date is required" });
-    }
-
     if (!req.user.temple) {
       return res.status(403).json({ message: "Temple not assigned" });
     }
 
     const selectedDate = new Date(date);
     selectedDate.setHours(0, 0, 0, 0);
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(nextDay.getDate() + 1);
 
+    // 1. Find all slots for this temple on the selected date
+    const slots = await require("../models/Slot").find({
+      temple: req.user.temple,
+      date: { $gte: selectedDate, $lt: nextDay }
+    });
+
+    const slotIds = slots.map(s => s._id);
+
+    // 2. Fetch bookings only for those slots
     const bookings = await Booking.find({
+      slot: { $in: slotIds },
       status: { $in: ["booked", "used"] },
     })
       .populate("user", "name")
@@ -209,23 +185,7 @@ exports.getBookingsByDate = async (req, res) => {
         populate: { path: "temple", select: "name date startTime endTime" },
       });
 
-    const filtered = bookings.filter((b) => {
-      if (!b.slot?.date) return false;
-
-      const slotDate = new Date(b.slot.date);
-      slotDate.setHours(0, 0, 0, 0);
-
-      const sameDate =
-        slotDate.getTime() === selectedDate.getTime();
-
-      const sameTemple =
-        b.slot.temple._id.toString() ===
-        req.user.temple.toString();
-
-      return sameDate && sameTemple;
-    });
-
-    res.json(filtered);
+    res.json(bookings);
 
   } catch (error) {
     res.status(500).json({ message: "Booking fetch error" });

@@ -77,7 +77,7 @@
 
 .remove-btn {
   background: transparent;
-  color: red;
+  color: var(--color-danger);
   border: none;
   cursor: pointer;
 }

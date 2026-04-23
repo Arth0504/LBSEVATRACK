@@ -15,6 +15,7 @@ const sendEmail = async (to, subject, text) => {
       to,
       subject,
       text,
+      html: text, // send html for better look
     });
 
     console.log("Email sent successfully ✅");

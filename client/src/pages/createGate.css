@@ -26,7 +26,7 @@
 .create-gate-card h2 {
   margin-bottom: 25px;
   text-align: center;
-  color: #FF5D5D;
+  color: var(--color-saffron);
   font-weight: 600;
 }
 
@@ -50,13 +50,13 @@
 
 .gate-form input:focus,
 .gate-form select:focus {
-  border-color: #FF5D5D;
-  box-shadow: 0 0 0 2px rgba(255, 93, 93, 0.15);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.15);
 }
 
 /* BUTTON */
 .gate-form button {
-  background: #FF5D5D;
+  background: var(--color-saffron);
   color: white;
   padding: 12px;
   border: none;

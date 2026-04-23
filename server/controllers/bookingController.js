@@ -96,10 +96,31 @@ exports.createBooking = async (req, res) => {
 
     // BACKGROUND EMAIL
     if (req.user?.email) {
+      const emailHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #FF9933; border-radius: 10px; overflow: hidden;">
+          <div style="background-color: #FF9933; color: white; padding: 20px; text-align: center;">
+            <h2>🙏 Darshan Booking Confirmed</h2>
+          </div>
+          <div style="padding: 20px; background-color: #FAFAFA; color: #333;">
+            <p>Dear Devotee,</p>
+            <p>Your darshan booking has been successfully confirmed. Here are the details:</p>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #FF9933;">
+              <p><strong>Booking ID:</strong> ${bookingId}</p>
+              <p><strong>Date & Time:</strong> ${slot.date.toISOString().split('T')[0]} | ${slot.startTime} - ${slot.endTime}</p>
+              <p><strong>Temple:</strong> ${slot.temple.name}</p>
+              <p><strong>Total Members:</strong> ${processedMembers.length}</p>
+            </div>
+            <p>Please present your Booking ID or QR code at the temple gate.</p>
+            <p>May you have a blessed darshan.</p>
+            <br/>
+            <p><strong>SevaTrack Team</strong></p>
+          </div>
+        </div>
+      `;
       sendEmail(
         req.user.email,
-        "Booking Confirmed",
-        `Booking ID: ${bookingId}`
+        "🙏 Darshan Booking Confirmed - SevaTrack",
+        emailHtml
       ).catch(console.log);
     }
 

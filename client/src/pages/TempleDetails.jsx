@@ -161,8 +161,18 @@ const TempleDetails = () => {
           ) : (
             <div className="slot-grid">
               {filteredSlots.map((slot) => {
-                const available =
-                  slot.capacity - slot.bookedCount;
+                  const available = slot.capacity - slot.bookedCount;
+                  const occupancy = slot.bookedCount / slot.capacity;
+                  
+                  let densityLabel = "Low";
+                  let densityColor = "#28a745"; // green
+                  if (occupancy >= 0.8) {
+                    densityLabel = "High";
+                    densityColor = "#e04a4a"; // red
+                  } else if (occupancy >= 0.5) {
+                    densityLabel = "Medium";
+                    densityColor = "#ffc107"; // yellow
+                  }
 
                 const isDisabled =
                   slot.status === "closed" ||
@@ -190,8 +200,37 @@ const TempleDetails = () => {
                     </p>
 
                     <p>
-                      <strong>Available:</strong> {available}
+                      <strong>Available:</strong> {available} / {slot.capacity}
                     </p>
+
+                    {/* Crowd Density Visualization */}
+                    <div style={{ margin: "10px 0" }}>
+                      <div style={{ 
+                        display: "flex", 
+                        justifyContent: "space-between", 
+                        fontSize: "12px", 
+                        marginBottom: "4px",
+                        fontWeight: "600",
+                        color: densityColor
+                      }}>
+                        <span>Crowd Density: {densityLabel}</span>
+                        <span>{Math.round(occupancy * 100)}%</span>
+                      </div>
+                      <div style={{ 
+                        width: "100%", 
+                        height: "8px", 
+                        background: "#eee", 
+                        borderRadius: "4px",
+                        overflow: "hidden" 
+                      }}>
+                        <div style={{ 
+                          width: `${Math.round(occupancy * 100)}%`, 
+                          height: "100%", 
+                          background: densityColor,
+                          transition: "width 0.3s ease"
+                        }}></div>
+                      </div>
+                    </div>
 
                     <button
                       className="book-btn"
@@ -199,10 +238,17 @@ const TempleDetails = () => {
                       style={{
                         background: isDisabled
                           ? "gray"
-                          : "#e04a4a",
+                          : "linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark))",
                         cursor: isDisabled
                           ? "not-allowed"
                           : "pointer",
+                        border: "none",
+                        color: "white",
+                        padding: "10px",
+                        borderRadius: "8px",
+                        marginTop: "10px",
+                        fontWeight: "bold",
+                        width: "100%"
                       }}
                       onClick={() =>
                         navigate(`/book/${slot._id}`)

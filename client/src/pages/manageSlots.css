@@ -18,8 +18,8 @@
 }
 
 .slots-container select:focus {
-  border-color: #ff5d5d;
-  box-shadow: 0 0 5px rgba(255, 93, 93, 0.3);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 5px rgba(255, 153, 51, 0.3);
 }
 
 /* ================= FORM ================= */
@@ -46,13 +46,13 @@
 
 .slot-form input:focus,
 .slot-form select:focus {
-  border-color: #ff5d5d;
-  box-shadow: 0 0 5px rgba(255, 93, 93, 0.2);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 5px rgba(255, 153, 51, 0.2);
 }
 
 /* ================= GENERATE BUTTON ================= */
 .slot-form button {
-  background: #ff5d5d;
+  background: var(--color-saffron);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -84,7 +84,7 @@
 
 /* Header */
 .slot-table th {
-  background: #ff5d5d;
+  background: var(--color-saffron);
   color: white;
   padding: 14px;
   text-align: left;

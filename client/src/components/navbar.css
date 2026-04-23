@@ -1,97 +1,109 @@
-/* RESET SAFE */
-html, body {
-  margin: 0;
-  padding: 0;
-}
+/* ========================================================
+   NAVBAR (BHAKTI THEME)
+   ======================================================== */
 
-* {
-  box-sizing: border-box;
-}
-
-/* NAVBAR */
 .navbar {
   width: 100%;
-  min-height: 85px;            /* FIX: height collapse nahi hoga */
+  min-height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 8%;
-  background-color: #ffffff;
-  border-bottom: 3px solid #f3f3f3;
-  position: relative;          /* sticky hata diya temporarily */
+  padding: 0 5%;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  transition: all var(--transition-normal);
 }
 
-/* LOGO */
 .logo {
-  font-size: 30px;
-  font-weight: 800;
-  color: #FF5D5D;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-saffron-dark);
   cursor: pointer;
   display: flex;
   align-items: center;
-  line-height: 1;              /* IMPORTANT */
+  gap: 0.25rem;
+  letter-spacing: -0.5px;
 }
 
-/* NAV LINKS */
+.logo span {
+  color: var(--color-saffron);
+}
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 2rem;
 }
 
-/* NORMAL LINKS */
-.nav-links a {
+.nav-links a:not(.btn-primary):not(.btn-outline) {
   text-decoration: none;
-  color: #333;
+  color: var(--text-secondary);
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1rem;
   position: relative;
+  transition: color var(--transition-fast);
 }
 
-/* UNDERLINE */
-.nav-links a::after {
+.nav-links a:not(.btn-primary):not(.btn-outline):hover,
+.nav-links a:not(.btn-primary):not(.btn-outline).active {
+  color: var(--color-saffron-dark);
+}
+
+.nav-links a:not(.btn-primary):not(.btn-outline)::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -5px;
+  bottom: -4px;
   width: 0%;
   height: 2px;
-  background-color: #FF5D5D;
-  transition: 0.3s ease;
+  background: linear-gradient(90deg, var(--color-saffron), var(--color-gold));
+  transition: width var(--transition-normal);
+  border-radius: 2px;
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
+.nav-links a:not(.btn-primary):not(.btn-outline):hover::after,
+.nav-links a:not(.btn-primary):not(.btn-outline).active::after {
   width: 100%;
 }
 
-.nav-links a:hover {
-  color: #FF5D5D;
-}
-
-/* BUTTONS */
-.btn-primary {
-  background-color: #FF5D5D;
-  color: white !important;
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
-}
-
 .btn-outline {
-  border: 2px solid #FF5D5D;
-  padding: 6px 18px;
-  border-radius: 25px;
-  color: #FF5D5D !important;
+  border: 1.5px solid var(--color-saffron);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-full);
+  color: var(--color-saffron-dark) !important;
   font-weight: 600;
+  transition: all var(--transition-fast);
 }
 
-.btn-logout {
-  background-color: #FF5D5D;
+.btn-outline:hover {
+  background-color: var(--bg-saffron-subtle);
+}
+
+.btn-primary, .btn-logout {
+  background: linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark));
+  color: var(--color-white) !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
   border: none;
-  padding: 8px 20px;
-  border-radius: 25px;
-  color: white;
   cursor: pointer;
+  box-shadow: var(--shadow-saffron);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover, .btn-logout:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 153, 51, 0.3);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 1rem;
+  }
+  .nav-links a:not(.btn-primary):not(.btn-outline) {
+    display: none; /* In a real app we would have a hamburger menu */
+  }
 }

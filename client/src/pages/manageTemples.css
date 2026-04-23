@@ -15,7 +15,7 @@
   height: 250px;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(255, 93, 93, 0.08);
+  box-shadow: 0 10px 25px rgba(255, 153, 51, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,7 +30,7 @@
 
 .admin-temple-card button {
   margin-top: 12px;
-  background: #ff5d5d;
+  background: var(--color-saffron);
   border: none;
   padding: 8px 14px;
   color: white;
@@ -60,7 +60,7 @@
 }
 
 .admin-form button {
-  background: #ff5d5d;
+  background: var(--color-saffron);
   color: white;
   border: none;
   padding: 10px;
@@ -81,6 +81,6 @@
 .admin-aarti-card button {
   background: transparent;
   border: none;
-  color: #ff5d5d;
+  color: var(--color-saffron);
   cursor: pointer;
 }

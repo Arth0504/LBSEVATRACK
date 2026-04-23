@@ -182,8 +182,9 @@ const styles = {
     minHeight: "100vh",
   },
   heading: {
-    color: "#e04a4a",
+    color: "var(--color-saffron)",
     marginBottom: "20px",
+    fontWeight: "700"
   },
   inputBox: {
     display: "flex",
@@ -197,11 +198,13 @@ const styles = {
     border: "1px solid #ccc",
   },
   button: {
-    background: "#e04a4a",
+    background: "linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark))",
     color: "white",
     border: "none",
     padding: "8px 15px",
     borderRadius: "6px",
+    fontWeight: "600",
+    cursor: "pointer"
   },
   scanBtn: {
     background: "#333",

@@ -49,13 +49,37 @@ const AdminAnalytics = () => {
     pdf.save("Temple_Analytics_Report.pdf");
   };
 
+  const exportCSV = () => {
+    if (!stats) return;
+    const headers = ["Temple", "Bookings", "Visitors", "Cancelled", "Total Members"];
+    const rows = Object.keys(stats).map((temple) => [
+      temple,
+      stats[temple].bookings,
+      stats[temple].visitors,
+      stats[temple].cancelled,
+      stats[temple].members,
+    ]);
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "Temple_Analytics_Report.csv");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
   const chartData = stats && {
     labels: Object.keys(stats),
     datasets: [
       {
         label: "Bookings",
         data: Object.values(stats).map((s) => s.bookings),
-        backgroundColor: "#e04a4a",
+        backgroundColor: "#FF9933", // saffron
       },
       {
         label: "Visitors",
@@ -86,9 +110,10 @@ const AdminAnalytics = () => {
     >
       <h2
         style={{
-          color: "#e04a4a",
+          color: "var(--color-saffron)",
           marginBottom: "30px",
           fontSize: "28px",
+          fontWeight: "700"
         }}
       >
         Temple Analytics Dashboard
@@ -133,7 +158,7 @@ const AdminAnalytics = () => {
         <button
           onClick={fetchData}
           style={{
-            background: "#e04a4a",
+            background: "linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark))",
             color: "white",
             border: "none",
             padding: "8px 15px",
@@ -146,19 +171,34 @@ const AdminAnalytics = () => {
         </button>
 
         {stats && (
-          <button
-            onClick={exportPDF}
-            style={{
-              background: "#222",
-              color: "white",
-              border: "none",
-              padding: "8px 15px",
-              borderRadius: "6px",
-              cursor: "pointer",
-            }}
-          >
-            Export PDF
-          </button>
+          <>
+            <button
+              onClick={exportPDF}
+              style={{
+                background: "#222",
+                color: "white",
+                border: "none",
+                padding: "8px 15px",
+                borderRadius: "6px",
+                cursor: "pointer",
+              }}
+            >
+              Export PDF
+            </button>
+            <button
+              onClick={exportCSV}
+              style={{
+                background: "#28a745",
+                color: "white",
+                border: "none",
+                padding: "8px 15px",
+                borderRadius: "6px",
+                cursor: "pointer",
+              }}
+            >
+              Export CSV
+            </button>
+          </>
         )}
       </div>
 

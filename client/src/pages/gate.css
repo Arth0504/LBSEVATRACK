@@ -9,7 +9,7 @@
 /* ===== SIDEBAR ===== */
 .gate-sidebar {
   width: 250px;
-  background: linear-gradient(180deg, #ff5d5d, #e64545);
+  background: linear-gradient(180deg, var(--color-saffron), #e64545);
   color: white;
   padding: 30px 20px;
   display: flex;
@@ -67,7 +67,7 @@
 
 .gate-content h2 {
   margin-bottom: 25px;
-  color: #ff5d5d;
+  color: var(--color-saffron);
   font-weight: 600;
 }
 
@@ -83,14 +83,14 @@
 
 .gate-content input:focus {
   outline: none;
-  border-color: #ff5d5d;
-  box-shadow: 0 0 5px rgba(255, 93, 93, 0.3);
+  border-color: var(--color-saffron);
+  box-shadow: 0 0 5px rgba(255, 153, 51, 0.3);
 }
 
 /* ===== BUTTON ===== */
 .gate-content button {
   padding: 10px 18px;
-  background: #ff5d5d;
+  background: var(--color-saffron);
   border: none;
   color: white;
   border-radius: 8px;
@@ -110,7 +110,7 @@
   padding: 25px;
   margin-top: 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(255, 93, 93, 0.15);
+  box-shadow: 0 10px 30px rgba(255, 153, 51, 0.15);
   animation: fadeIn 0.4s ease;
 }
 
@@ -132,7 +132,7 @@ table {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(255, 93, 93, 0.12);
+  box-shadow: 0 8px 25px rgba(255, 153, 51, 0.12);
 }
 
 th,
@@ -156,7 +156,7 @@ tr:nth-child(even) {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(255, 93, 93, 0.15);
+  box-shadow: 0 10px 25px rgba(255, 153, 51, 0.15);
   margin-top: 20px;
 }
 

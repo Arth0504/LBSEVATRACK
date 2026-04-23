@@ -64,8 +64,8 @@ border:1px solid #ddd;
 }
 
 .form-group input:focus{
-border-color:#ff5d5d;
-box-shadow:0 0 6px rgba(255,93,93,0.3);
+border-color:var(--color-saffron);
+box-shadow:0 0 6px rgba(255, 153, 51,0.3);
 }
 
 /* BUTTON */
@@ -73,7 +73,7 @@ box-shadow:0 0 6px rgba(255,93,93,0.3);
 .auth-btn{
 width:100%;
 padding:12px;
-background:#ff5d5d;
+background:var(--color-saffron);
 border:none;
 color:white;
 border-radius:25px;
@@ -82,7 +82,7 @@ cursor:pointer;
 }
 
 .auth-btn:hover{
-background:#e04848;
+background:var(--color-saffron-dark);
 }
 
 /* LINK */
@@ -93,7 +93,7 @@ font-size:14px;
 }
 
 .switch-text a{
-color:#ff5d5d;
+color:var(--color-saffron);
 font-weight:600;
 text-decoration:none;
 }
