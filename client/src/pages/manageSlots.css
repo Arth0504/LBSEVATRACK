@@ -18,8 +18,8 @@
 }
 
 .slots-container select:focus {
-  border-color: var(--color-saffron);
-  box-shadow: 0 0 5px rgba(255, 153, 51, 0.3);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px rgba(197, 168, 128, 0.3);
 }
 
 /* ================= FORM ================= */
@@ -46,13 +46,13 @@
 
 .slot-form input:focus,
 .slot-form select:focus {
-  border-color: var(--color-saffron);
-  box-shadow: 0 0 5px rgba(255, 153, 51, 0.2);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px rgba(197, 168, 128, 0.2);
 }
 
 /* ================= GENERATE BUTTON ================= */
 .slot-form button {
-  background: var(--color-saffron);
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -63,7 +63,7 @@
 }
 
 .slot-form button:hover {
-  background: #e04a4a;
+  background: var(--color-primary);
   transform: translateY(-2px);
 }
 
@@ -84,7 +84,7 @@
 
 /* Header */
 .slot-table th {
-  background: var(--color-saffron);
+  background: var(--color-primary);
   color: white;
   padding: 14px;
   text-align: left;
@@ -114,7 +114,7 @@
 }
 
 .badge.active {
-  background: #28a745;
+  background: var(--color-success);
 }
 
 .badge.full {
@@ -131,7 +131,7 @@
 }
 
 .crowd.low {
-  color: #28a745;
+  color: var(--color-success);
 }
 
 .crowd.medium {

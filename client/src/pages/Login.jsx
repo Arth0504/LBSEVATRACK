@@ -46,31 +46,26 @@ toast.error("Invalid email or password ❌");
 
 };
 
-if(loading){
-return(
-<div className="om-screen">
-<div className="om-symbol">🕉</div>
-<h2>Har Har Mahadev 🔱</h2>
-</div>
-);
+if (loading) {
+  return (
+    <div className="om-screen">
+      <div className="om-symbol">🕉</div>
+      <h2>Logging you in...</h2>
+      <p>Please wait a moment</p>
+    </div>
+  );
 }
 
-return(
-<div className="auth-wrapper">
-<div className="flowers">
-<span>🌸</span><span>🌸</span><span>🌸</span>
-<span>🌸</span><span>🌸</span><span>🌸</span>
-</div>
-
-<div className="auth-card">
+return (
+  <div className="auth-wrapper"><div className="auth-card">
 
 <img
 className="auth-animation"
 src="https://cdn-icons-png.flaticon.com/512/3097/3097130.png"
 />
 
-<h2>Pranam 🙏</h2>
-<p className="subtitle">Seva Track par aapka swagat hai</p>
+<h2>Welcome Back</h2>
+<p className="subtitle">Sign in to continue your journey</p>
 
 <h3>Login</h3>
 

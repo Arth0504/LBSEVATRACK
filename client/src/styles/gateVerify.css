@@ -5,11 +5,11 @@
 }
 
 .gate-container h2 {
-  color: #e04a4a;
+  color: var(--color-primary);
 }
 
 button {
-  background: #e04a4a;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 25px;
@@ -67,7 +67,7 @@ button {
 }
 
 .adult {
-  background: #e04a4a;
+  background: var(--color-primary);
   padding: 4px 10px;
   border-radius: 20px;
   color: white;
@@ -83,7 +83,7 @@ button {
 }
 
 .manual-box button {
-  background: #e04a4a;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 20px;

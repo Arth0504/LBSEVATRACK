@@ -128,7 +128,7 @@ const styles = {
     minHeight: "100vh",
   },
   heading: {
-    color: "#e04a4a",
+    color: "var(--color-primary)",
     marginBottom: "30px",
   },
   form: {
@@ -148,7 +148,7 @@ const styles = {
     border: "1px solid #ccc",
   },
   button: {
-    background: "#e04a4a",
+    background: "var(--color-primary)",
     color: "white",
     border: "none",
     padding: "10px",

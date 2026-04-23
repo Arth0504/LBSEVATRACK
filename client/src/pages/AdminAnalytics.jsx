@@ -79,17 +79,17 @@ const AdminAnalytics = () => {
       {
         label: "Bookings",
         data: Object.values(stats).map((s) => s.bookings),
-        backgroundColor: "#FF9933", // saffron
+        backgroundColor: "var(--color-primary)", // saffron
       },
       {
         label: "Visitors",
         data: Object.values(stats).map((s) => s.visitors),
-        backgroundColor: "#28a745",
+        backgroundColor: "var(--color-success)",
       },
       {
         label: "Cancelled",
         data: Object.values(stats).map((s) => s.cancelled),
-        backgroundColor: "#ffc107",
+        backgroundColor: "var(--color-warning)",
       },
       {
         label: "Total Members",
@@ -110,7 +110,7 @@ const AdminAnalytics = () => {
     >
       <h2
         style={{
-          color: "var(--color-saffron)",
+          color: "var(--color-primary)",
           marginBottom: "30px",
           fontSize: "28px",
           fontWeight: "700"
@@ -158,7 +158,7 @@ const AdminAnalytics = () => {
         <button
           onClick={fetchData}
           style={{
-            background: "linear-gradient(135deg, var(--color-saffron), var(--color-saffron-dark))",
+            background: "linear-gradient(135deg, var(--color-primary), var(--color-primary-dark))",
             color: "white",
             border: "none",
             padding: "8px 15px",
@@ -188,7 +188,7 @@ const AdminAnalytics = () => {
             <button
               onClick={exportCSV}
               style={{
-                background: "#28a745",
+                background: "var(--color-success)",
                 color: "white",
                 border: "none",
                 padding: "8px 15px",

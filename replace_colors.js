@@ -14,16 +14,23 @@ function traverseAndReplace(dir) {
       let content = fs.readFileSync(fullPath, 'utf8');
       let originalContent = content;
       
-      // Replace red/pink hex with saffron hex/vars
-      content = content.replace(/#FF5D5D/gi, 'var(--color-saffron)');
-      content = content.replace(/#e04848/gi, 'var(--color-saffron-dark)');
-      content = content.replace(/#fef1f1/gi, 'var(--bg-saffron-subtle)');
+      // Update saffron variables to primary
+      content = content.replace(/var\(--color-saffron\)/g, 'var(--color-primary)');
+      content = content.replace(/var\(--color-saffron-dark\)/g, 'var(--color-primary-dark)');
+      content = content.replace(/var\(--bg-saffron-subtle\)/g, 'var(--color-cream)');
+      content = content.replace(/var\(--shadow-saffron\)/g, 'var(--shadow-primary)');
       
-      // Replace rgba(255, 93, 93, ...) with rgba(255, 153, 51, ...)
-      content = content.replace(/rgba\(\s*255\s*,\s*93\s*,\s*93/g, 'rgba(255, 153, 51');
+      // Update hardcoded #FF9933 or #FF5D5D to var(--color-primary) if any remain
+      content = content.replace(/#FF9933/gi, 'var(--color-primary)');
+      content = content.replace(/#FF5D5D/gi, 'var(--color-primary)');
+      content = content.replace(/#e04a4a/gi, 'var(--color-primary)');
+      content = content.replace(/#b83232/gi, 'var(--color-primary-dark)');
+      content = content.replace(/#ffc107/gi, 'var(--color-warning)'); // sometimes used for medium
+      content = content.replace(/#28a745/gi, 'var(--color-success)'); // sometimes used for low
       
-      // Replace some red text colors with saffron
-      content = content.replace(/color:\s*red/gi, 'color: var(--color-danger)');
+      // Update rgba soft reds/saffrons to a soft primary/cream
+      content = content.replace(/rgba\(\s*255\s*,\s*153\s*,\s*51/g, 'rgba(197, 168, 128');
+      content = content.replace(/rgba\(\s*255\s*,\s*93\s*,\s*93/g, 'rgba(197, 168, 128');
 
       if (content !== originalContent) {
         fs.writeFileSync(fullPath, content);
@@ -34,4 +41,4 @@ function traverseAndReplace(dir) {
 }
 
 traverseAndReplace(srcDir);
-console.log('Done replacing colors.');
+console.log('Done updating variables to soft minimal theme.');

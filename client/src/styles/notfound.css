@@ -1,6 +1,6 @@
 .notfound-container {
   height: 100vh;
-  background: linear-gradient(135deg, #e04a4a, #b83232);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,7 +34,7 @@
   border: none;
   border-radius: 30px;
   background: white;
-  color: #e04a4a;
+  color: var(--color-primary);
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s ease;

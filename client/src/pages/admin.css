@@ -171,7 +171,7 @@ body {
 
 .action-btn:hover {
   background: #fdf1f1;
-  color: #e04a4a;
+  color: var(--color-primary);
   border-color: #f8dbdb;
   transform: translateY(-2px);
 }
