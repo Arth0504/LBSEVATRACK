@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fafafa;
+  background: var(--bg-main);
 }
 
 .auth-card {
@@ -48,13 +48,13 @@
   padding: 40px;
   width: 350px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(199, 173, 136, 0.2);
+  box-shadow: 0 15px 40px rgba(74, 144, 226, 0.2);
 }
 
 .auth-card h3 {
   margin-bottom: 25px;
   text-align: center;
-  color: #c7ad88;
+  color: var(--color-primary);
 }
 
 /* FORM */
@@ -72,21 +72,21 @@
   width: 100%;
   padding: 10px 14px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   outline: none;
   transition: 0.3s;
 }
 
 .form-group input:focus {
-  border-color: #c7ad88;
-  box-shadow: 0 0 8px rgba(199, 173, 136, 0.3);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
 /* BUTTON */
 .auth-btn {
   width: 100%;
   padding: 12px;
-  background: #c7ad88;
+  background: var(--color-primary);
   border: none;
   color: white;
   font-weight: 600;
@@ -96,7 +96,7 @@
 }
 
 .auth-btn:hover {
-  background: #c7ad88;
+  background: var(--color-primary);
 }
 
 /* SWITCH TEXT */
@@ -107,7 +107,7 @@
 }
 
 .switch-text a {
-  color: #c7ad88;
+  color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
 }

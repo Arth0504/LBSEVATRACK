@@ -28,11 +28,11 @@ function Notes() {
           <div
             key={note._id}
             style={{
-              border: "1px solid #ccc",
+              border: "1px solid var(--border-color)",
               padding: "15px",
               marginBottom: "10px",
               borderRadius: "8px",
-              background: "#f9f9f9",
+              background: "var(--bg-main)",
             }}
           >
             <h4>{note.title}</h4>

@@ -69,7 +69,7 @@ const AdminDashboard = () => {
               <Stat title="Today's Bookings" value={stats?.totalBookingsToday} type="stat-coral"/>
               <Stat title="Visitors Today" value={stats?.totalVisitorsToday} type="stat-blue"/>
               <Stat title="Cancelled Today" value={stats?.cancelledToday} type="stat-red"/>
-              <Stat title="Full Slots" value={stats?.fullSlots} type="stat-orange"/>
+              <Stat title="Full Slots" value={stats?.fullSlots} type="stat-var(--color-primary)"/>
               <Stat title="Active Slots" value={stats?.activeSlots} type="stat-green"/>
               <Stat title="Members Today" value={stats?.totalMembersToday} type="stat-purple"/>
             </div>

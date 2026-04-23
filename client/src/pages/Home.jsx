@@ -249,7 +249,7 @@ export default function Home() {
 
         <div className="notice-container">
           {!notes || notes.length === 0 ? (
-            <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#666', padding: '2rem' }}>No notices available</p>
+            <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem' }}>No notices available</p>
           ) : (
             notes.map((note, index) => (
               <div 

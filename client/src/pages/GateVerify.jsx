@@ -178,11 +178,11 @@ const GateVerify = () => {
 const styles = {
   container: {
     padding: "40px",
-    background: "#fafafa",
+    background: "var(--bg-main)",
     minHeight: "100vh",
   },
   heading: {
-    color: "#c7ad88",
+    color: "var(--color-primary)",
     marginBottom: "20px",
   },
   inputBox: {
@@ -194,29 +194,31 @@ const styles = {
     padding: "8px",
     flex: 1,
     borderRadius: "6px",
-    border: "1px solid #ccc",
+    border: "1px solid var(--border-color)",
   },
   button: {
-    background: "#c7ad88",
+    background: "var(--color-primary)",
     color: "white",
     border: "none",
     padding: "8px 15px",
     borderRadius: "6px",
   },
   scanBtn: {
-    background: "#333",
+    background: "var(--color-primary-dark)",
     color: "white",
     padding: "8px 15px",
     borderRadius: "6px",
+    border: "none"
   },
   stopBtn: {
-    background: "red",
+    background: "var(--color-primary)",
     color: "white",
     padding: "8px 15px",
     borderRadius: "6px",
+    border: "none"
   },
   error: {
-    color: "red",
+    color: "var(--color-primary)",
     fontWeight: "bold",
   },
   card: {
@@ -224,10 +226,10 @@ const styles = {
     background: "white",
     padding: "20px",
     borderRadius: "10px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+    boxShadow: "var(--shadow-md)",
   },
   success: {
-    color: "green",
+    color: "var(--color-primary-dark)",
   },
   userSection: {
     display: "flex",
@@ -247,7 +249,7 @@ const styles = {
     marginTop: "20px",
   },
   memberCard: {
-    border: "1px solid #eee",
+    border: "1px solid var(--border-color)",
     padding: "10px",
     borderRadius: "6px",
     textAlign: "center",

@@ -16,7 +16,7 @@
 
 .verify-box button {
   padding: 10px 15px;
-  background: #c7ad88;
+  background: var(--color-primary);
   color: white;
   border: none;
   cursor: pointer;
@@ -46,7 +46,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #fafafa;
+  background: var(--bg-main);
   font-family: "Poppins", sans-serif;
 }
 
@@ -55,12 +55,12 @@
   padding: 40px;
   border-radius: 20px;
   width: 500px;
-  box-shadow: 0 15px 40px rgba(199, 173, 136, 0.15);
+  box-shadow: 0 15px 40px rgba(74, 144, 226, 0.15);
 }
 
 .gate-card h2 {
   text-align: center;
-  color: #c7ad88;
+  color: var(--color-primary);
   margin-bottom: 25px;
 }
 
@@ -82,11 +82,11 @@
   flex: 1;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
 }
 
 .verify-form button {
-  background: #c7ad88;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 20px;

@@ -79,22 +79,22 @@ const AdminAnalytics = () => {
       {
         label: "Bookings",
         data: Object.values(stats).map((s) => s.bookings),
-        backgroundColor: "#c7ad88", // primary
+        backgroundColor: "var(--color-primary)",
       },
       {
         label: "Visitors",
         data: Object.values(stats).map((s) => s.visitors),
-        backgroundColor: "#28a745",
+        backgroundColor: "rgba(74, 144, 226, 0.7)",
       },
       {
         label: "Cancelled",
         data: Object.values(stats).map((s) => s.cancelled),
-        backgroundColor: "#ff9800",
+        backgroundColor: "rgba(74, 144, 226, 0.4)",
       },
       {
         label: "Total Members",
         data: Object.values(stats).map((s) => s.members),
-        backgroundColor: "#007bff",
+        backgroundColor: "rgba(74, 144, 226, 0.15)",
       },
     ],
   };
@@ -140,7 +140,7 @@ const AdminAnalytics = () => {
           style={{
             padding: "8px 12px",
             borderRadius: "6px",
-            border: "1px solid #ccc",
+            border: "1px solid var(--border-color)",
           }}
         />
 
@@ -151,7 +151,7 @@ const AdminAnalytics = () => {
           style={{
             padding: "8px 12px",
             borderRadius: "6px",
-            border: "1px solid #ccc",
+            border: "1px solid var(--border-color)",
           }}
         />
 
@@ -175,7 +175,7 @@ const AdminAnalytics = () => {
             <button
               onClick={exportPDF}
               style={{
-                background: "#222",
+                background: "var(--text-primary)",
                 color: "white",
                 border: "none",
                 padding: "8px 15px",

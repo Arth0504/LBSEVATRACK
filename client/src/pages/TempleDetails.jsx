@@ -165,13 +165,13 @@ const TempleDetails = () => {
                   const occupancy = slot.bookedCount / slot.capacity;
                   
                   let densityLabel = "Low";
-                  let densityColor = "#28a745"; // soft green
+                  let densityColor = "rgba(74, 144, 226, 0.3)"; // soft primary
                   if (occupancy >= 0.8) {
                     densityLabel = "High";
-                    densityColor = "#d62828"; // red
+                    densityColor = "var(--color-primary)"; // strong primary
                   } else if (occupancy >= 0.5) {
                     densityLabel = "Medium";
-                    densityColor = "#ff9800"; // orange
+                    densityColor = "rgba(74, 144, 226, 0.7)"; // medium primary
                   }
 
                 const isDisabled =
@@ -219,7 +219,7 @@ const TempleDetails = () => {
                       <div style={{ 
                         width: "100%", 
                         height: "8px", 
-                        background: "#eee", 
+                        background: "var(--border-color)", 
                         borderRadius: "4px",
                         overflow: "hidden" 
                       }}>
@@ -238,7 +238,7 @@ const TempleDetails = () => {
                       style={{
                         background: isDisabled
                           ? "gray"
-                          : "#c7ad88",
+                          : "var(--color-primary)",
                         cursor: isDisabled
                           ? "not-allowed"
                           : "pointer",

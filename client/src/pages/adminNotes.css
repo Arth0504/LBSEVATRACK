@@ -30,20 +30,20 @@
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   font-size: 14px;
   transition: 0.2s;
 }
 
 .note-form input:focus,
 .note-form textarea:focus {
-  border-color: #c7ad88;
+  border-color: var(--color-primary);
   outline: none;
 }
 
 /* 🔥 BUTTON */
 .note-form button {
-  background: #c7ad88;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 10px 18px;
@@ -68,7 +68,7 @@
   background: #ffffff;
   padding: 20px;
   border-radius: 14px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-color);
   position: relative;
   box-shadow: 0 8px 20px rgba(0,0,0,0.04);
   transition: 0.3s;
@@ -88,7 +88,7 @@
 /* 🔥 MESSAGE */
 .note-item p {
   font-size: 14px;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 /* 🔥 DELETE BUTTON */

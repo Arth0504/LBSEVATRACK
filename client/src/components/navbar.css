@@ -26,7 +26,7 @@ html, body {
 .logo {
   font-size: 30px;
   font-weight: 800;
-  color: #c7ad88;
+  color: var(--color-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -43,7 +43,7 @@ html, body {
 /* NORMAL LINKS */
 .nav-links a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 500;
   font-size: 16px;
   position: relative;
@@ -57,7 +57,7 @@ html, body {
   bottom: -5px;
   width: 0%;
   height: 2px;
-  background-color: #c7ad88;
+  background-color: var(--color-primary);
   transition: 0.3s ease;
 }
 
@@ -67,12 +67,12 @@ html, body {
 }
 
 .nav-links a:hover {
-  color: #c7ad88;
+  color: var(--color-primary);
 }
 
 /* BUTTONS */
 .btn-primary {
-  background-color: #c7ad88;
+  background-color: var(--color-primary);
   color: white !important;
   padding: 8px 20px;
   border-radius: 25px;
@@ -80,15 +80,15 @@ html, body {
 }
 
 .btn-outline {
-  border: 2px solid #c7ad88;
+  border: 2px solid var(--color-primary);
   padding: 6px 18px;
   border-radius: 25px;
-  color: #c7ad88 !important;
+  color: var(--color-primary) !important;
   font-weight: 600;
 }
 
 .btn-logout {
-  background-color: #c7ad88;
+  background-color: var(--color-primary);
   border: none;
   padding: 8px 20px;
   border-radius: 25px;

@@ -25,7 +25,7 @@
 }
 
 .add-btn {
-  background: orange;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 6px;
@@ -33,7 +33,7 @@
 }
 
 .confirm-btn {
-  background: #c7ad88;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 8px;

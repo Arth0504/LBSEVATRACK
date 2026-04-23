@@ -1,0 +1,45 @@
+:root {
+  /* ONE SINGLE UNIFIED COLOR THEME: Clean Soft Blue */
+  --color-primary: #4A90E2;
+  --color-primary-light: #EBF4FC;
+  --color-primary-dark: #357ABD;
+  
+  /* Backgrounds */
+  --bg-main: #FAFAFA;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F0F4F8;
+
+  /* Text */
+  --text-primary: #2C3E50;
+  --text-secondary: #7F8C8D;
+  --text-light: #FFFFFF;
+
+  /* Borders & Shadows */
+  --border-color: #E2E8F0;
+  --shadow-sm: 0 2px 5px rgba(0,0,0,0.05);
+  --shadow-md: 0 5px 15px rgba(74, 144, 226, 0.1);
+}
+
+/* Global Reset for Consistency */
+* {
+  box-sizing: border-box;
+  font-family: "Inter", "Poppins", sans-serif;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}
+
+/* Global inputs & buttons standardization (optional but helps) */
+button {
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-primary);
+}

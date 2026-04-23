@@ -3,7 +3,7 @@
   padding: 40px 20px;
   display: flex;
   justify-content: center;
-  background: #f9f9f9;
+  background: var(--bg-main);
   min-height: 100vh;
 }
 
@@ -26,7 +26,7 @@
 .create-gate-card h2 {
   margin-bottom: 25px;
   text-align: center;
-  color: #c7ad88;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
@@ -42,7 +42,7 @@
 .gate-form select {
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   font-size: 14px;
   transition: 0.2s ease;
   outline: none;
@@ -50,13 +50,13 @@
 
 .gate-form input:focus,
 .gate-form select:focus {
-  border-color: #c7ad88;
-  box-shadow: 0 0 0 2px rgba(199, 173, 136, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.15);
 }
 
 /* BUTTON */
 .gate-form button {
-  background: #c7ad88;
+  background: var(--color-primary);
   color: white;
   padding: 12px;
   border: none;
@@ -68,7 +68,7 @@
 }
 
 .gate-form button:hover {
-  background: #c7ad88;
+  background: var(--color-primary);
   transform: translateY(-2px);
 }
 
