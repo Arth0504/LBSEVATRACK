@@ -1,111 +1,109 @@
-/* ================= MAIN CONTAINER ================= */
 .slots-container {
-  padding: 40px;
+  padding: 38px;
   background: var(--bg-main);
   min-height: 100vh;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-/* ================= TEMPLE DROPDOWN ================= */
 .slots-container select {
-  padding: 10px 14px;
-  margin-bottom: 25px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
+  padding: 9px 14px;
+  margin-bottom: 22px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
   outline: none;
-  transition: 0.3s ease;
   font-size: 14px;
+  background: var(--bg-card);
+  transition: border-color 0.3s ease;
 }
 
 .slots-container select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 5px rgba(242, 140, 40, 0.3);
+  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.1);
 }
 
-/* ================= FORM ================= */
 .slot-form {
   display: flex;
-  gap: 15px;
+  gap: 13px;
   flex-wrap: wrap;
-  margin-bottom: 35px;
-  background: white;
+  margin-bottom: 30px;
+  background: var(--bg-card);
   padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
 }
 
 .slot-form input,
 .slot-form select {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
+  padding: 9px 13px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
   outline: none;
-  min-width: 160px;
-  transition: 0.3s ease;
+  min-width: 150px;
+  font-size: 14px;
+  background: var(--bg-soft);
+  transition: border-color 0.3s ease;
 }
 
 .slot-form input:focus,
 .slot-form select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 5px rgba(242, 140, 40, 0.2);
+  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.1);
 }
 
-/* ================= GENERATE BUTTON ================= */
 .slot-form button {
   background: var(--color-primary);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
+  padding: 9px 20px;
+  border-radius: var(--radius-full);
   cursor: pointer;
-  transition: 0.3s ease;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  margin-top: 0;
 }
 
 .slot-form button:hover {
-  background: var(--color-primary);
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
 }
 
-/* ================= TABLE WRAPPER ================= */
 .slot-table {
-  background: white;
+  background: var(--bg-card);
   padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
   overflow-x: auto;
 }
 
-/* ================= TABLE ================= */
-.slot-table table {
-  width: 100%;
-  border-collapse: collapse;
-}
+.slot-table table { width: 100%; border-collapse: collapse; }
 
-/* Header */
 .slot-table th {
-  background: var(--color-primary);
-  color: white;
-  padding: 14px;
+  background: var(--bg-soft);
+  color: var(--color-primary-dark);
+  padding: 13px;
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Body */
 .slot-table td {
   padding: 12px;
   border-bottom: 1px solid var(--border-color);
   font-size: 14px;
+  color: var(--text-main);
 }
 
-.slot-table tr:hover {
-  background: var(--bg-main);
-  transition: 0.2s ease;
-}
+.slot-table tr:hover { background: rgba(232, 149, 109, 0.04); transition: 0.2s ease; }
 
-/* ================= STATUS BADGE ================= */
 .badge {
-  padding: 5px 12px;
+  padding: 4px 12px;
   border-radius: 20px;
   color: white;
   font-size: 12px;
@@ -113,108 +111,41 @@
   display: inline-block;
 }
 
-.badge.active {
-  background: var(--color-primary);
-}
+.badge.active   { background: #27AE60; }
+.badge.full     { background: var(--color-primary-dark); }
+.badge.closed   { background: #95A5A6; }
 
-.badge.full {
-  background: var(--color-primary);
-}
+.crowd { font-weight: 600; }
+.crowd.low    { color: #27AE60; }
+.crowd.medium { color: var(--color-primary-dark); }
+.crowd.high   { color: #C0392B; }
 
-.badge.closed {
-  background: #6c757d;
-}
-
-/* ================= CROWD LEVEL ================= */
-.crowd {
-  font-weight: 600;
-}
-
-.crowd.low {
-  color: var(--color-primary);
-}
-
-.crowd.medium {
-  color: var(--color-primary);
-}
-
-.crowd.high {
-  color: var(--color-primary);
-}
-
-/* ================= ACTION BUTTONS ================= */
 .slot-table button {
-  padding: 6px 12px;
-  border-radius: 8px;
+  padding: 6px 13px;
+  border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
-  margin-right: 8px;
-  transition: 0.3s ease;
+  margin-right: 7px;
   font-size: 13px;
+  font-weight: 500;
+  transition: 0.3s ease;
+  margin-top: 0;
 }
 
-/* Edit */
-.slot-table button:first-child {
-  background: var(--color-primary);
-  color: white;
-}
+.slot-table button:first-child  { background: var(--color-primary-light); color: var(--color-primary-dark); }
+.slot-table button:first-child:hover  { background: var(--color-primary); color: white; transform: translateY(-1px); }
 
-.slot-table button:first-child:hover {
-  background: var(--color-primary);
-  transform: translateY(-2px);
-}
+.slot-table button:last-child   { background: #FDECEA; color: #C0392B; }
+.slot-table button:last-child:hover   { background: #C0392B; color: white; transform: translateY(-1px); }
 
-/* Delete */
-.slot-table button:last-child {
-  background: var(--color-primary);
-  color: white;
-}
+.slot-table button:only-child   { background: #EAF7EE; color: #1E7E34; }
+.slot-table button:only-child:hover   { background: #27AE60; color: white; transform: translateY(-1px); }
 
-.slot-table button:last-child:hover {
-  background: var(--color-primary);
-  transform: translateY(-2px);
-}
-
-/* Save (Edit Mode) */
-.slot-table button:only-child {
-  background: var(--color-primary);
-  color: white;
-}
-
-.slot-table button:only-child:hover {
-  background: var(--color-primary);
-  transform: translateY(-2px);
-}
-
-/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-  .slot-form {
-    flex-direction: column;
-  }
-
-  .slot-table table,
-  .slot-table thead,
-  .slot-table tbody,
-  .slot-table th,
-  .slot-table td,
-  .slot-table tr {
-    display: block;
-  }
-
-  .slot-table tr {
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .slot-table td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-  }
-
-  .slot-table td::before {
-    position: absolute;
-    left: 15px;
-    font-weight: bold;
-  }
+  .slot-form { flex-direction: column; }
+  .slot-table table, .slot-table thead, .slot-table tbody,
+  .slot-table th, .slot-table td, .slot-table tr { display: block; }
+  .slot-table tr { margin-bottom: 14px; border-bottom: 1px solid var(--border-color); }
+  .slot-table td { border: none; position: relative; padding-left: 48%; }
+  .slot-table td::before { position: absolute; left: 14px; font-weight: bold; }
 }

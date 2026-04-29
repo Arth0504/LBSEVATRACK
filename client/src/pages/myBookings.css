@@ -1,22 +1,25 @@
 .my-bookings {
   padding: 40px;
-  font-family: Arial, sans-serif;
   background: var(--bg-main);
+  min-height: 100vh;
 }
-
 
 .booking-card {
   width: 300px;
-  background: #fff;
+  background: var(--bg-card);
   padding: 18px;
-  border-radius: 12px;
-  border-left: 5px solid var(--color-primary);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  transition: 0.3s;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  border-top: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .booking-card:hover {
   transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
 .card-header {
@@ -26,68 +29,79 @@
 }
 
 .card-header h3 {
-  color: var(--color-primary);
-  font-size: 18px;
+  color: var(--color-primary-dark);
+  font-size: 17px;
 }
 
 .card-body {
   margin-top: 10px;
   font-size: 14px;
-  color: var(--text-primary);
+  color: var(--text-muted);
 }
 
 .status {
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 20px;
   font-size: 11px;
+  font-weight: 600;
   color: white;
 }
 
-.status.booked {
-  background: green;
-}
-
-.status.cancelled {
-  background: red;
-}
-
-.status.used {
-  background: var(--color-primary);
-}
+.status.booked  { background: #27AE60; }
+.status.cancelled { background: #C0392B; }
+.status.used    { background: var(--color-primary); }
 
 .card-buttons {
-  margin-top: 15px;
+  margin-top: 14px;
   display: flex;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .download-btn {
   background: var(--color-primary);
   color: white;
   border: none;
-  padding: 7px 12px;
-  border-radius: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.download-btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
 }
 
 .cancel-btn {
-  background: var(--text-primary);
-  color: white;
-  border: none;
-  padding: 7px 12px;
-  border-radius: 6px;
+  background: var(--bg-soft);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-}
-.back-btn {
-  margin-bottom: 15px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: var(--text-primary);            /* 🔥 FIX */
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-.back-btn:hover {
-  color: var(--color-primary);        /* 🔥 hover effect */
+.cancel-btn:hover {
+  background: #FDECEA;
+  color: #C0392B;
+  border-color: #F5C6C2;
 }
+
+.back-btn {
+  margin-bottom: 14px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--text-main);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.back-btn:hover { color: var(--color-primary); }

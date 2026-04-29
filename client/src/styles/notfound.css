@@ -1,45 +1,52 @@
 .notfound-container {
   height: 100vh;
-  background: linear-gradient(135deg, var(--color-primary), #b83232);
+  background: linear-gradient(135deg, var(--bg-main) 0%, #FFF0E4 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--text-main);
   text-align: center;
   padding: 20px;
 }
 
 .error-code {
-  font-size: 120px;
+  font-size: 110px;
   margin: 0;
   font-weight: 800;
-  letter-spacing: 5px;
+  letter-spacing: 4px;
+  color: var(--color-primary);
+  text-shadow: 0 4px 20px rgba(232, 149, 109, 0.2);
 }
 
 .notfound-container h2 {
-  font-size: 32px;
+  font-size: 28px;
   margin: 10px 0;
+  color: var(--text-main);
 }
 
 .notfound-container p {
   font-size: 16px;
-  max-width: 400px;
-  opacity: 0.9;
+  max-width: 380px;
+  color: var(--text-muted);
 }
 
 .home-btn {
-  margin-top: 25px;
-  padding: 12px 28px;
+  margin-top: 24px;
+  padding: 12px 30px;
   border: none;
-  border-radius: 30px;
-  background: white;
-  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: white;
   font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
 }
 
 .home-btn:hover {
-  background: var(--bg-main);
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
