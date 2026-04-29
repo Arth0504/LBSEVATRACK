@@ -1,52 +1,75 @@
+/* ═══════════════════════════════════════
+   404 NOT FOUND — Sacred Path Lost
+   ═══════════════════════════════════════ */
 .notfound-container {
-  height: 100vh;
-  background: linear-gradient(135deg, var(--bg-main) 0%, #FFF0E4 100%);
+  min-height: 100vh;
+  background: linear-gradient(160deg, #FDFBF5 0%, #F7F2E8 60%, #EAF0F6 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--text-main);
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px;
+  font-family: 'Jost', sans-serif;
 }
 
 .error-code {
-  font-size: 110px;
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: 4px;
-  color: var(--color-primary);
-  text-shadow: 0 4px 20px rgba(232, 149, 109, 0.2);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(80px, 15vw, 130px);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: transparent;
+  background: linear-gradient(135deg, #C9A96E 0%, #E8D5A3 50%, #C9A96E 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 8px;
 }
 
 .notfound-container h2 {
-  font-size: 28px;
-  margin: 10px 0;
-  color: var(--text-main);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 500;
+  color: #2C2416;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
 }
 
 .notfound-container p {
   font-size: 16px;
-  max-width: 380px;
-  color: var(--text-muted);
+  font-weight: 300;
+  max-width: 360px;
+  color: #9E8E78;
+  line-height: 1.7;
+  margin-bottom: 0;
 }
 
 .home-btn {
-  margin-top: 24px;
-  padding: 12px 30px;
+  margin-top: 32px;
+  padding: 13px 34px;
   border: none;
-  border-radius: var(--radius-full);
-  background: var(--color-primary);
-  color: white;
-  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
+  font-family: 'Jost', sans-serif;
   font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: var(--shadow-md);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 0 6px 22px rgba(201, 169, 110, 0.30);
 }
 
 .home-btn:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(201, 169, 110, 0.40);
+}
+
+/* Decorative divider */
+.notfound-container::before {
+  content: '✦';
+  font-size: 20px;
+  color: rgba(201, 169, 110, 0.35);
+  margin-bottom: 24px;
+  letter-spacing: 0.3em;
 }

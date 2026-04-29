@@ -1,96 +1,106 @@
+/* ═══════════════════════════════════════
+   CREATE GATE — Sacred Entry Creation
+   ═══════════════════════════════════════ */
 .create-gate-container {
   padding: 40px 20px;
   display: flex;
   justify-content: center;
-  background: var(--bg-main);
+  background: linear-gradient(160deg, #FDFBF5 0%, #F7F2E8 100%);
   min-height: 100vh;
+  font-family: 'Jost', sans-serif;
 }
 
 .create-gate-card {
-  background: var(--bg-card);
-  padding: 32px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-color);
+  background: #fff;
+  padding: 36px;
+  border-radius: 24px;
+  box-shadow: 0 8px 36px rgba(100, 80, 40, 0.10);
+  border: 1px solid rgba(201, 169, 110, 0.15);
   width: 100%;
   max-width: 420px;
   height: fit-content;
 }
 
 .create-gate-card h2 {
-  margin-bottom: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #A8834A;
   text-align: center;
-  color: var(--color-primary-dark);
-  font-weight: 700;
-  font-size: 22px;
+  margin-bottom: 26px;
+  letter-spacing: 0.01em;
 }
 
 .gate-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .gate-form input,
 .gate-form select {
-  padding: 11px 14px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  padding: 11px 15px;
+  border-radius: 12px;
+  border: 1.5px solid #EAE0CC;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  background: var(--bg-soft);
-  transition: border-color 0.3s, box-shadow 0.3s;
+  font-weight: 300;
+  background: #FDFBF5;
+  color: #2C2416;
   outline: none;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .gate-form input:focus,
 .gate-form select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.1);
+  border-color: #C9A96E;
   background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.10);
 }
 
 .gate-form button {
-  background: var(--color-primary);
-  color: white;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
   padding: 12px;
   border: none;
-  border-radius: var(--radius-full);
+  border-radius: 999px;
   cursor: pointer;
+  font-family: 'Jost', sans-serif;
   font-size: 15px;
-  font-weight: 600;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: var(--shadow-sm);
-  margin-top: 4px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 6px 20px rgba(201, 169, 110, 0.28);
+  margin-top: 6px;
 }
 
 .gate-form button:hover {
-  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 28px rgba(201, 169, 110, 0.38);
 }
 
-.gate-form button:active { transform: scale(0.98); }
-
 .success-message {
-  background: #EAF7EE;
-  color: #1E7E34;
-  padding: 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid #C3E6CB;
+  background: rgba(100, 160, 100, 0.08);
+  color: #3D7A3D;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 160, 100, 0.20);
   font-size: 13px;
+  font-weight: 400;
   text-align: center;
 }
 
 .error-message {
-  background: #FDECEA;
-  color: #C0392B;
-  padding: 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid #F5C6C2;
+  background: rgba(180, 80, 80, 0.07);
+  color: #8B3030;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(180, 80, 80, 0.18);
   font-size: 13px;
+  font-weight: 400;
   text-align: center;
 }
 
 @media (max-width: 480px) {
-  .create-gate-card { padding: 22px; }
+  .create-gate-card { padding: 28px 22px; }
 }

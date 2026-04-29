@@ -1,107 +1,128 @@
+/* ═══════════════════════════════════════
+   MY BOOKINGS — Sacred Journey Log
+   ═══════════════════════════════════════ */
 .my-bookings {
-  padding: 40px;
-  background: var(--bg-main);
+  padding: 44px 5%;
+  background: #FDFBF5;
   min-height: 100vh;
+  font-family: 'Jost', sans-serif;
+}
+
+.my-bookings h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #2C2416;
+  margin-bottom: 28px;
 }
 
 .booking-card {
   width: 300px;
-  background: var(--bg-card);
-  padding: 18px;
-  border-radius: var(--radius-md);
-  border-left: 4px solid var(--color-primary);
-  box-shadow: var(--shadow-sm);
-  border-top: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  padding: 22px;
+  border-radius: 20px;
+  border-top: 2px solid rgba(201, 169, 110, 0.35);
+  box-shadow: 0 4px 20px rgba(100, 80, 40, 0.08);
+  border-left: 1px solid rgba(201, 169, 110, 0.12);
+  border-right: 1px solid rgba(201, 169, 110, 0.12);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .booking-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 32px rgba(100, 80, 40, 0.12);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .card-header h3 {
-  color: var(--color-primary-dark);
-  font-size: 17px;
+  font-family: 'Cormorant Garamond', serif;
+  color: #A8834A;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .card-body {
-  margin-top: 10px;
   font-size: 14px;
-  color: var(--text-muted);
+  font-weight: 300;
+  color: #6B5D4A;
+  line-height: 1.7;
 }
 
 .status {
-  padding: 3px 10px;
-  border-radius: 20px;
+  padding: 3px 12px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  color: white;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.status.booked  { background: #27AE60; }
-.status.cancelled { background: #C0392B; }
-.status.used    { background: var(--color-primary); }
+.status.booked    { background: rgba(201, 169, 110, 0.12); color: #A8834A; }
+.status.cancelled { background: rgba(180, 80, 80, 0.08);  color: #8B3030; }
+.status.used      { background: rgba(100, 160, 100, 0.10); color: #3D7A3D; }
 
 .card-buttons {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   justify-content: space-between;
   gap: 8px;
 }
 
 .download-btn {
-  background: var(--color-primary);
-  color: white;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
   border: none;
-  padding: 7px 14px;
-  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  border-radius: 999px;
   cursor: pointer;
+  font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 3px 12px rgba(201, 169, 110, 0.24);
 }
 
-.download-btn:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
-}
+.download-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(201, 169, 110, 0.34); }
 
 .cancel-btn {
-  background: var(--bg-soft);
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-  padding: 7px 14px;
-  border-radius: var(--radius-sm);
+  background: #FDFBF5;
+  color: #6B5D4A;
+  border: 1px solid rgba(201, 169, 110, 0.22);
+  padding: 8px 16px;
+  border-radius: 999px;
   cursor: pointer;
+  font-family: 'Jost', sans-serif;
   font-size: 13px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 400;
+  transition: all 0.35s ease;
 }
 
 .cancel-btn:hover {
-  background: #FDECEA;
-  color: #C0392B;
-  border-color: #F5C6C2;
+  background: rgba(180, 80, 80, 0.07);
+  color: #8B3030;
+  border-color: rgba(180, 80, 80, 0.20);
 }
 
 .back-btn {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   background: none;
   border: none;
+  font-family: 'Jost', sans-serif;
   font-size: 15px;
+  font-weight: 400;
   cursor: pointer;
-  color: var(--text-main);
-  font-weight: 600;
-  transition: color 0.2s ease;
+  color: #6B5D4A;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.back-btn:hover { color: var(--color-primary); }
+.back-btn:hover { color: #A8834A; transform: translateX(-3px); }

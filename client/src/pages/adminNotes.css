@@ -1,114 +1,230 @@
+/* ═══════════════════════════════════════
+   ADMIN NOTES — Sacred Messages
+   ═══════════════════════════════════════ */
 .admin-notes {
   padding: 28px;
-  max-width: 880px;
+  max-width: 860px;
   margin: 0 auto;
+  font-family: 'Jost', sans-serif;
 }
 
 .admin-notes h2 {
+  font-family: 'Cormorant Garamond', serif;
   font-size: 24px;
-  margin-bottom: 18px;
+  font-weight: 600;
+  color: #2C2416;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--text-main);
 }
 
 .note-form {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: 0 4px 18px rgba(100, 80, 40, 0.07);
+  border: 1px solid rgba(201, 169, 110, 0.12);
   margin-bottom: 28px;
 }
 
 .note-form input,
 .note-form textarea {
   width: 100%;
-  padding: 11px 14px;
-  margin-bottom: 13px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  padding: 11px 15px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1.5px solid #EAE0CC;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  background: var(--bg-soft);
-  transition: border-color 0.3s, box-shadow 0.3s;
+  font-weight: 300;
+  background: #FDFBF5;
+  color: #2C2416;
+  outline: none;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .note-form input:focus,
 .note-form textarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.1);
-  outline: none;
+  border-color: #C9A96E;
   background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.10);
 }
 
 .note-form button {
-  background: var(--color-primary);
-  color: white;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
   border: none;
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
+  padding: 11px 24px;
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  transition: background 0.3s ease, transform 0.3s ease;
+  font-weight: 500;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 4px 14px rgba(201, 169, 110, 0.26);
   margin-top: 0;
 }
 
-.note-form button:hover {
-  background: var(--color-primary-dark);
-  transform: translateY(-1px);
-}
+.note-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(201, 169, 110, 0.36); }
 
-.note-list {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
+.note-list { display: flex; flex-direction: column; gap: 16px; }
 
 .note-item {
-  background: var(--bg-card);
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
+  background: #fff;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(201, 169, 110, 0.12);
+  box-shadow: 0 4px 18px rgba(100, 80, 40, 0.07);
   position: relative;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .note-item:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 30px rgba(100, 80, 40, 0.11);
 }
 
 .note-item h4 {
-  font-size: 17px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2C2416;
   margin-bottom: 6px;
-  color: var(--text-main);
 }
 
 .note-item p {
   font-size: 14px;
-  color: var(--text-muted);
+  font-weight: 300;
+  color: #6B5D4A;
+  line-height: 1.7;
 }
 
 .note-item button {
   position: absolute;
-  top: 12px; right: 12px;
-  background: #FDECEA;
-  color: #C0392B;
-  border: 1px solid #F5C6C2;
+  top: 14px; right: 14px;
+  background: rgba(180, 80, 80, 0.08);
+  color: #8B3030;
+  border: 1px solid rgba(180, 80, 80, 0.16);
   padding: 5px 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   cursor: pointer;
+  font-family: 'Jost', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   margin-top: 0;
 }
 
 .note-item button:hover {
-  background: #C0392B;
-  color: white;
+  background: #8B3030;
+  color: #fff;
   border-color: transparent;
+}
+
+/* ═══════════════════════════════════════
+   CREATE GATE — Sacred Entry Creation
+   ═══════════════════════════════════════ */
+.create-gate-container {
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(160deg, #FDFBF5 0%, #F7F2E8 100%);
+  min-height: 100vh;
+  font-family: 'Jost', sans-serif;
+}
+
+.create-gate-card {
+  background: #fff;
+  padding: 36px;
+  border-radius: 24px;
+  box-shadow: 0 8px 36px rgba(100, 80, 40, 0.10);
+  border: 1px solid rgba(201, 169, 110, 0.15);
+  width: 100%;
+  max-width: 420px;
+  height: fit-content;
+}
+
+.create-gate-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #A8834A;
+  text-align: center;
+  margin-bottom: 26px;
+  letter-spacing: 0.01em;
+}
+
+.gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gate-form input,
+.gate-form select {
+  padding: 11px 15px;
+  border-radius: 12px;
+  border: 1.5px solid #EAE0CC;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  background: #FDFBF5;
+  color: #2C2416;
+  outline: none;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gate-form input:focus,
+.gate-form select:focus {
+  border-color: #C9A96E;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.10);
+}
+
+.gate-form button {
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 6px 20px rgba(201, 169, 110, 0.28);
+  margin-top: 6px;
+}
+
+.gate-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201, 169, 110, 0.38);
+}
+
+.success-message {
+  background: rgba(100, 160, 100, 0.08);
+  color: #3D7A3D;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 160, 100, 0.20);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.error-message {
+  background: rgba(180, 80, 80, 0.07);
+  color: #8B3030;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(180, 80, 80, 0.18);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .create-gate-card { padding: 28px 22px; }
 }

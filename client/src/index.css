@@ -1,127 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap');
 
+/* ═══════════════════════════════════════════
+   DIVINE SPIRITUAL DESIGN SYSTEM
+   Palette: Ivory · Parchment · Pastel Gold · Sacred Sky · Soft Sage
+   ═══════════════════════════════════════════ */
 :root {
-  --color-primary: #E8956D;
-  --color-primary-light: #FFF3EB;
-  --color-primary-dark: #C97040;
+  /* Core Palette */
+  --divine-gold:        #C9A96E;
+  --divine-gold-light:  #E8D5A3;
+  --divine-gold-pale:   #F5EDD6;
+  --divine-ivory:       #FDFBF5;
+  --divine-parchment:   #F7F2E8;
+  --divine-cream:       #FBF8F0;
+  --divine-sky:         #EAF0F6;
+  --divine-sky-deep:    #D4E4F0;
+  --divine-sage:        #E8EDE6;
 
-  --bg-main: #FDFAF6;
-  --bg-card: #FFFFFF;
-  --bg-soft: #FFF8F2;
+  /* Text */
+  --text-primary:   #2C2416;
+  --text-secondary: #6B5D4A;
+  --text-muted:     #9E8E78;
+  --text-light:     #BFB09A;
 
-  --text-main: #3D2C1E;
-  --text-muted: #8A7060;
-  --border-color: #EDE3D8;
+  /* Semantic aliases */
+  --color-primary:       var(--divine-gold);
+  --color-primary-light: var(--divine-gold-pale);
+  --color-primary-dark:  #A8834A;
+  --bg-main:             var(--divine-ivory);
+  --bg-card:             #FFFFFF;
+  --bg-soft:             var(--divine-parchment);
+  --border-color:        #EAE0CC;
 
-  --shadow-sm: 0 1px 4px rgba(180, 120, 60, 0.06);
-  --shadow-md: 0 4px 16px rgba(180, 120, 60, 0.10);
-  --shadow-lg: 0 8px 28px rgba(180, 120, 60, 0.13);
+  /* Shadows — warm, barely-there */
+  --shadow-xs: 0 1px 3px rgba(100, 80, 40, 0.05);
+  --shadow-sm: 0 2px 10px rgba(100, 80, 40, 0.07);
+  --shadow-md: 0 6px 24px rgba(100, 80, 40, 0.10);
+  --shadow-lg: 0 12px 40px rgba(100, 80, 40, 0.12);
+  --shadow-glow: 0 0 30px rgba(201, 169, 110, 0.15);
 
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 99px;
+  /* Radii */
+  --r-xs:   6px;
+  --r-sm:   12px;
+  --r-md:   18px;
+  --r-lg:   28px;
+  --r-xl:   40px;
+  --r-full: 999px;
 
-  --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  /* Transitions */
+  --ease-gentle: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-* {
-  margin: 0;
-  padding: 0;
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0; padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  line-height: 1.6;
+  font-family: 'Jost', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--text-primary);
+  line-height: 1.25;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 3.2rem); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.7rem); }
+h4 { font-size: 1.2rem; }
+
+p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 300;
 }
 
 a {
   text-decoration: none;
-  color: var(--color-primary);
-  transition: color var(--transition);
+  color: var(--divine-gold);
+  transition: color var(--ease-gentle);
 }
+a:hover { color: var(--color-primary-dark); }
 
-a:hover {
-  color: var(--color-primary-dark);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: var(--text-main);
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.01em;
-}
-
-p {
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
+/* ── Form Elements ── */
 input, select, textarea {
-  padding: 12px 16px;
+  width: 100%;
+  padding: 13px 18px;
   border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-sm);
+  font-family: 'Jost', sans-serif;
   font-size: 15px;
-  color: var(--text-main);
-  background-color: var(--bg-card);
-  transition: all var(--transition);
+  font-weight: 400;
+  color: var(--text-primary);
+  background: var(--divine-cream);
+  transition: border-color var(--ease-gentle), box-shadow var(--ease-gentle), background var(--ease-gentle);
   outline: none;
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.12);
+  border-color: var(--divine-gold);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.12);
 }
 
+input::placeholder, textarea::placeholder {
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+/* ── Buttons ── */
 button, .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 11px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   gap: 8px;
+  padding: 12px 28px;
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  transition: transform var(--ease-gentle), box-shadow var(--ease-gentle), background var(--ease-gentle), color var(--ease-gentle);
 }
 
+/* Primary — soft gold */
 .btn-primary, .auth-btn, .book-btn, .add-btn, button[type="submit"] {
-  background-color: var(--color-primary) !important;
-  color: white !important;
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--divine-gold) 0%, #B8924A 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(201, 169, 110, 0.30);
 }
-
 .btn-primary:hover, .auth-btn:hover, .book-btn:hover, .add-btn:hover, button[type="submit"]:hover {
-  background-color: var(--color-primary-dark) !important;
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 24px rgba(201, 169, 110, 0.38) !important;
 }
 
+/* Outline */
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--divine-gold);
+  color: var(--color-primary-dark) !important;
+}
+.btn-outline:hover {
+  background: var(--divine-gold-pale);
+  transform: translateY(-2px);
+}
+
+/* ── Cards ── */
 .card, .auth-card, .dashboard-card {
   background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--r-lg);
   border: 1px solid var(--border-color);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--ease-gentle), box-shadow var(--ease-gentle);
 }
-
 .card:hover, .dashboard-card:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
 }
 
+/* ── Tables ── */
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   background: var(--bg-card);
-  border-radius: var(--radius-md);
+  border-radius: var(--r-md);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-color);
@@ -129,24 +187,37 @@ table {
 }
 
 th, td {
-  padding: 14px 16px;
+  padding: 14px 18px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
 th {
-  background-color: var(--bg-soft);
+  background: var(--divine-parchment);
   color: var(--color-primary-dark);
+  font-family: 'Jost', sans-serif;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
 }
 
-tr:last-child td {
-  border-bottom: none;
-}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(201, 169, 110, 0.04); }
 
-tr:hover td {
-  background-color: rgba(232, 149, 109, 0.04);
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--divine-gold-light); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--divine-gold); }
+
+/* ── Utility ── */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-gentle), transform 0.8s var(--ease-gentle);
+}
+.fade-in-section.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

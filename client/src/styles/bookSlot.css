@@ -1,30 +1,37 @@
+/* ═══════════════════════════════════════
+   BOOK SLOT — Sacred Booking
+   ═══════════════════════════════════════ */
 .book-container {
-  padding: 60px 80px;
-  background: var(--bg-main);
+  padding: 60px 6%;
+  background: var(--divine-ivory, #FDFBF5);
   min-height: 100vh;
 }
 
 .book-container h2 {
-  color: var(--text-main);
-  margin-bottom: 28px;
-  font-size: 26px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  color: #2C2416;
+  margin-bottom: 32px;
+  letter-spacing: 0.01em;
 }
 
+/* Member Card */
 .member-card {
-  background: var(--bg-card);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  margin-bottom: 22px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  background: #fff;
+  padding: 28px;
+  border-radius: 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(100, 80, 40, 0.07);
+  border: 1px solid rgba(201, 169, 110, 0.14);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: box-shadow 0.3s ease;
+  gap: 14px;
+  transition: box-shadow 0.4s ease;
 }
 
 .member-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 32px rgba(100, 80, 40, 0.11);
 }
 
 .member-header {
@@ -33,99 +40,126 @@
   align-items: center;
 }
 
-.badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
+.member-header h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
   font-weight: 600;
-  color: white;
+  color: #2C2416;
 }
 
-.badge.child { background: var(--color-primary); }
-.badge.adult { background: var(--color-primary-dark); }
+/* Badges */
+.badge {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
+.badge.child {
+  background: rgba(201, 169, 110, 0.15);
+  color: #A8834A;
+  border: 1px solid rgba(201, 169, 110, 0.30);
+}
+
+.badge.adult {
+  background: rgba(212, 228, 240, 0.40);
+  color: #4A6B8A;
+  border: 1px solid rgba(212, 228, 240, 0.60);
+}
+
+/* Inputs inside card */
 .member-card input,
 .member-card select {
-  padding: 9px 13px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  padding: 11px 15px;
+  border-radius: 12px;
+  border: 1.5px solid #EAE0CC;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  background: var(--bg-soft);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 300;
+  background: #FDFBF5;
+  color: #2C2416;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  outline: none;
 }
 
 .member-card input:focus,
 .member-card select:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(232, 149, 109, 0.1);
-  outline: none;
+  border-color: #C9A96E;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.10);
 }
 
 .preview-img {
-  width: 90px;
-  height: 90px;
+  width: 88px; height: 88px;
   object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-top: 8px;
-  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  margin-top: 6px;
+  border: 2px solid rgba(201, 169, 110, 0.25);
 }
 
+/* Buttons */
 .add-btn {
-  background: var(--color-primary);
-  color: white;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
   border: none;
-  padding: 10px 22px;
-  border-radius: var(--radius-full);
+  padding: 10px 24px;
+  border-radius: 999px;
   margin-right: 12px;
   cursor: pointer;
-  font-weight: 600;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: var(--shadow-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 4px 14px rgba(201, 169, 110, 0.26);
 }
 
 .add-btn:hover {
-  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 22px rgba(201, 169, 110, 0.36);
 }
 
 .confirm-btn {
-  background: var(--color-primary);
-  color: white;
+  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  color: #fff;
   border: none;
-  padding: 10px 26px;
-  border-radius: var(--radius-full);
+  padding: 11px 28px;
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  font-family: 'Jost', sans-serif;
   font-size: 14px;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: var(--shadow-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 4px 14px rgba(201, 169, 110, 0.26);
 }
 
 .confirm-btn:hover {
-  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 22px rgba(201, 169, 110, 0.36);
 }
 
 .remove-btn {
   background: transparent;
-  color: #C0392B;
+  color: #B05050;
   border: none;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  font-weight: 400;
+  transition: color 0.25s ease;
+  padding: 4px 8px;
 }
 
-.remove-btn:hover { color: #922B21; }
+.remove-btn:hover { color: #8B3030; }
 
+/* Loader */
 .full-loader {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(253, 250, 246, 0.92);
+  inset: 0;
+  background: rgba(253, 251, 245, 0.90);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,29 +168,36 @@
 
 .loader-box { text-align: center; }
 
+.loader-box p {
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #9E8E78;
+  letter-spacing: 0.05em;
+}
+
 .spinner {
-  border: 4px solid var(--border-color);
-  border-top: 4px solid var(--color-primary);
+  width: 42px; height: 42px;
+  border: 2px solid rgba(201, 169, 110, 0.20);
+  border-top: 2px solid #C9A96E;
   border-radius: 50%;
-  width: 44px; height: 44px;
-  animation: spin 0.9s linear infinite;
+  animation: sacredSpin 1s linear infinite;
   margin: auto;
 }
 
 .loader {
-  border: 3px solid var(--border-color);
-  border-top: 3px solid var(--color-primary);
+  width: 26px; height: 26px;
+  border: 2px solid rgba(201, 169, 110, 0.20);
+  border-top: 2px solid #C9A96E;
   border-radius: 50%;
-  width: 28px; height: 28px;
-  animation: spin 0.9s linear infinite;
+  animation: sacredSpin 1s linear infinite;
   margin: auto;
 }
 
-@keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes sacredSpin {
+  to { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
-  .book-container { padding: 40px 20px; }
+  .book-container { padding: 40px 5%; }
 }
