@@ -1,101 +1,103 @@
 /* myBookings.css */
 .my-bookings {
-  padding: 36px 5%;
-  background: #FDFCFB;
+  padding: 40px 5%;
+  background: #FEFCF8;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .my-bookings h2 {
-  font-family: 'Lora', serif;
-  font-size: 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
   font-weight: 600;
-  color: #2E2B27;
-  margin-bottom: 22px;
+  color: #3D3530;
+  margin-bottom: 26px;
 }
 
 .booking-card {
-  width: 280px;
+  width: 300px;
   background: #FFFFFF;
-  padding: 18px;
-  border-radius: 14px;
-  border: 1px solid #EAE8E4;
-  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
-  transition: box-shadow 0.25s ease;
+  padding: 22px;
+  border-radius: 18px;
+  border-top: 3px solid #F0E4C8;
+  box-shadow: 0 2px 14px rgba(60,45,30,0.07);
+  border-left: 1px solid #EDE6D9;
+  border-right: 1px solid #EDE6D9;
+  border-bottom: 1px solid #EDE6D9;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .booking-card:hover {
-  box-shadow: 0 4px 16px rgba(20,18,14,0.07);
+  box-shadow: 0 8px 28px rgba(60,45,30,0.11);
+  transform: translateY(-3px);
 }
 
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; }
 
-.card-header h3 { font-family: 'Lora', serif; color: #2E2B27; font-size: 16px; font-weight: 600; }
+.card-header h3 { font-family: 'Playfair Display', serif; color: #3D3530; font-size: 18px; font-weight: 600; }
 
-.card-body { font-size: 12px; color: #8C8880; line-height: 1.7; font-weight: 300; }
+.card-body { font-size: 13px; color: #9E9080; line-height: 1.75; font-weight: 300; }
 
-/* Status — neutral only, no color */
+/* Status — warm tinted */
 .status {
-  padding: 2px 9px;
+  padding: 4px 12px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: #F2F0ED;
-  color: #8C8880;
-  border: 1px solid #D8D5D0;
 }
 
-.status.booked    { background: #F2F0ED; color: #5A5650; border-color: #D8D5D0; }
-.status.cancelled { background: #F9F8F6; color: #B8B4AE; border-color: #EAE8E4; }
-.status.used      { background: #F9F8F6; color: #8C8880; border-color: #EAE8E4; }
+.status.booked    { background: #FAF3E4; color: #9E9080; border: 1px solid #F0E4C8; }
+.status.cancelled { background: #FAF7F2; color: #C4B9A8; border: 1px solid #EDE6D9; }
+.status.used      { background: #FAF7F2; color: #9E9080; border: 1px solid #EDE6D9; }
 
-.card-buttons { margin-top: 13px; display: flex; justify-content: space-between; gap: 6px; }
+.card-buttons { margin-top: 16px; display: flex; justify-content: space-between; gap: 8px; }
 
 .download-btn {
-  background: #2E2B27;
+  background: #3D3530;
   color: #fff;
   border: none;
-  padding: 6px 13px;
+  padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
   font-weight: 500;
   transition: background 0.25s ease;
+  box-shadow: 0 2px 8px rgba(60,45,30,0.12);
 }
 
-.download-btn:hover { background: #1A1816; }
+.download-btn:hover { background: #241F1A; }
 
 .cancel-btn {
-  background: #F9F8F6;
-  color: #8C8880;
-  border: 1px solid #EAE8E4;
-  padding: 6px 13px;
+  background: #FAF7F2;
+  color: #9E9080;
+  border: 1.5px solid #EDE6D9;
+  padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
   font-weight: 400;
   transition: all 0.25s ease;
 }
 
-.cancel-btn:hover { background: #F2F0ED; color: #5A5650; border-color: #D8D5D0; }
+.cancel-btn:hover { background: #F4EFE6; color: #6E6358; border-color: #DDD4C4; }
 
 .back-btn {
-  margin-bottom: 13px;
+  margin-bottom: 16px;
   background: none;
   border: none;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
   font-weight: 400;
   cursor: pointer;
-  color: #8C8880;
+  color: #9E9080;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: color 0.25s ease;
+  gap: 5px;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.back-btn:hover { color: #2E2B27; }
+.back-btn:hover { color: #3D3530; transform: translateX(-2px); }

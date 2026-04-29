@@ -1,39 +1,40 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Inter:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap");
 
 .temple-details {
-  font-family: 'Inter', sans-serif;
-  background: #FDFCFB;
-  color: #5A5650;
+  font-family: 'DM Sans', sans-serif;
+  background: #FEFCF8;
+  color: #6E6358;
   line-height: 1.7;
 }
 
-.back-container { padding: 20px 5%; }
+.back-container { padding: 24px 5%; }
 
 .back-btn {
   background: #FFFFFF;
-  color: #8C8880;
-  padding: 7px 18px;
-  border: 1px solid #EAE8E4;
+  color: #9E9080;
+  padding: 9px 22px;
+  border: 1.5px solid #EDE6D9;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
   font-weight: 400;
   transition: all 0.25s ease;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .back-btn:hover {
-  background: #F2F0ED;
-  color: #2E2B27;
-  border-color: #D8D5D0;
+  background: #FAF3E4;
+  color: #3D3530;
+  border-color: #F0E4C8;
+  transform: translateX(-2px);
 }
 
 .hero-section {
-  height: clamp(240px, 36vw, 400px);
-  background: linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40)),
+  height: clamp(260px, 40vw, 440px);
+  background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.42)),
     url("/hero-combined.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
@@ -46,165 +47,171 @@
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 50px;
-  background: linear-gradient(to top, #FDFCFB, transparent);
+  height: 60px;
+  background: linear-gradient(to top, #FEFCF8, transparent);
 }
 
 .hero-overlay { position: relative; z-index: 1; padding: 0 20px; }
 
 .hero-overlay h1 {
-  font-family: 'Lora', serif;
-  font-size: clamp(24px, 4vw, 44px);
-  color: rgba(252, 250, 245, 0.95);
-  margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 52px);
+  color: rgba(254,250,240,0.97);
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
-.hero-overlay p { color: rgba(252, 250, 245, 0.55); font-size: 14px; font-weight: 300; }
+.hero-overlay p { color: rgba(254,250,240,0.60); font-size: 15px; font-weight: 300; }
 
 .hero-btn {
-  margin-top: 16px;
-  padding: 10px 26px;
-  background: rgba(255,255,255,0.15);
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: rgba(200,169,106,0.80);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.35);
-  color: rgba(255,255,255,0.90);
+  border: 1.5px solid rgba(200,169,106,0.50);
+  color: #fff;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
   font-weight: 500;
-  transition: background 0.25s ease;
+  transition: all 0.25s ease;
 }
 
-.hero-btn:hover { background: rgba(255,255,255,0.25); }
+.hero-btn:hover { background: rgba(200,169,106,0.95); transform: translateY(-1px); }
 
-.info-section { padding: 52px 5%; max-width: 1020px; margin: auto; }
+.info-section { padding: 60px 5%; max-width: 1100px; margin: auto; }
 
 .info-section h2 {
-  font-family: 'Lora', serif;
-  font-size: clamp(18px, 2.4vw, 26px);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
-  margin-bottom: 14px;
-  color: #2E2B27;
+  margin-bottom: 18px;
+  color: #3D3530;
 }
 
-.info-section p { font-size: 14px; font-weight: 300; margin-bottom: 12px; color: #8C8880; line-height: 1.8; }
+.info-section p { font-size: 15px; font-weight: 300; margin-bottom: 14px; color: #9E9080; line-height: 1.8; }
 
-.aarti-section { padding: 52px 5%; background: #F9F8F6; }
+.aarti-section { padding: 60px 5%; background: #FAF7F2; }
 
 .aarti-section h2 {
   text-align: center;
-  margin-bottom: 32px;
-  font-family: 'Lora', serif;
-  font-size: clamp(18px, 2.4vw, 26px);
+  margin-bottom: 38px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
-  color: #2E2B27;
+  color: #3D3530;
 }
 
 .aarti-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  max-width: 1020px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .aarti-card {
   background: #FFFFFF;
-  padding: 20px 18px;
-  border-radius: 14px;
-  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
-  border: 1px solid #EAE8E4;
-  transition: box-shadow 0.3s ease;
+  padding: 24px 22px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
+  border: 1px solid #EDE6D9;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.aarti-card:hover { box-shadow: 0 4px 16px rgba(20,18,14,0.07); }
+.aarti-card:hover { box-shadow: 0 8px 24px rgba(60,45,30,0.10); transform: translateY(-3px); }
 
-.aarti-card h4 { font-family: 'Lora', serif; color: #2E2B27; margin-bottom: 4px; font-size: 16px; font-weight: 600; }
-.aarti-card p  { font-size: 13px; color: #B8B4AE; font-weight: 300; }
+.aarti-card h4 { font-family: 'Playfair Display', serif; color: #3D3530; margin-bottom: 6px; font-size: 18px; font-weight: 600; }
+.aarti-card p  { font-size: 13px; color: #C4B9A8; font-weight: 300; }
 
-.calendar-section { padding: 52px 5%; text-align: center; background: #FDFCFB; }
+.calendar-section { padding: 60px 5%; text-align: center; background: #FEFCF8; }
 
 .calendar-section h2 {
-  margin-bottom: 16px;
-  font-family: 'Lora', serif;
-  font-size: clamp(18px, 2.4vw, 24px);
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.8vw, 28px);
   font-weight: 600;
-  color: #2E2B27;
+  color: #3D3530;
 }
 
 .calendar-section input[type="date"] {
-  padding: 10px 16px;
-  border-radius: 9px;
-  border: 1px solid #EAE8E4;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1.5px solid #EDE6D9;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
   background: #FFFFFF;
-  color: #2E2B27;
+  color: #3D3530;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.calendar-section input[type="date"]:focus { border-color: #B8B4AE; }
+.calendar-section input[type="date"]:focus {
+  border-color: #C8A96A;
+  box-shadow: 0 0 0 4px rgba(200,169,106,0.10);
+}
 
-.slots-section { padding: 52px 5%; }
+.slots-section { padding: 60px 5%; }
 
 .slots-section h2 {
   text-align: center;
-  margin-bottom: 28px;
-  font-family: 'Lora', serif;
-  font-size: clamp(18px, 2.4vw, 26px);
+  margin-bottom: 36px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
-  color: #2E2B27;
+  color: #3D3530;
 }
 
 .slot-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  max-width: 1020px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .slot-card {
   background: #FFFFFF;
-  padding: 20px 18px;
-  border-radius: 14px;
-  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
-  border: 1px solid #EAE8E4;
-  transition: box-shadow 0.3s ease;
+  padding: 24px 22px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
+  border: 1px solid #EDE6D9;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.slot-card:hover { box-shadow: 0 4px 16px rgba(20,18,14,0.07); }
+.slot-card:hover { box-shadow: 0 8px 24px rgba(60,45,30,0.10); transform: translateY(-3px); }
 
-.slot-card p { margin-bottom: 7px; font-size: 13px; color: #8C8880; font-weight: 300; }
+.slot-card p { margin-bottom: 8px; font-size: 14px; color: #9E9080; font-weight: 300; }
 
 .book-btn {
-  margin-top: 11px;
-  padding: 8px 18px;
+  margin-top: 14px;
+  padding: 10px 22px;
   border-radius: 999px;
   border: none;
-  background: #2E2B27;
+  background: #3D3530;
   color: #fff;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
   font-weight: 500;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 2px 10px rgba(60,45,30,0.12);
 }
 
-.book-btn:hover { background: #1A1816; }
+.book-btn:hover { background: #241F1A; transform: translateY(-1px); }
 
 .book-btn:disabled {
-  background: #D8D5D0;
+  background: #DDD4C4;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
   opacity: 0.6;
 }
 
 @media (max-width: 768px) {
-  .hero-overlay h1 { font-size: 24px; }
-  .hero-section { height: 220px; }
-  .info-section, .aarti-section, .slots-section, .calendar-section { padding: 32px 5%; }
+  .hero-overlay h1 { font-size: 28px; }
+  .hero-section { height: 250px; }
+  .info-section, .aarti-section, .slots-section, .calendar-section { padding: 38px 5%; }
 }

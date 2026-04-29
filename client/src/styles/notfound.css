@@ -1,53 +1,58 @@
 /* notfound.css */
 .notfound-container {
   min-height: 100vh;
-  background: #FDFCFB;
+  background: #FEFCF8;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 40px 20px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .error-code {
-  font-family: 'Lora', serif;
-  font-size: clamp(64px, 13vw, 110px);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(72px, 14vw, 120px);
   font-weight: 600;
-  color: #EAE8E4;
+  color: #EDE6D9;
   line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   letter-spacing: 0.04em;
 }
 
 .notfound-container h2 {
-  font-family: 'Lora', serif;
-  font-size: clamp(17px, 2.4vw, 24px);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 2.8vw, 28px);
   font-weight: 600;
-  color: #2E2B27;
-  margin-bottom: 9px;
+  color: #3D3530;
+  margin-bottom: 10px;
 }
 
 .notfound-container p {
-  font-size: 14px;
-  max-width: 320px;
-  color: #B8B4AE;
-  line-height: 1.7;
+  font-size: 15px;
+  max-width: 340px;
+  color: #C4B9A8;
+  line-height: 1.75;
 }
 
 .home-btn {
-  margin-top: 26px;
-  padding: 11px 28px;
+  margin-top: 28px;
+  padding: 13px 32px;
   border: none;
   border-radius: 999px;
-  background: #2E2B27;
+  background: #3D3530;
   color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 2px 12px rgba(60,45,30,0.14);
 }
 
-.home-btn:hover { background: #1A1816; }
+.home-btn:hover {
+  background: #241F1A;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(60,45,30,0.18);
+}
