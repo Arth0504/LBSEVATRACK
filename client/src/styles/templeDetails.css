@@ -2,18 +2,18 @@
 
 .temple-details {
   font-family: 'Inter', sans-serif;
-  background: #FAFAF8;
-  color: #3D3830;
+  background: #FDFCFB;
+  color: #5A5650;
   line-height: 1.7;
 }
 
-.back-container { padding: 22px 5%; }
+.back-container { padding: 20px 5%; }
 
 .back-btn {
-  background: #fff;
-  color: #7A7268;
-  padding: 8px 20px;
-  border: 1px solid #E2DED6;
+  background: #FFFFFF;
+  color: #8C8880;
+  padding: 7px 18px;
+  border: 1px solid #EAE8E4;
   border-radius: 999px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
@@ -26,15 +26,14 @@
 }
 
 .back-btn:hover {
-  background: #EEF4F0;
-  color: #5C8068;
-  border-color: #B8D4C0;
-  transform: translateX(-2px);
+  background: #F2F0ED;
+  color: #2E2B27;
+  border-color: #D8D5D0;
 }
 
 .hero-section {
-  height: clamp(260px, 38vw, 420px);
-  background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.42)),
+  height: clamp(240px, 36vw, 400px);
+  background: linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40)),
     url("/hero-combined.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
@@ -47,171 +46,165 @@
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(to top, #FAFAF8, transparent);
+  height: 50px;
+  background: linear-gradient(to top, #FDFCFB, transparent);
 }
 
 .hero-overlay { position: relative; z-index: 1; padding: 0 20px; }
 
 .hero-overlay h1 {
   font-family: 'Lora', serif;
-  font-size: clamp(26px, 4.5vw, 48px);
-  color: rgba(255,252,240,0.96);
+  font-size: clamp(24px, 4vw, 44px);
+  color: rgba(252, 250, 245, 0.95);
   margin-bottom: 8px;
   font-weight: 500;
 }
 
-.hero-overlay p { color: rgba(255,252,240,0.65); font-size: 15px; font-weight: 300; }
+.hero-overlay p { color: rgba(252, 250, 245, 0.55); font-size: 14px; font-weight: 300; }
 
 .hero-btn {
-  margin-top: 18px;
-  padding: 11px 28px;
-  background: #7A9E87;
-  border: none;
-  color: #fff;
+  margin-top: 16px;
+  padding: 10px 26px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.90);
   border-radius: 999px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 10px rgba(122,158,135,0.25);
+  transition: background 0.25s ease;
 }
 
-.hero-btn:hover { background: #5C8068; transform: translateY(-1px); }
+.hero-btn:hover { background: rgba(255,255,255,0.25); }
 
-.info-section { padding: 56px 5%; max-width: 1060px; margin: auto; }
+.info-section { padding: 52px 5%; max-width: 1020px; margin: auto; }
 
 .info-section h2 {
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 600;
-  margin-bottom: 16px;
-  color: #5C8068;
+  margin-bottom: 14px;
+  color: #2E2B27;
 }
 
-.info-section p { font-size: 15px; font-weight: 300; margin-bottom: 14px; color: #7A7268; line-height: 1.8; }
+.info-section p { font-size: 14px; font-weight: 300; margin-bottom: 12px; color: #8C8880; line-height: 1.8; }
 
-.aarti-section { padding: 56px 5%; background: #F7F6F3; }
+.aarti-section { padding: 52px 5%; background: #F9F8F6; }
 
 .aarti-section h2 {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 32px;
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 600;
-  color: #5C8068;
+  color: #2E2B27;
 }
 
 .aarti-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 18px;
-  max-width: 1060px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 1020px;
   margin: 0 auto;
 }
 
 .aarti-card {
-  background: #fff;
-  padding: 22px 20px;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(30,27,22,0.05);
-  border: 1px solid #EFEDE8;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #FFFFFF;
+  padding: 20px 18px;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
+  border: 1px solid #EAE8E4;
+  transition: box-shadow 0.3s ease;
 }
 
-.aarti-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(30,27,22,0.08); }
+.aarti-card:hover { box-shadow: 0 4px 16px rgba(20,18,14,0.07); }
 
-.aarti-card h4 { font-family: 'Lora', serif; color: #5C8068; margin-bottom: 5px; font-size: 17px; font-weight: 600; }
-.aarti-card p  { font-size: 13px; color: #A09890; font-weight: 300; }
+.aarti-card h4 { font-family: 'Lora', serif; color: #2E2B27; margin-bottom: 4px; font-size: 16px; font-weight: 600; }
+.aarti-card p  { font-size: 13px; color: #B8B4AE; font-weight: 300; }
 
-.calendar-section { padding: 56px 5%; text-align: center; background: #FAFAF8; }
+.calendar-section { padding: 52px 5%; text-align: center; background: #FDFCFB; }
 
 .calendar-section h2 {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2.5vw, 26px);
+  font-size: clamp(18px, 2.4vw, 24px);
   font-weight: 600;
-  color: #5C8068;
+  color: #2E2B27;
 }
 
 .calendar-section input[type="date"] {
-  padding: 11px 18px;
-  border-radius: 10px;
-  border: 1.5px solid #E2DED6;
+  padding: 10px 16px;
+  border-radius: 9px;
+  border: 1px solid #EAE8E4;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  background: #fff;
-  color: #3D3830;
+  background: #FFFFFF;
+  color: #2E2B27;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.25s ease;
 }
 
-.calendar-section input[type="date"]:focus {
-  border-color: #7A9E87;
-  box-shadow: 0 0 0 3px rgba(122,158,135,0.12);
-}
+.calendar-section input[type="date"]:focus { border-color: #B8B4AE; }
 
-.slots-section { padding: 56px 5%; }
+.slots-section { padding: 52px 5%; }
 
 .slots-section h2 {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   font-family: 'Lora', serif;
-  font-size: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 600;
-  color: #5C8068;
+  color: #2E2B27;
 }
 
 .slot-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 18px;
-  max-width: 1060px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 1020px;
   margin: 0 auto;
 }
 
 .slot-card {
-  background: #fff;
-  padding: 22px 20px;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(30,27,22,0.05);
-  border: 1px solid #EFEDE8;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #FFFFFF;
+  padding: 20px 18px;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
+  border: 1px solid #EAE8E4;
+  transition: box-shadow 0.3s ease;
 }
 
-.slot-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(30,27,22,0.08); }
+.slot-card:hover { box-shadow: 0 4px 16px rgba(20,18,14,0.07); }
 
-.slot-card p { margin-bottom: 7px; font-size: 13px; color: #7A7268; font-weight: 300; }
+.slot-card p { margin-bottom: 7px; font-size: 13px; color: #8C8880; font-weight: 300; }
 
 .book-btn {
-  margin-top: 12px;
-  padding: 9px 20px;
+  margin-top: 11px;
+  padding: 8px 18px;
   border-radius: 999px;
   border: none;
-  background: #7A9E87;
+  background: #2E2B27;
   color: #fff;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
+  transition: background 0.25s ease;
 }
 
-.book-btn:hover { background: #5C8068; transform: translateY(-1px); }
+.book-btn:hover { background: #1A1816; }
 
 .book-btn:disabled {
-  background: #C8C2B8;
+  background: #D8D5D0;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
   opacity: 0.6;
 }
 
 @media (max-width: 768px) {
-  .hero-overlay h1 { font-size: 26px; }
-  .hero-section { height: 240px; }
-  .info-section, .aarti-section, .slots-section, .calendar-section { padding: 36px 5%; }
+  .hero-overlay h1 { font-size: 24px; }
+  .hero-section { height: 220px; }
+  .info-section, .aarti-section, .slots-section, .calendar-section { padding: 32px 5%; }
 }

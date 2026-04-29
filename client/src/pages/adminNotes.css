@@ -1,83 +1,82 @@
 /* adminNotes.css */
-.admin-notes { padding:26px; max-width:820px; margin:0 auto; font-family:'Inter',sans-serif; }
+.admin-notes { padding: 24px; max-width: 800px; margin: 0 auto; font-family: 'Inter', sans-serif; }
 
-.admin-notes h2 { font-family:'Lora',serif; font-size:22px; font-weight:600; color:#3D3830; margin-bottom:18px; display:flex; align-items:center; gap:9px; }
+.admin-notes h2 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: #2E2B27; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
 .note-form {
-  background: #fff;
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 2px 10px rgba(30,27,22,0.05);
-  border: 1px solid #EFEDE8;
-  margin-bottom: 24px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 1px 6px rgba(20,18,14,0.04);
+  border: 1px solid #EAE8E4;
+  margin-bottom: 22px;
 }
 
 .note-form input,
 .note-form textarea {
   width: 100%;
-  padding: 10px 13px;
-  margin-bottom: 11px;
-  border-radius: 10px;
-  border: 1.5px solid #E2DED6;
+  padding: 9px 12px;
+  margin-bottom: 10px;
+  border-radius: 9px;
+  border: 1px solid #EAE8E4;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  background: #FAFAF8;
-  color: #3D3830;
+  font-size: 13px;
+  background: #FDFCFB;
+  color: #2E2B27;
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.25s ease;
 }
 
 .note-form input:focus,
-.note-form textarea:focus { border-color: #7A9E87; background: #fff; }
+.note-form textarea:focus { border-color: #B8B4AE; background: #fff; }
 
 .note-form button {
-  background: #7A9E87;
+  background: #2E2B27;
   color: #fff;
   border: none;
-  padding: 10px 22px;
+  padding: 9px 20px;
   border-radius: 999px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
   transition: background 0.25s ease;
-  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
   margin-top: 0;
 }
 
-.note-form button:hover { background: #5C8068; }
+.note-form button:hover { background: #1A1816; }
 
-.note-list { display:flex; flex-direction:column; gap:14px; }
+.note-list { display: flex; flex-direction: column; gap: 12px; }
 
 .note-item {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #EFEDE8;
-  box-shadow: 0 2px 8px rgba(30,27,22,0.04);
+  background: #FFFFFF;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid #EAE8E4;
+  box-shadow: 0 1px 5px rgba(20,18,14,0.03);
   position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: box-shadow 0.25s ease;
 }
 
-.note-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(30,27,22,0.07); }
+.note-item:hover { box-shadow: 0 3px 12px rgba(20,18,14,0.06); }
 
-.note-item h4 { font-family:'Lora',serif; font-size:17px; font-weight:600; color:#3D3830; margin-bottom:5px; }
-.note-item p  { font-size:13px; color:#A09890; line-height:1.65; font-weight:300; }
+.note-item h4 { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; color: #2E2B27; margin-bottom: 5px; }
+.note-item p  { font-size: 13px; color: #B8B4AE; line-height: 1.65; font-weight: 300; }
 
 .note-item button {
   position: absolute;
-  top: 12px; right: 12px;
-  background: #FEF2F2;
-  color: #8B3030;
-  border: 1px solid #F5C6C2;
-  padding: 4px 11px;
+  top: 11px; right: 11px;
+  background: #F9F8F6;
+  color: #B8B4AE;
+  border: 1px solid #EAE8E4;
+  padding: 3px 10px;
   border-radius: 999px;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   margin-top: 0;
 }
 
-.note-item button:hover { background: #8B3030; color: #fff; border-color: transparent; }
+.note-item button:hover { background: #F2F0ED; color: #5A5650; border-color: #D8D5D0; }

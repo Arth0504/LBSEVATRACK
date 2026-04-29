@@ -1,7 +1,7 @@
-/* temples.css */
+/* ── temples.css ── */
 .temples-container {
-  padding: 64px 6%;
-  background: #FAFAF8;
+  padding: 60px 6%;
+  background: #FDFCFB;
   min-height: 100vh;
 }
 
@@ -9,75 +9,74 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
 
 .temple-navbar h2 {
   flex: 1;
   text-align: center;
   font-family: 'Lora', serif;
-  font-size: clamp(24px, 3vw, 34px);
-  color: #3D3830;
+  font-size: clamp(22px, 3vw, 32px);
+  color: #2E2B27;
   font-weight: 600;
 }
 
 .temple-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 28px;
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 22px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
 .temple-card {
-  background: #fff;
-  border-radius: 18px;
+  background: #FFFFFF;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(30,27,22,0.06);
-  border: 1px solid #EFEDE8;
+  box-shadow: 0 1px 8px rgba(20,18,14,0.05);
+  border: 1px solid #EAE8E4;
   display: flex;
   flex-direction: column;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .temple-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 28px rgba(30,27,22,0.10);
+  box-shadow: 0 4px 20px rgba(20,18,14,0.09);
 }
 
 .temple-image {
-  height: 220px;
+  height: 210px;
   background-size: cover;
   background-position: center;
 }
 
 .temple-content {
-  padding: 22px 20px;
+  padding: 20px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 9px;
 }
 
 .temple-content h3 {
   font-family: 'Lora', serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 600;
-  color: #3D3830;
+  color: #2E2B27;
   margin-bottom: 2px;
 }
 
 .temple-content p {
   font-size: 13px;
-  color: #A09890;
-  margin-bottom: 6px;
+  color: #B8B4AE;
+  margin-bottom: 4px;
 }
 
 .main-btn {
-  padding: 9px 22px;
-  background: #7A9E87;
+  padding: 8px 20px;
+  background: #2E2B27;
   color: #fff;
   border: none;
   border-radius: 999px;
@@ -85,14 +84,12 @@
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
+  transition: background 0.25s ease;
 }
 
-.main-btn:hover {
-  background: #5C8068;
-  transform: translateY(-1px);
-}
+.main-btn:hover { background: #1A1816; }
 
-@media (max-width: 1200px) { .temple-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); } }
-@media (max-width: 768px)  { .temples-container { padding: 44px 5%; } .temple-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .temples-container { padding: 40px 5%; }
+  .temple-grid { grid-template-columns: 1fr; gap: 18px; }
+}
