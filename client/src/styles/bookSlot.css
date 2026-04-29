@@ -1,145 +1,109 @@
-/* ═══════════════════════════════════════
-   BOOK SLOT — Sacred Booking
-   ═══════════════════════════════════════ */
+/* bookSlot.css */
 .book-container {
-  padding: 60px 6%;
-  background: var(--divine-ivory, #FDFBF5);
+  padding: 56px 6%;
+  background: #FAFAF8;
   min-height: 100vh;
 }
 
 .book-container h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(24px, 3vw, 32px);
+  font-family: 'Lora', serif;
+  font-size: clamp(22px, 2.5vw, 28px);
   font-weight: 600;
-  color: #2C2416;
-  margin-bottom: 32px;
-  letter-spacing: 0.01em;
+  color: #3D3830;
+  margin-bottom: 28px;
 }
 
-/* Member Card */
 .member-card {
   background: #fff;
-  padding: 28px;
-  border-radius: 22px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(100, 80, 40, 0.07);
-  border: 1px solid rgba(201, 169, 110, 0.14);
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(30,27,22,0.05);
+  border: 1px solid #EFEDE8;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  transition: box-shadow 0.4s ease;
+  gap: 12px;
+  transition: box-shadow 0.3s ease;
 }
 
-.member-card:hover {
-  box-shadow: 0 8px 32px rgba(100, 80, 40, 0.11);
-}
+.member-card:hover { box-shadow: 0 4px 18px rgba(30,27,22,0.08); }
 
-.member-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.member-header { display:flex; justify-content:space-between; align-items:center; }
 
-.member-header h4 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #2C2416;
-}
+.member-header h4 { font-family:'Lora',serif; font-size:17px; font-weight:600; color:#3D3830; }
 
-/* Badges */
 .badge {
-  padding: 4px 14px;
+  padding: 3px 12px;
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.badge.child {
-  background: rgba(201, 169, 110, 0.15);
-  color: #A8834A;
-  border: 1px solid rgba(201, 169, 110, 0.30);
-}
+.badge.child { background: #EEF4F0; color: #5C8068; border: 1px solid #B8D4C0; }
+.badge.adult { background: #F0F4F8; color: #4A6B8A; border: 1px solid #B8D0E0; }
 
-.badge.adult {
-  background: rgba(212, 228, 240, 0.40);
-  color: #4A6B8A;
-  border: 1px solid rgba(212, 228, 240, 0.60);
-}
-
-/* Inputs inside card */
 .member-card input,
 .member-card select {
-  padding: 11px 15px;
-  border-radius: 12px;
-  border: 1.5px solid #EAE0CC;
-  font-family: 'Jost', sans-serif;
+  padding: 10px 13px;
+  border-radius: 10px;
+  border: 1.5px solid #E2DED6;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 300;
-  background: #FDFBF5;
-  color: #2C2416;
-  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  background: #FAFAF8;
+  color: #3D3830;
   outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .member-card input:focus,
 .member-card select:focus {
-  border-color: #C9A96E;
+  border-color: #7A9E87;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.10);
+  box-shadow: 0 0 0 3px rgba(122,158,135,0.12);
 }
 
 .preview-img {
-  width: 88px; height: 88px;
+  width: 84px; height: 84px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
   margin-top: 6px;
-  border: 2px solid rgba(201, 169, 110, 0.25);
+  border: 1px solid #E2DED6;
 }
 
-/* Buttons */
 .add-btn {
-  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  background: #7A9E87;
   color: #fff;
   border: none;
-  padding: 10px 24px;
+  padding: 9px 22px;
   border-radius: 999px;
-  margin-right: 12px;
+  margin-right: 10px;
   cursor: pointer;
-  font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  box-shadow: 0 4px 14px rgba(201, 169, 110, 0.26);
+  transition: background 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
 }
 
-.add-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(201, 169, 110, 0.36);
-}
+.add-btn:hover { background: #5C8068; transform: translateY(-1px); }
 
 .confirm-btn {
-  background: linear-gradient(135deg, #C9A96E 0%, #B8924A 100%);
+  background: #7A9E87;
   color: #fff;
   border: none;
-  padding: 11px 28px;
+  padding: 10px 26px;
   border-radius: 999px;
   cursor: pointer;
-  font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  box-shadow: 0 4px 14px rgba(201, 169, 110, 0.26);
+  transition: background 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
 }
 
-.confirm-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(201, 169, 110, 0.36);
-}
+.confirm-btn:hover { background: #5C8068; transform: translateY(-1px); }
 
 .remove-btn {
   background: transparent;
@@ -148,17 +112,16 @@
   cursor: pointer;
   font-size: 13px;
   font-weight: 400;
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
   padding: 4px 8px;
 }
 
 .remove-btn:hover { color: #8B3030; }
 
-/* Loader */
 .full-loader {
   position: fixed;
   inset: 0;
-  background: rgba(253, 251, 245, 0.90);
+  background: rgba(250,250,248,0.88);
   backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
@@ -168,36 +131,26 @@
 
 .loader-box { text-align: center; }
 
-.loader-box p {
-  margin-top: 14px;
-  font-size: 14px;
-  font-weight: 300;
-  color: #9E8E78;
-  letter-spacing: 0.05em;
-}
+.loader-box p { margin-top: 12px; font-size: 13px; color: #A09890; }
 
 .spinner {
-  width: 42px; height: 42px;
-  border: 2px solid rgba(201, 169, 110, 0.20);
-  border-top: 2px solid #C9A96E;
+  width: 38px; height: 38px;
+  border: 2px solid #EFEDE8;
+  border-top: 2px solid #7A9E87;
   border-radius: 50%;
-  animation: sacredSpin 1s linear infinite;
+  animation: spin 0.9s linear infinite;
   margin: auto;
 }
 
 .loader {
-  width: 26px; height: 26px;
-  border: 2px solid rgba(201, 169, 110, 0.20);
-  border-top: 2px solid #C9A96E;
+  width: 24px; height: 24px;
+  border: 2px solid #EFEDE8;
+  border-top: 2px solid #7A9E87;
   border-radius: 50%;
-  animation: sacredSpin 1s linear infinite;
+  animation: spin 0.9s linear infinite;
   margin: auto;
 }
 
-@keyframes sacredSpin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-@media (max-width: 768px) {
-  .book-container { padding: 40px 5%; }
-}
+@media (max-width: 768px) { .book-container { padding: 36px 5%; } }

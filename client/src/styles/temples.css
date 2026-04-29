@@ -1,9 +1,7 @@
-/* ═══════════════════════════════════════
-   TEMPLES LISTING — Sacred Gallery
-   ═══════════════════════════════════════ */
+/* temples.css */
 .temples-container {
-  padding: 70px 6%;
-  background: var(--divine-ivory);
+  padding: 64px 6%;
+  background: #FAFAF8;
   min-height: 100vh;
 }
 
@@ -11,109 +9,90 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 56px;
+  margin-bottom: 48px;
 }
 
 .temple-navbar h2 {
   flex: 1;
   text-align: center;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 3.5vw, 38px);
-  color: var(--text-primary);
+  font-family: 'Lora', serif;
+  font-size: clamp(24px, 3vw, 34px);
+  color: #3D3830;
   font-weight: 600;
-  letter-spacing: 0.01em;
 }
 
 .temple-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 36px;
-  max-width: 1280px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .temple-card {
   background: #fff;
-  border-radius: 22px;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 6px 28px rgba(100, 80, 40, 0.08);
-  border: 1px solid rgba(201, 169, 110, 0.12);
+  box-shadow: 0 2px 12px rgba(30,27,22,0.06);
+  border: 1px solid #EFEDE8;
   display: flex;
   flex-direction: column;
-  transition: transform 0.45s ease, box-shadow 0.45s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
   cursor: pointer;
 }
 
 .temple-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 48px rgba(100, 80, 40, 0.14);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 28px rgba(30,27,22,0.10);
 }
 
 .temple-image {
-  height: 240px;
+  height: 220px;
   background-size: cover;
   background-position: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.temple-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.05) 100%);
 }
 
 .temple-content {
-  padding: 26px 24px;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   text-align: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .temple-content h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
+  font-family: 'Lora', serif;
+  font-size: 20px;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 4px;
+  color: #3D3830;
+  margin-bottom: 2px;
 }
 
 .temple-content p {
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--text-muted);
-  margin-bottom: 8px;
+  font-size: 13px;
+  color: #A09890;
+  margin-bottom: 6px;
 }
 
 .main-btn {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, var(--divine-gold) 0%, #B8924A 100%);
+  padding: 9px 22px;
+  background: #7A9E87;
   color: #fff;
   border: none;
-  border-radius: var(--r-full);
+  border-radius: 999px;
   cursor: pointer;
-  font-family: 'Jost', sans-serif;
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.05em;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  box-shadow: 0 4px 16px rgba(201, 169, 110, 0.26);
-  align-self: center;
+  transition: background 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 2px 8px rgba(122,158,135,0.20);
 }
 
 .main-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201, 169, 110, 0.36);
+  background: #5C8068;
+  transform: translateY(-1px);
 }
 
-@media (max-width: 1200px) {
-  .temple-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-}
-
-@media (max-width: 768px) {
-  .temples-container { padding: 50px 5%; }
-  .temple-grid { grid-template-columns: 1fr; gap: 24px; }
-}
+@media (max-width: 1200px) { .temple-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); } }
+@media (max-width: 768px)  { .temples-container { padding: 44px 5%; } .temple-grid { grid-template-columns: 1fr; } }
