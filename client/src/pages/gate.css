@@ -84,7 +84,7 @@
 .gate-content input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 0 5px rgba(242, 140, 40, 0.3);
 }
 
 /* ===== BUTTON ===== */
@@ -110,7 +110,7 @@
   padding: 25px;
   margin-top: 20px;
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(74, 144, 226, 0.15);
+  box-shadow: 0 10px 30px rgba(242, 140, 40, 0.15);
   animation: fadeIn 0.4s ease;
 }
 
@@ -132,7 +132,7 @@ table {
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.12);
+  box-shadow: 0 8px 25px rgba(242, 140, 40, 0.12);
 }
 
 th,
@@ -156,7 +156,7 @@ tr:nth-child(even) {
   background: white;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(74, 144, 226, 0.15);
+  box-shadow: 0 10px 25px rgba(242, 140, 40, 0.15);
   margin-top: 20px;
 }
 

@@ -19,7 +19,7 @@
 
 .slots-container select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 0 5px rgba(242, 140, 40, 0.3);
 }
 
 /* ================= FORM ================= */
@@ -47,7 +47,7 @@
 .slot-form input:focus,
 .slot-form select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 5px rgba(242, 140, 40, 0.2);
 }
 
 /* ================= GENERATE BUTTON ================= */

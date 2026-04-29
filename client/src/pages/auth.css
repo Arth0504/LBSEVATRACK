@@ -65,7 +65,7 @@ border:1px solid var(--border-color);
 
 .form-group input:focus{
 border-color:var(--color-primary);
-box-shadow:0 0 6px rgba(74, 144, 226,0.3);
+box-shadow:0 0 6px rgba(242, 140, 40,0.3);
 }
 
 /* BUTTON */
@@ -97,4 +97,4 @@ color:var(--color-primary);
 font-weight:600;
 text-decoration:none;
 }
-
+

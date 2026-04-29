@@ -48,7 +48,7 @@
   padding: 40px;
   width: 350px;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 15px 40px rgba(242, 140, 40, 0.2);
 }
 
 .auth-card h3 {
@@ -79,7 +79,7 @@
 
 .form-group input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 0 8px rgba(242, 140, 40, 0.3);
 }
 
 /* BUTTON */
