@@ -6,21 +6,21 @@
    ═══════════════════════════════════════════════════════ */
 :root {
   /* ── Warm Palette ── */
-  --ivory:        #FEFCF8;   /* page bg — warm white */
-  --cream:        #FAF7F2;   /* section bg */
-  --parchment:    #F4EFE6;   /* card hover, muted bg */
-  --linen:        #EDE6D9;   /* borders */
-  --sand:         #DDD4C4;   /* stronger borders */
-  --taupe-200:    #C4B9A8;   /* placeholder text */
-  --taupe-400:    #9E9080;   /* secondary text */
-  --taupe-600:    #6E6358;   /* body text */
-  --taupe-800:    #3D3530;   /* headings */
-  --taupe-900:    #241F1A;   /* darkest */
+  --ivory:        #FFFFFF;   /* page bg — warm white */
+  --cream:        #FAFAF9;   /* section bg */
+  --parchment:    #F5F5F4;   /* card hover, muted bg */
+  --linen:        #E7E5E4;   /* borders */
+  --sand:         #D6D3D1;   /* stronger borders */
+  --taupe-200:    #A8A29E;   /* placeholder text */
+  --taupe-400:    #78716C;   /* secondary text */
+  --taupe-600:    #57534E;   /* body text */
+  --taupe-800:    #44403C;   /* headings */
+  --taupe-900:    #292524;   /* darkest */
 
   /* ── Warm Accent — soft amber/gold, very muted ── */
-  --amber:        #C8A96A;   /* warm accent */
-  --amber-light:  #F0E4C8;   /* accent bg tint */
-  --amber-pale:   #FAF3E4;   /* very light accent bg */
+  --amber:        #A3B18A;   /* warm accent */
+  --amber-light:  #EAECE5;   /* accent bg tint */
+  --amber-pale:   #F4F5F2;   /* very light accent bg */
 
   /* ── Semantic ── */
   --bg:           var(--ivory);
@@ -35,10 +35,10 @@
   --border-mid:   var(--sand);
 
   /* ── Shadows — warm-tinted ── */
-  --shadow-xs: 0 1px 4px  rgba(60,45,30,0.05);
-  --shadow-sm: 0 2px 12px rgba(60,45,30,0.07);
-  --shadow-md: 0 6px 24px rgba(60,45,30,0.09);
-  --shadow-lg: 0 12px 40px rgba(60,45,30,0.11);
+  --shadow-xs: 0 1px 4px  rgba(68, 64, 60,0.05);
+  --shadow-sm: 0 2px 12px rgba(68, 64, 60,0.07);
+  --shadow-md: 0 6px 24px rgba(68, 64, 60,0.09);
+  --shadow-lg: 0 12px 40px rgba(68, 64, 60,0.11);
 
   /* ── Radii ── */
   --r-xs:   8px;
@@ -109,7 +109,7 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus {
   border-color: var(--amber);
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(200,169,106,0.12);
+  box-shadow: 0 0 0 4px rgba(163, 177, 138,0.12);
 }
 input::placeholder, textarea::placeholder {
   color: var(--text-faint);
@@ -242,3 +242,4 @@ tr:hover td { background: var(--cream); }
   margin: 0 auto;
   padding: 0 5%;
 }
+

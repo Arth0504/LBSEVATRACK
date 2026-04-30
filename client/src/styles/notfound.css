@@ -1,7 +1,7 @@
 /* notfound.css */
 .notfound-container {
   min-height: 100vh;
-  background: #FEFCF8;
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,7 +15,7 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(72px, 14vw, 120px);
   font-weight: 600;
-  color: #EDE6D9;
+  color: #E7E5E4;
   line-height: 1;
   margin-bottom: 6px;
   letter-spacing: 0.04em;
@@ -25,14 +25,14 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(20px, 2.8vw, 28px);
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 10px;
 }
 
 .notfound-container p {
   font-size: 15px;
   max-width: 340px;
-  color: #C4B9A8;
+  color: #A8A29E;
   line-height: 1.75;
 }
 
@@ -41,18 +41,19 @@
   padding: 13px 32px;
   border: none;
   border-radius: 999px;
-  background: #3D3530;
+  background: #44403C;
   color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.14);
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.14);
 }
 
 .home-btn:hover {
-  background: #241F1A;
+  background: #292524;
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(60,45,30,0.18);
+  box-shadow: 0 4px 18px rgba(68, 64, 60,0.18);
 }
+

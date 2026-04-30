@@ -1,7 +1,7 @@
 /* gateVerify.css */
 .gate-container {
   padding: 52px 6%;
-  background: #FEFCF8;
+  background: #FFFFFF;
   min-height: 100vh;
   font-family: 'DM Sans', sans-serif;
 }
@@ -10,7 +10,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 26px;
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 8px;
 }
 
@@ -21,8 +21,8 @@
   background: #FFFFFF;
   padding: 26px;
   border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(60,45,30,0.08);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 4px 20px rgba(68, 64, 60,0.08);
+  border: 1px solid #E7E5E4;
 }
 
 .user-photo {
@@ -30,7 +30,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 13px;
-  border: 2px solid #EDE6D9;
+  border: 2px solid #E7E5E4;
 }
 
 .member-grid { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
@@ -41,7 +41,7 @@
   width: 76px; height: 76px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
 }
 
 .child, .adult {
@@ -52,9 +52,9 @@
   letter-spacing: 0.05em;
   display: inline-block;
   margin-top: 5px;
-  background: #FAF3E4;
-  color: #9E9080;
-  border: 1px solid #F0E4C8;
+  background: #F4F5F2;
+  color: #78716C;
+  border: 1px solid #EAECE5;
 }
 
 .manual-box { margin-top: 18px; }
@@ -63,19 +63,19 @@
   padding: 10px 14px;
   margin-right: 10px;
   border-radius: 12px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   background: #fff;
-  color: #3D3530;
+  color: #44403C;
   outline: none;
   transition: border-color 0.25s ease;
 }
 
-.manual-box input:focus { border-color: #C8A96A; }
+.manual-box input:focus { border-color: #A3B18A; }
 
 .manual-box button {
-  background: #3D3530;
+  background: #44403C;
   color: #fff;
   border: none;
   padding: 10px 22px;
@@ -86,9 +86,10 @@
   font-weight: 500;
   transition: background 0.25s ease;
   margin-top: 0;
-  box-shadow: 0 2px 10px rgba(60,45,30,0.12);
+  box-shadow: 0 2px 10px rgba(68, 64, 60,0.12);
 }
 
-.manual-box button:hover { background: #241F1A; }
+.manual-box button:hover { background: #292524; }
 
 @media (max-width: 768px) { .gate-container { padding: 34px 5%; } }
+

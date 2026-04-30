@@ -2,8 +2,8 @@
 
 .temple-details {
   font-family: 'DM Sans', sans-serif;
-  background: #FEFCF8;
-  color: #6E6358;
+  background: #FFFFFF;
+  color: #57534E;
   line-height: 1.7;
 }
 
@@ -11,9 +11,9 @@
 
 .back-btn {
   background: #FFFFFF;
-  color: #9E9080;
+  color: #78716C;
   padding: 9px 22px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   border-radius: 999px;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
@@ -26,9 +26,9 @@
 }
 
 .back-btn:hover {
-  background: #FAF3E4;
-  color: #3D3530;
-  border-color: #F0E4C8;
+  background: #F4F5F2;
+  color: #44403C;
+  border-color: #EAECE5;
   transform: translateX(-2px);
 }
 
@@ -48,7 +48,7 @@
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 60px;
-  background: linear-gradient(to top, #FEFCF8, transparent);
+  background: linear-gradient(to top, #FFFFFF, transparent);
 }
 
 .hero-overlay { position: relative; z-index: 1; padding: 0 20px; }
@@ -56,19 +56,19 @@
 .hero-overlay h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(28px, 5vw, 52px);
-  color: rgba(254,250,240,0.97);
+  color: rgba(255, 255, 255,0.97);
   margin-bottom: 10px;
   font-weight: 500;
 }
 
-.hero-overlay p { color: rgba(254,250,240,0.60); font-size: 15px; font-weight: 300; }
+.hero-overlay p { color: rgba(255, 255, 255,0.60); font-size: 15px; font-weight: 300; }
 
 .hero-btn {
   margin-top: 20px;
   padding: 12px 30px;
-  background: rgba(200,169,106,0.80);
+  background: rgba(163, 177, 138,0.80);
   backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(200,169,106,0.50);
+  border: 1.5px solid rgba(163, 177, 138,0.50);
   color: #fff;
   border-radius: 999px;
   cursor: pointer;
@@ -78,7 +78,7 @@
   transition: all 0.25s ease;
 }
 
-.hero-btn:hover { background: rgba(200,169,106,0.95); transform: translateY(-1px); }
+.hero-btn:hover { background: rgba(163, 177, 138,0.95); transform: translateY(-1px); }
 
 .info-section { padding: 60px 5%; max-width: 1100px; margin: auto; }
 
@@ -87,12 +87,12 @@
   font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
   margin-bottom: 18px;
-  color: #3D3530;
+  color: #44403C;
 }
 
-.info-section p { font-size: 15px; font-weight: 300; margin-bottom: 14px; color: #9E9080; line-height: 1.8; }
+.info-section p { font-size: 15px; font-weight: 300; margin-bottom: 14px; color: #78716C; line-height: 1.8; }
 
-.aarti-section { padding: 60px 5%; background: #FAF7F2; }
+.aarti-section { padding: 60px 5%; background: #FAFAF9; }
 
 .aarti-section h2 {
   text-align: center;
@@ -100,7 +100,7 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
 }
 
 .aarti-grid {
@@ -115,42 +115,42 @@
   background: #FFFFFF;
   padding: 24px 22px;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.06);
+  border: 1px solid #E7E5E4;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.aarti-card:hover { box-shadow: 0 8px 24px rgba(60,45,30,0.10); transform: translateY(-3px); }
+.aarti-card:hover { box-shadow: 0 8px 24px rgba(68, 64, 60,0.10); transform: translateY(-3px); }
 
-.aarti-card h4 { font-family: 'Playfair Display', serif; color: #3D3530; margin-bottom: 6px; font-size: 18px; font-weight: 600; }
-.aarti-card p  { font-size: 13px; color: #C4B9A8; font-weight: 300; }
+.aarti-card h4 { font-family: 'Playfair Display', serif; color: #44403C; margin-bottom: 6px; font-size: 18px; font-weight: 600; }
+.aarti-card p  { font-size: 13px; color: #A8A29E; font-weight: 300; }
 
-.calendar-section { padding: 60px 5%; text-align: center; background: #FEFCF8; }
+.calendar-section { padding: 60px 5%; text-align: center; background: #FFFFFF; }
 
 .calendar-section h2 {
   margin-bottom: 20px;
   font-family: 'Playfair Display', serif;
   font-size: clamp(22px, 2.8vw, 28px);
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
 }
 
 .calendar-section input[type="date"] {
   padding: 12px 20px;
   border-radius: 12px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   background: #FFFFFF;
-  color: #3D3530;
+  color: #44403C;
   cursor: pointer;
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .calendar-section input[type="date"]:focus {
-  border-color: #C8A96A;
-  box-shadow: 0 0 0 4px rgba(200,169,106,0.10);
+  border-color: #A3B18A;
+  box-shadow: 0 0 0 4px rgba(163, 177, 138,0.10);
 }
 
 .slots-section { padding: 60px 5%; }
@@ -161,7 +161,7 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(22px, 2.8vw, 30px);
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
 }
 
 .slot-grid {
@@ -176,34 +176,34 @@
   background: #FFFFFF;
   padding: 24px 22px;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.06);
+  border: 1px solid #E7E5E4;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.slot-card:hover { box-shadow: 0 8px 24px rgba(60,45,30,0.10); transform: translateY(-3px); }
+.slot-card:hover { box-shadow: 0 8px 24px rgba(68, 64, 60,0.10); transform: translateY(-3px); }
 
-.slot-card p { margin-bottom: 8px; font-size: 14px; color: #9E9080; font-weight: 300; }
+.slot-card p { margin-bottom: 8px; font-size: 14px; color: #78716C; font-weight: 300; }
 
 .book-btn {
   margin-top: 14px;
   padding: 10px 22px;
   border-radius: 999px;
   border: none;
-  background: #3D3530;
+  background: #44403C;
   color: #fff;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   font-weight: 500;
   transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 10px rgba(60,45,30,0.12);
+  box-shadow: 0 2px 10px rgba(68, 64, 60,0.12);
 }
 
-.book-btn:hover { background: #241F1A; transform: translateY(-1px); }
+.book-btn:hover { background: #292524; transform: translateY(-1px); }
 
 .book-btn:disabled {
-  background: #DDD4C4;
+  background: #D6D3D1;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -215,3 +215,4 @@
   .hero-section { height: 250px; }
   .info-section, .aarti-section, .slots-section, .calendar-section { padding: 38px 5%; }
 }
+

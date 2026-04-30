@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FEFCF8;
+  background: #FFFFFF;
   padding: 40px 20px;
 }
 
@@ -15,8 +15,8 @@
   width: 100%;
   max-width: 400px;
   border-radius: 22px;
-  box-shadow: 0 4px 28px rgba(60,45,30,0.09);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 4px 28px rgba(68, 64, 60,0.09);
+  border: 1px solid #E7E5E4;
   text-align: center;
 }
 
@@ -36,11 +36,11 @@
   font-family: 'Playfair Display', serif;
   font-size: 26px;
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 4px;
 }
 
-.subtitle { font-size: 14px; color: #C4B9A8; margin-bottom: 26px; }
+.subtitle { font-size: 14px; color: #A8A29E; margin-bottom: 26px; }
 
 .form-group { margin-bottom: 15px; text-align: left; }
 
@@ -50,34 +50,34 @@
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: #9E9080;
+  color: #78716C;
   margin-bottom: 6px;
 }
 
 .form-group input {
   width: 100%;
   padding: 12px 15px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   border-radius: 12px;
   font-size: 15px;
-  color: #3D3530;
-  background: #FEFCF8;
+  color: #44403C;
+  background: #FFFFFF;
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .form-group input:focus {
-  border-color: #C8A96A;
+  border-color: #A3B18A;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(200,169,106,0.10);
+  box-shadow: 0 0 0 4px rgba(163, 177, 138,0.10);
 }
 
-.form-group input::placeholder { color: #DDD4C4; }
+.form-group input::placeholder { color: #D6D3D1; }
 
 .auth-btn {
   width: 100%;
   padding: 13px;
-  background: #3D3530;
+  background: #44403C;
   border: none;
   color: #fff;
   font-size: 15px;
@@ -85,13 +85,14 @@
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.14);
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.14);
   margin-top: 8px;
 }
 
-.auth-btn:hover { background: #241F1A; transform: translateY(-1px); }
+.auth-btn:hover { background: #292524; transform: translateY(-1px); }
 
-.switch-text { margin-top: 16px; font-size: 14px; color: #C4B9A8; }
+.switch-text { margin-top: 16px; font-size: 14px; color: #A8A29E; }
 
-.switch-text a { color: #6E6358; font-weight: 500; text-decoration: none; }
-.switch-text a:hover { color: #3D3530; }
+.switch-text a { color: #57534E; font-weight: 500; text-decoration: none; }
+.switch-text a:hover { color: #44403C; }
+

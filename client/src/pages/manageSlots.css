@@ -1,27 +1,27 @@
 /* manageSlots.css */
 .slots-container {
   padding: 30px;
-  background: #FEFCF8;
+  background: #FFFFFF;
   min-height: 100vh;
   font-family: 'DM Sans', sans-serif;
 }
 
-.slots-container h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #3D3530; margin-bottom: 22px; }
+.slots-container h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #44403C; margin-bottom: 22px; }
 
 .slots-container select {
   padding: 10px 14px;
   margin-bottom: 20px;
   border-radius: 12px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   background: #fff;
-  color: #3D3530;
+  color: #44403C;
   outline: none;
   transition: border-color 0.25s ease;
 }
 
-.slots-container select:focus { border-color: #C8A96A; }
+.slots-container select:focus { border-color: #A3B18A; }
 
 .slot-form {
   display: flex;
@@ -31,29 +31,29 @@
   background: #FFFFFF;
   padding: 22px;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.06);
+  border: 1px solid #E7E5E4;
 }
 
 .slot-form input,
 .slot-form select {
   padding: 10px 14px;
   border-radius: 12px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  background: #FEFCF8;
-  color: #3D3530;
+  background: #FFFFFF;
+  color: #44403C;
   min-width: 148px;
   outline: none;
   transition: border-color 0.25s ease;
 }
 
 .slot-form input:focus,
-.slot-form select:focus { border-color: #C8A96A; }
+.slot-form select:focus { border-color: #A3B18A; }
 
 .slot-form button {
-  background: #3D3530;
+  background: #44403C;
   color: #fff;
   border: none;
   padding: 10px 22px;
@@ -63,44 +63,44 @@
   font-size: 14px;
   font-weight: 500;
   transition: background 0.25s ease, transform 0.25s ease;
-  box-shadow: 0 2px 10px rgba(60,45,30,0.12);
+  box-shadow: 0 2px 10px rgba(68, 64, 60,0.12);
   margin-top: 0;
 }
 
-.slot-form button:hover { background: #241F1A; transform: translateY(-1px); }
+.slot-form button:hover { background: #292524; transform: translateY(-1px); }
 
 .slot-table {
   background: #FFFFFF;
   padding: 20px;
   border-radius: 18px;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.06);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.06);
+  border: 1px solid #E7E5E4;
   overflow-x: auto;
 }
 
 .slot-table table { width: 100%; border-collapse: collapse; }
 
 .slot-table th {
-  background: #FAF7F2;
-  color: #C4B9A8;
+  background: #FAFAF9;
+  color: #A8A29E;
   padding: 11px 13px;
   text-align: left;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-bottom: 1px solid #EDE6D9;
+  border-bottom: 1px solid #E7E5E4;
 }
 
 .slot-table td {
   padding: 12px 13px;
-  border-bottom: 1px solid #FAF7F2;
+  border-bottom: 1px solid #FAFAF9;
   font-size: 14px;
-  color: #3D3530;
+  color: #44403C;
   font-weight: 300;
 }
 
-.slot-table tr:hover td { background: #FAF7F2; }
+.slot-table tr:hover td { background: #FAFAF9; }
 
 .badge {
   padding: 3px 11px;
@@ -111,19 +111,19 @@
   display: inline-block;
 }
 
-.badge.active   { background: #FAF3E4; color: #9E9080; border: 1px solid #F0E4C8; }
-.badge.full     { background: #FAF7F2; color: #9E9080; border: 1px solid #EDE6D9; }
-.badge.closed   { background: #FAF7F2; color: #C4B9A8; border: 1px solid #EDE6D9; }
+.badge.active   { background: #F4F5F2; color: #78716C; border: 1px solid #EAECE5; }
+.badge.full     { background: #FAFAF9; color: #78716C; border: 1px solid #E7E5E4; }
+.badge.closed   { background: #FAFAF9; color: #A8A29E; border: 1px solid #E7E5E4; }
 
-.crowd { font-weight: 500; color: #9E9080; }
-.crowd.low    { color: #6E6358; }
-.crowd.medium { color: #9E9080; }
-.crowd.high   { color: #6E6358; }
+.crowd { font-weight: 500; color: #78716C; }
+.crowd.low    { color: #57534E; }
+.crowd.medium { color: #78716C; }
+.crowd.high   { color: #57534E; }
 
 .slot-table button {
   padding: 5px 13px;
   border-radius: 999px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   cursor: pointer;
   margin-right: 5px;
   font-family: 'DM Sans', sans-serif;
@@ -131,11 +131,11 @@
   font-weight: 500;
   transition: all 0.22s ease;
   margin-top: 0;
-  background: #FAF7F2;
-  color: #9E9080;
+  background: #FAFAF9;
+  color: #78716C;
 }
 
-.slot-table button:hover { background: #F4EFE6; color: #3D3530; border-color: #DDD4C4; }
+.slot-table button:hover { background: #F5F5F4; color: #44403C; border-color: #D6D3D1; }
 
 @media (max-width: 768px) {
   .slot-form { flex-direction: column; }
@@ -144,3 +144,4 @@
   .slot-table tr { margin-bottom: 10px; }
   .slot-table td { border: none; position: relative; padding-left: 44%; }
 }
+

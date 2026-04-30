@@ -4,8 +4,8 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: #FEFCF8;
-  color: #6E6358;
+  background: #FFFFFF;
+  color: #57534E;
   overflow-x: hidden;
   cursor: none;
 }
@@ -19,14 +19,14 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background: #FEFCF8;
+  background: #FFFFFF;
 }
 
 .global-light-1 {
   position: absolute;
   top: -20%; left: -10%;
   width: 60vw; height: 60vw;
-  background: radial-gradient(circle, rgba(200,169,106,0.06) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(163, 177, 138,0.06) 0%, transparent 65%);
   border-radius: 50%;
   animation: warmDrift 26s ease-in-out infinite alternate;
 }
@@ -35,7 +35,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: absolute;
   bottom: -20%; right: -10%;
   width: 55vw; height: 55vw;
-  background: radial-gradient(circle, rgba(196,185,168,0.07) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(168, 162, 158,0.07) 0%, transparent 65%);
   border-radius: 50%;
   animation: warmDrift 32s ease-in-out infinite alternate-reverse;
 }
@@ -48,7 +48,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 /* ── Custom cursor ── */
 .smooth-cursor-dot {
   width: 6px; height: 6px;
-  background: #C8A96A;
+  background: #A3B18A;
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
@@ -58,7 +58,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 
 .smooth-cursor-outline {
   width: 30px; height: 30px;
-  border: 1.5px solid rgba(200,169,106,0.30);
+  border: 1.5px solid rgba(163, 177, 138,0.30);
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
@@ -91,7 +91,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 /* Sanskrit greeting above hero */
 .message {
   font-family: 'Noto Serif Devanagari', serif;
-  color: #C8A96A;
+  color: #A3B18A;
   font-size: clamp(14px, 1.6vw, 19px);
   font-weight: 400;
   text-align: center;
@@ -108,7 +108,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   margin: 24px auto 0;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 40px rgba(60,45,30,0.12);
+  box-shadow: 0 8px 40px rgba(68, 64, 60,0.12);
 }
 
 .home-hero-slide {
@@ -138,8 +138,8 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   padding: 0 7% 8%;
   background: linear-gradient(
     to top,
-    rgba(36,31,26,0.72) 0%,
-    rgba(36,31,26,0.28) 40%,
+    rgba(41, 37, 36,0.72) 0%,
+    rgba(41, 37, 36,0.28) 40%,
     transparent 100%
   );
   z-index: 2;
@@ -155,7 +155,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 
 .home-hero-shlok {
   font-family: 'Noto Serif Devanagari', serif;
-  color: rgba(254, 250, 240, 0.96);
+  color: rgba(255, 255, 255, 0.96);
   font-size: clamp(17px, 2.2vw, 28px);
   line-height: 1.75;
   font-weight: 400;
@@ -171,10 +171,10 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 
 /* CTA — warm frosted */
 .hero-cta-btn {
-  background: rgba(254,250,240,0.14);
+  background: rgba(255, 255, 255,0.14);
   backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(254,250,240,0.40);
-  color: rgba(254,250,240,0.94);
+  border: 1.5px solid rgba(255, 255, 255,0.40);
+  color: rgba(255, 255, 255,0.94);
   padding: 12px 30px;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
@@ -192,10 +192,10 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 .active .stagger-text-2 { animation: riseUp 0.9s 0.8s forwards ease-out; }
 
 .hero-cta-btn:hover {
-  background: rgba(200,169,106,0.75) !important;
+  background: rgba(163, 177, 138,0.75) !important;
   border-color: transparent;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(200,169,106,0.30);
+  box-shadow: 0 8px 24px rgba(163, 177, 138,0.30);
 }
 
 .btn-glow { display: none; }
@@ -211,14 +211,14 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 
 .dot {
   height: 6px; width: 18px;
-  background: rgba(200,169,106,0.22);
+  background: rgba(163, 177, 138,0.22);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.35s ease;
 }
 
 .dot.active {
-  background: rgba(200,169,106,0.65);
+  background: rgba(163, 177, 138,0.65);
   width: 36px;
 }
 
@@ -234,13 +234,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   font-family: 'Playfair Display', serif;
   font-size: clamp(24px, 3.2vw, 38px);
   font-weight: 600;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 10px;
 }
 
 .section-sub {
   font-family: 'DM Sans', sans-serif;
-  color: #C4B9A8;
+  color: #A8A29E;
   font-size: 15px;
   font-weight: 400;
 }
@@ -248,7 +248,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 /* Warm amber ornament line */
 .title-underline {
   width: 48px; height: 2px;
-  background: linear-gradient(90deg, transparent, #C8A96A, transparent);
+  background: linear-gradient(90deg, transparent, #A3B18A, transparent);
   margin: 14px auto 0;
   border-radius: 2px;
   position: relative;
@@ -260,7 +260,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: absolute;
   top: -3px;
   width: 8px; height: 8px;
-  background: #C8A96A;
+  background: #A3B18A;
   border-radius: 50%;
   opacity: 0.4;
 }
@@ -290,7 +290,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(60,45,30,0.09);
+  box-shadow: 0 4px 20px rgba(68, 64, 60,0.09);
   transition: box-shadow 0.45s ease, transform 0.45s ease;
 }
 
@@ -311,15 +311,15 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(36,31,26,0.78) 0%,
-    rgba(36,31,26,0.20) 50%,
+    rgba(41, 37, 36,0.78) 0%,
+    rgba(41, 37, 36,0.20) 50%,
     transparent 100%
   );
   transition: background 0.45s ease;
 }
 
 .featured-card:hover {
-  box-shadow: 0 12px 36px rgba(60,45,30,0.15);
+  box-shadow: 0 12px 36px rgba(68, 64, 60,0.15);
   transform: translateY(-4px);
 }
 
@@ -328,8 +328,8 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 .featured-card:hover .card-gradient {
   background: linear-gradient(
     to top,
-    rgba(36,31,26,0.65) 0%,
-    rgba(36,31,26,0.14) 50%,
+    rgba(41, 37, 36,0.65) 0%,
+    rgba(41, 37, 36,0.14) 50%,
     transparent 100%
   );
 }
@@ -356,13 +356,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
   font-weight: 600;
-  color: rgba(254,250,240,0.97);
+  color: rgba(255, 255, 255,0.97);
   margin-bottom: 5px;
 }
 
 .temple-location {
   font-size: 13px;
-  color: rgba(254,250,240,0.60);
+  color: rgba(255, 255, 255,0.60);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -370,8 +370,8 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 }
 
 .featured-btn {
-  background: rgba(254,250,240,0.90);
-  color: #3D3530;
+  background: rgba(255, 255, 255,0.90);
+  color: #44403C;
   border: none;
   padding: 10px 22px;
   border-radius: 999px;
@@ -391,7 +391,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 .featured-card:hover .featured-btn { opacity: 1; transform: translateY(0); }
 
 .featured-btn:hover {
-  background: #C8A96A;
+  background: #A3B18A;
   color: #fff;
 }
 
@@ -408,7 +408,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   z-index: 1;
   border-radius: 28px;
   margin: 0 3%;
-  box-shadow: 0 2px 20px rgba(60,45,30,0.05);
+  box-shadow: 0 2px 20px rgba(68, 64, 60,0.05);
 }
 
 .how-container {
@@ -428,13 +428,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 }
 
 .how-step {
-  background: #FEFCF8;
+  background: #FFFFFF;
   padding: 36px 26px;
   border-radius: 20px;
   width: 220px;
   text-align: center;
-  border: 1px solid #EDE6D9;
-  box-shadow: 0 2px 8px rgba(60,45,30,0.04);
+  border: 1px solid #E7E5E4;
+  box-shadow: 0 2px 8px rgba(68, 64, 60,0.04);
   transition: box-shadow 0.35s ease, transform 0.35s ease;
   position: relative;
   overflow: hidden;
@@ -446,13 +446,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #C8A96A, transparent);
+  background: linear-gradient(90deg, transparent, #A3B18A, transparent);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
 
 .how-step:hover {
-  box-shadow: 0 8px 24px rgba(60,45,30,0.09);
+  box-shadow: 0 8px 24px rgba(68, 64, 60,0.09);
   transform: translateY(-4px);
 }
 
@@ -463,8 +463,8 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 /* Step circle — warm amber tint */
 .step-circle {
   width: 52px; height: 52px;
-  background: #FAF3E4;
-  color: #C8A96A;
+  background: #F4F5F2;
+  color: #A3B18A;
   font-family: 'Playfair Display', serif;
   font-size: 20px;
   font-weight: 600;
@@ -473,25 +473,25 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   align-items: center;
   justify-content: center;
   margin: 0 auto 18px;
-  border: 1.5px solid #F0E4C8;
+  border: 1.5px solid #EAECE5;
 }
 
 .how-step h4 {
   font-family: 'Playfair Display', serif;
   font-size: 16px;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 8px;
   font-weight: 600;
 }
 
 .how-step p {
   font-size: 13px;
-  color: #C4B9A8;
+  color: #A8A29E;
   line-height: 1.65;
 }
 
 .step-arrow {
-  color: #DDD4C4;
+  color: #D6D3D1;
   opacity: 0.8;
   animation: nudge 2.8s ease-in-out infinite;
   display: flex;
@@ -525,32 +525,32 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   background: #FFFFFF;
   padding: 44px 40px;
   border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(60,45,30,0.08);
-  border: 1px solid #EDE6D9;
+  box-shadow: 0 4px 24px rgba(68, 64, 60,0.08);
+  border: 1px solid #E7E5E4;
 }
 
 .query-form input,
 .query-form textarea {
   padding: 13px 16px;
-  border: 1.5px solid #EDE6D9;
+  border: 1.5px solid #E7E5E4;
   border-radius: 12px;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
-  color: #3D3530;
-  background: #FEFCF8;
+  color: #44403C;
+  background: #FFFFFF;
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .query-form input:focus,
 .query-form textarea:focus {
-  border-color: #C8A96A;
+  border-color: #A3B18A;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(200,169,106,0.10);
+  box-shadow: 0 0 0 4px rgba(163, 177, 138,0.10);
 }
 
 .query-btn {
-  background: #3D3530;
+  background: #44403C;
   color: #fff;
   border: none;
   padding: 13px 32px;
@@ -560,14 +560,14 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   border-radius: 999px;
   cursor: pointer;
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 2px 12px rgba(60,45,30,0.12);
+  box-shadow: 0 2px 12px rgba(68, 64, 60,0.12);
   margin-top: 6px;
 }
 
 .query-btn:hover {
-  background: #241F1A;
+  background: #292524;
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(60,45,30,0.16);
+  box-shadow: 0 4px 18px rgba(68, 64, 60,0.16);
 }
 
 /* ══════════════════════════════════════
@@ -591,8 +591,8 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   padding: 28px 24px;
   border-radius: 18px;
   background: #FFFFFF;
-  border: 1px solid #EDE6D9;
-  box-shadow: 0 2px 10px rgba(60,45,30,0.05);
+  border: 1px solid #E7E5E4;
+  box-shadow: 0 2px 10px rgba(68, 64, 60,0.05);
   transition: box-shadow 0.35s ease, transform 0.35s ease;
   position: relative;
   overflow: hidden;
@@ -604,13 +604,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: absolute;
   top: 0; left: 0;
   width: 3px; height: 100%;
-  background: linear-gradient(to bottom, #C8A96A, #F0E4C8);
+  background: linear-gradient(to bottom, #A3B18A, #EAECE5);
   opacity: 0;
   transition: opacity 0.35s ease;
 }
 
 .notice-card:hover {
-  box-shadow: 0 8px 28px rgba(60,45,30,0.09);
+  box-shadow: 0 8px 28px rgba(68, 64, 60,0.09);
   transform: translateY(-3px);
 }
 
@@ -619,14 +619,14 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 .notice-card h3 {
   font-family: 'Playfair Display', serif;
   font-size: 19px;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 9px;
   font-weight: 600;
 }
 
 .notice-card p {
   font-size: 14px;
-  color: #C4B9A8;
+  color: #A8A29E;
   line-height: 1.7;
 }
 
@@ -634,11 +634,11 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
    FOOTER — warm cream, not dark
    ══════════════════════════════════════ */
 .footer {
-  background: #FAF7F2;
-  color: #9E9080;
+  background: #FAFAF9;
+  color: #78716C;
   padding: 64px 5% 28px;
   font-family: 'DM Sans', sans-serif;
-  border-top: 1px solid #EDE6D9;
+  border-top: 1px solid #E7E5E4;
 }
 
 .footer-gradient-top { display: none; }
@@ -654,13 +654,13 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 .brand-col h3 {
   font-family: 'Playfair Display', serif;
   font-size: 22px;
-  color: #3D3530;
+  color: #44403C;
   margin-bottom: 10px;
   font-weight: 600;
 }
 
 .brand-col p {
-  color: #C4B9A8;
+  color: #A8A29E;
   font-size: 14px;
   line-height: 1.75;
 }
@@ -673,7 +673,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   font-weight: 600;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: #C4B9A8;
+  color: #A8A29E;
   margin-bottom: 18px;
   padding-bottom: 10px;
   position: relative;
@@ -684,7 +684,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   position: absolute;
   bottom: 0; left: 0;
   width: 24px; height: 1.5px;
-  background: #C8A96A;
+  background: #A3B18A;
   opacity: 0.5;
 }
 
@@ -692,7 +692,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   display: block;
   margin-bottom: 12px;
   font-size: 14px;
-  color: #C4B9A8;
+  color: #A8A29E;
   text-decoration: none;
   cursor: pointer;
   width: fit-content;
@@ -700,15 +700,15 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
 }
 
 .footer-col a:hover, .footer-col .footer-link:hover {
-  color: #6E6358;
+  color: #57534E;
   transform: translateX(4px);
 }
 
 .footer-bottom {
-  border-top: 1px solid #EDE6D9;
+  border-top: 1px solid #E7E5E4;
   padding-top: 22px;
   font-size: 13px;
-  color: #DDD4C4;
+  color: #D6D3D1;
   display: flex;
   justify-content: space-between;
   max-width: 1200px;
@@ -718,7 +718,7 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   gap: 10px;
 }
 
-.madeby { color: #C8A96A; font-weight: 500; opacity: 0.8; }
+.madeby { color: #A3B18A; font-weight: 500; opacity: 0.8; }
 
 /* Particles — off */
 .particles { display: none; }
@@ -735,3 +735,4 @@ h1, h2, h3, h4, .message, .home-hero-shlok {
   .footer-bottom { flex-direction: column; text-align: center; }
   .featured-grid { grid-template-columns: 1fr; }
 }
+
