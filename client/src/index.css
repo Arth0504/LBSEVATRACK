@@ -4,141 +4,215 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════ */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
 
   body {
-    @apply font-sans bg-rose-25 text-warm-700 antialiased overflow-x-hidden;
-    line-height: 1.7;
+    @apply font-sans antialiased overflow-x-hidden;
+    background-color: #F8F5F2;
+    color: #3D3935;
+    line-height: 1.65;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif text-warm-800 leading-tight;
+  h1,h2,h3,h4,h5,h6 {
+    @apply font-serif leading-tight;
+    color: #28251F;
   }
 
   a { @apply no-underline; }
-
-  input, select, textarea {
-    @apply font-sans;
-  }
+  input, select, textarea { @apply font-sans; }
 
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { @apply bg-rose-200 rounded-full; }
-  ::-webkit-scrollbar-thumb:hover { @apply bg-rose-300; }
+  ::-webkit-scrollbar-thumb { background: #D1CEC9; border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: #A8A29C; }
 }
 
+/* ═══════════════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════════════ */
 @layer components {
-  /* ── Buttons ── */
+
+  /* ── Primary Button ── */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-blush-400 text-white font-sans font-medium text-sm rounded-full
-           shadow-soft transition-all duration-300 hover:bg-blush-500 hover:-translate-y-0.5 hover:shadow-soft-md
-           focus:outline-none focus:ring-2 focus:ring-blush-300 focus:ring-offset-2 cursor-pointer border-0;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-xl font-sans font-semibold text-sm text-white
+           bg-primary-grad shadow-primary
+           transition-all duration-200
+           hover:shadow-primary-lg hover:-translate-y-0.5 hover:brightness-105
+           focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2
+           cursor-pointer border-0 select-none;
   }
 
+  /* ── Secondary Button ── */
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blush-500 font-sans font-medium text-sm rounded-full
-           border border-rose-200 shadow-card transition-all duration-300 hover:bg-rose-50 hover:-translate-y-0.5 hover:shadow-card-hover
-           focus:outline-none focus:ring-2 focus:ring-rose-200 cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3 rounded-xl font-sans font-medium text-sm
+           bg-white text-primary-600 border border-primary-200
+           shadow-xs transition-all duration-200
+           hover:bg-primary-50 hover:border-primary-300 hover:-translate-y-0.5 hover:shadow-sm
+           focus:outline-none focus:ring-2 focus:ring-primary-200 cursor-pointer;
   }
 
+  /* ── Ghost Button ── */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-transparent text-warm-500 font-sans font-medium text-sm rounded-full
-           border border-warm-200 transition-all duration-300 hover:bg-warm-100 hover:text-warm-700 cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5 rounded-xl font-sans font-medium text-sm
+           bg-transparent text-stone-600 border border-stone-200
+           transition-all duration-200
+           hover:bg-stone-100 hover:text-stone-800 hover:border-stone-300
+           cursor-pointer;
   }
 
-  /* ── Cards ── */
-  .card-base {
-    @apply bg-white rounded-3xl border border-rose-100 shadow-card transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1;
+  /* ── Danger Button ── */
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           px-5 py-2.5 rounded-xl font-sans font-medium text-sm
+           bg-red-50 text-red-600 border border-red-200
+           transition-all duration-200 hover:bg-red-100 cursor-pointer;
   }
 
-  .card-soft {
-    @apply bg-rose-25 rounded-3xl border border-rose-100 shadow-warm transition-all duration-300 hover:shadow-warm-md;
+  /* ── Card ── */
+  .card {
+    @apply bg-white rounded-2xl border border-stone-150 shadow-sm
+           transition-all duration-300;
   }
 
-  /* ── Inputs ── */
-  .input-base {
-    @apply w-full px-4 py-3 bg-white border border-rose-200 rounded-xl font-sans text-sm text-warm-800
-           placeholder-warm-300 outline-none transition-all duration-300
-           focus:border-blush-300 focus:ring-2 focus:ring-blush-100 focus:bg-white;
+  .card-hover {
+    @apply card hover:shadow-md hover:-translate-y-1;
   }
 
-  /* ── Section header ── */
-  .section-title {
-    @apply font-serif text-3xl md:text-4xl font-semibold text-warm-800 text-center;
+  .card-muted {
+    @apply rounded-2xl border border-stone-150 shadow-xs
+           transition-all duration-300;
+    background-color: #F8F5F2;
+  }
+
+  /* ── Input ── */
+  .input {
+    @apply w-full px-4 py-3 rounded-xl font-sans text-sm text-stone-800
+           bg-white border border-stone-200
+           placeholder-stone-400 outline-none
+           transition-all duration-200
+           focus:border-primary-400 focus:ring-2 focus:ring-primary-100;
+  }
+
+  /* ── Label ── */
+  .label {
+    @apply block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1.5;
+  }
+
+  /* ── Section container ── */
+  .section-container {
+    @apply max-w-7xl mx-auto px-5 md:px-8 lg:px-12;
+  }
+
+  /* ── Section heading ── */
+  .section-heading {
+    @apply font-serif font-semibold text-stone-800;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
   }
 
   .section-sub {
-    @apply font-sans text-base text-warm-400 text-center mt-2;
+    @apply font-sans text-base text-stone-400 mt-2;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    @apply w-12 h-1 rounded-full mx-auto mt-4;
+    background: linear-gradient(90deg, #C94B6A, #A83558);
   }
 
   /* ── Badge ── */
-  .badge-rose {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-blush-500;
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
+           text-xs font-semibold tracking-wide;
   }
 
-  .badge-warm {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-warm-100 text-warm-600;
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-600;
+  }
+
+  .badge-stone {
+    @apply badge bg-stone-100 text-stone-600;
   }
 
   /* ── Status badges ── */
-  .status-booked    { @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-rose-100 text-blush-500; }
-  .status-used      { @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-cream-100 text-warm-600; }
-  .status-cancelled { @apply inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-warm-100 text-warm-500; }
+  .status-booked    { @apply badge bg-emerald-50 text-emerald-700 border border-emerald-200; }
+  .status-used      { @apply badge bg-blue-50 text-blue-700 border border-blue-200; }
+  .status-cancelled { @apply badge bg-red-50 text-red-600 border border-red-200; }
 
-  /* ── Sidebar item ── */
-  .sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium text-warm-500
-           transition-all duration-200 cursor-pointer hover:bg-rose-50 hover:text-blush-500;
+  /* ── Sidebar nav item ── */
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium
+           text-stone-300 transition-all duration-200 cursor-pointer
+           hover:bg-white/10 hover:text-white;
   }
 
-  .sidebar-link-active {
-    @apply flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium
-           bg-gradient-to-r from-rose-100 to-blush-50 text-blush-500 border-l-2 border-blush-400;
+  .nav-item-active {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold
+           bg-white/15 text-white border-l-2 border-primary-400 cursor-pointer;
   }
 
-  /* ── Fade-in animation ── */
-  .fade-in-section {
+  /* ── Table ── */
+  .table-head-cell {
+    @apply text-left text-xs font-semibold uppercase tracking-wider
+           text-stone-400 px-4 py-3 bg-stone-50 first:rounded-tl-xl last:rounded-tr-xl;
+  }
+
+  .table-cell {
+    @apply px-4 py-3.5 text-sm text-stone-700 border-b border-stone-100;
+  }
+
+  /* ── Scroll fade ── */
+  .fade-section {
     @apply opacity-0 translate-y-5 transition-all duration-700 ease-out;
   }
 
-  .fade-in-visible {
+  .fade-visible {
     @apply opacity-100 translate-y-0;
   }
 
-  /* ── Divider ornament ── */
-  .ornament-line {
-    @apply flex items-center justify-center gap-3 my-4;
+  /* ── Page header ── */
+  .page-header {
+    @apply mb-8 pb-6 border-b border-stone-150;
   }
 
-  .ornament-line::before,
-  .ornament-line::after {
-    content: '';
-    @apply flex-1 h-px bg-gradient-to-r from-transparent via-rose-200 to-transparent;
+  .page-title {
+    @apply font-serif text-2xl font-semibold text-stone-800;
+  }
+
+  .page-sub {
+    @apply text-sm text-stone-400 mt-1;
   }
 }
 
+/* ═══════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════ */
 @layer utilities {
-  .text-gradient-rose {
-    background: linear-gradient(135deg, #E07A90, #C9556E);
+  .text-gradient {
+    background: linear-gradient(135deg, #C94B6A, #A83558);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .bg-mesh {
-    background-image:
-      radial-gradient(at 20% 10%, rgba(253,210,220,0.35) 0px, transparent 50%),
-      radial-gradient(at 80% 90%, rgba(249,215,230,0.30) 0px, transparent 50%),
-      radial-gradient(at 50% 50%, rgba(255,241,242,0.20) 0px, transparent 60%);
+  .bg-warm-page {
+    background-color: #F8F5F2;
   }
 
-  .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/60;
+  .bg-warm-section {
+    background-color: #F2EEE9;
   }
 
-  .glass-rose {
-    @apply bg-rose-25/90 backdrop-blur-md border border-rose-100/60;
+  .glass-nav {
+    background: rgba(248, 245, 242, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 }

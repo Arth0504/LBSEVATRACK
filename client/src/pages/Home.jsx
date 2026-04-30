@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import API from "../api/axios";
+import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
 
 const slides = [
   { image: "/somanth-hero.png",  shlok: "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् |\nउर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥" },
@@ -10,50 +11,47 @@ const slides = [
 ];
 
 const steps = [
-  { num: "01", title: "Register",       desc: "Create your account in seconds",       icon: "👤" },
-  { num: "02", title: "Select Temple",  desc: "Browse and choose your destination",   icon: "🛕" },
-  { num: "03", title: "Choose Slot",    desc: "Pick your preferred date & time",      icon: "📅" },
-  { num: "04", title: "Visit & Darshan",desc: "Show QR code at the entry gate",       icon: "✨" },
+  { num: "01", title: "Create Account",  desc: "Register in under a minute with your email",  icon: "👤" },
+  { num: "02", title: "Choose Temple",   desc: "Browse our curated list of sacred temples",    icon: "🛕" },
+  { num: "03", title: "Book a Slot",     desc: "Select your preferred date and time slot",     icon: "📅" },
+  { num: "04", title: "Visit & Darshan", desc: "Show your QR code at the entry gate",          icon: "✨" },
 ];
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
   const [temples, setTemples] = useState([]);
   const [notes, setNotes] = useState([]);
-  const [queryData, setQueryData] = useState({ name: "", email: "", message: "" });
-  const [queryLoading, setQueryLoading] = useState(false);
+  const [query, setQuery] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const sectionRefs = useRef([]);
-  sectionRefs.current = [];
-
-  const addToRefs = (el) => {
-    if (el && !sectionRefs.current.includes(el)) sectionRefs.current.push(el);
-  };
+  const refs = useRef([]);
+  refs.current = [];
+  const addRef = (el) => { if (el && !refs.current.includes(el)) refs.current.push(el); };
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrent((p) => (p + 1) % slides.length), 5000);
-    return () => clearInterval(interval);
+    const t = setInterval(() => setCurrent(p => (p + 1) % slides.length), 5000);
+    return () => clearInterval(t);
   }, []);
 
   useEffect(() => {
-    API.get("/temples").then((r) => setTemples(r.data)).catch(() => {});
-    API.get("/notes").then((r) => setNotes(r.data)).catch(() => {});
+    API.get("/temples").then(r => setTemples(r.data)).catch(() => {});
+    API.get("/notes").then(r => setNotes(r.data)).catch(() => {});
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("fade-in-visible"); }),
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("fade-visible"); }),
+      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
     );
-    const curr = sectionRefs.current;
-    curr.forEach((r) => observer.observe(r));
-    return () => curr.forEach((r) => observer.unobserve(r));
+    const curr = refs.current;
+    curr.forEach(r => obs.observe(r));
+    return () => curr.forEach(r => obs.unobserve(r));
   }, [temples, notes]);
 
-  const handleDarshan = (id) => (!token ? navigate("/login") : navigate(`/temple/${id}`));
+  const goTemple = (id) => !token ? navigate("/login") : navigate(`/temple/${id}`);
 
-  const getTempleImage = (name = "") => {
+  const getImg = (name = "") => {
     const l = name.toLowerCase();
     if (l.includes("dwarka"))  return "/dw1.png";
     if (l.includes("somnath")) return "/Sm1.png";
@@ -61,177 +59,174 @@ export default function Home() {
     return "/default-temple.png";
   };
 
-  const handleQuery = async (e) => {
+  const submitQuery = async (e) => {
     e.preventDefault();
-    setQueryLoading(true);
+    setSending(true);
     try {
-      await API.post("/query", queryData);
+      await API.post("/query", query);
       alert("Question submitted successfully! 🙏");
-      setQueryData({ name: "", email: "", message: "" });
+      setQuery({ name: "", email: "", message: "" });
     } catch { alert("Failed to submit. Please try again."); }
-    finally { setQueryLoading(false); }
+    finally { setSending(false); }
   };
 
   return (
-    <div className="min-h-screen bg-rose-25 bg-mesh">
+    <div className="min-h-screen bg-warm-page">
       <Navbar />
 
-      {/* ══════════════════════════════════════
-          HERO SLIDER
-          ══════════════════════════════════════ */}
-      <section className="relative">
-        {/* Sanskrit greeting */}
-        <div className="text-center pt-8 pb-4 px-4">
-          <p className="font-devanagari text-base md:text-lg text-blush-400 opacity-80 tracking-widest">
+      {/* ══════════════════════════════════════════
+          HERO — Full viewport, strong overlay
+          ══════════════════════════════════════════ */}
+      <section className="relative" style={{ height: "clamp(420px, 58vw, 620px)" }}>
+        {slides.map((s, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${i === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+            style={{ backgroundImage: `url(${s.image})` }}
+          />
+        ))}
+
+        {/* Strong gradient overlay */}
+        <div className="absolute inset-0 z-20" style={{ background: "linear-gradient(105deg, rgba(15,8,12,0.82) 0%, rgba(15,8,12,0.55) 45%, rgba(15,8,12,0.15) 100%)" }} />
+
+        {/* Sanskrit greeting strip */}
+        <div className="absolute top-0 left-0 right-0 z-30 bg-black/20 backdrop-blur-sm py-2.5 text-center">
+          <p className="font-devanagari text-sm text-white/75 tracking-widest">
             सदा भवानी दाहिनी, सम्मुख रहें गणेश 🪷
           </p>
         </div>
 
-        {/* Slider */}
-        <div className="relative mx-4 md:mx-8 lg:mx-12 rounded-3xl overflow-hidden shadow-warm-lg"
-             style={{ height: "clamp(300px, 50vw, 520px)" }}>
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${i === current ? "opacity-100 z-10" : "opacity-0 z-0"}`}
-              style={{ backgroundImage: `url(${slide.image})` }}
-            >
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-hero" />
+        {/* Hero content */}
+        <div className="absolute inset-0 z-30 flex items-center">
+          <div className="section-container w-full pt-10">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
+                <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse" />
+                <span className="text-white/80 text-xs font-medium tracking-wide">Digital Darshan Booking</span>
+              </div>
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end pb-12 pl-8 md:pl-16 z-10">
-                <div className="max-w-lg">
-                  <p className="font-devanagari text-white/90 text-lg md:text-2xl leading-relaxed mb-6 drop-shadow-lg">
-                    {slide.shlok.split("\n").map((line, j) => (
-                      <span key={j} className="block">{line}</span>
-                    ))}
-                  </p>
-                  <button
-                    onClick={() => navigate("/temples")}
-                    className="btn-primary text-base px-8 py-3.5 shadow-soft-lg"
-                  >
-                    Book Darshan 🙏
-                  </button>
-                </div>
+              <h1 className="font-serif text-white font-bold mb-4 leading-tight drop-shadow-lg"
+                  style={{ fontSize: "clamp(2rem, 4.5vw, 3.6rem)" }}>
+                Book Your Sacred<br />
+                <span className="text-primary-300">Darshan</span> Online
+              </h1>
+
+              <p className="font-devanagari text-white/80 text-lg md:text-xl leading-relaxed mb-8 drop-shadow">
+                {slides[current].shlok.split("\n").map((l, j) => <span key={j} className="block">{l}</span>)}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <button onClick={() => navigate("/temples")} className="btn-primary text-base px-8 py-3.5 shadow-primary-lg">
+                  Book Darshan <ArrowRight size={18} />
+                </button>
+                <button onClick={() => navigate("/temples")} className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/25 text-white text-base font-medium hover:bg-white/20 transition-all duration-200">
+                  Explore Temples
+                </button>
               </div>
             </div>
-          ))}
-
-          {/* Dots */}
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`rounded-full transition-all duration-300 ${i === current ? "w-8 h-2 bg-white" : "w-2 h-2 bg-white/50"}`}
-              />
-            ))}
           </div>
+        </div>
+
+        {/* Slide dots */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+          {slides.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)}
+              className={`rounded-full transition-all duration-300 ${i === current ? "w-7 h-2.5 bg-white" : "w-2.5 h-2.5 bg-white/40 hover:bg-white/60"}`}
+            />
+          ))}
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          NOTICE BOARD
-          ══════════════════════════════════════ */}
-      {notes.length > 0 && (
-        <section className="max-w-7xl mx-auto px-5 md:px-8 py-16 fade-in-section" ref={addToRefs}>
-          <div className="text-center mb-10">
-            <span className="badge-rose mb-3">📢 Announcements</span>
-            <h2 className="section-title mt-2">Notice Board</h2>
-            <div className="ornament-line mt-4"><span className="text-rose-200 text-lg">🌸</span></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {notes.map((note, i) => (
-              <div key={note._id || i} className="card-base p-6 group">
-                <div className="w-10 h-10 rounded-2xl bg-rose-100 flex items-center justify-center mb-4 group-hover:bg-blush-100 transition-colors">
-                  <span className="text-lg">📌</span>
-                </div>
-                <h3 className="font-serif text-lg font-semibold text-warm-800 mb-2">{note.title}</h3>
-                <p className="text-sm text-warm-400 leading-relaxed">{note.message}</p>
+      {/* ══════════════════════════════════════════
+          STATS STRIP
+          ══════════════════════════════════════════ */}
+      <div className="bg-white border-b border-stone-150 shadow-xs">
+        <div className="section-container py-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-stone-100">
+            {[["3+", "Sacred Temples"], ["10K+", "Happy Devotees"], ["50K+", "Darshans Booked"], ["100%", "Secure Booking"]].map(([val, label]) => (
+              <div key={label} className="text-center px-4 first:pl-0 last:pr-0">
+                <p className="font-serif text-2xl font-bold text-gradient">{val}</p>
+                <p className="text-xs text-stone-400 mt-0.5 font-medium">{label}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════
+          NOTICE BOARD
+          ══════════════════════════════════════════ */}
+      {notes.length > 0 && (
+        <section className="bg-warm-section py-16 fade-section" ref={addRef}>
+          <div className="section-container">
+            <div className="text-center mb-10">
+              <span className="badge-primary mb-3">📢 Announcements</span>
+              <h2 className="section-heading mt-2">Notice Board</h2>
+              <div className="divider" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {notes.map((n, i) => (
+                <div key={n._id || i} className="card p-6 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div className="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center mb-4 text-lg">📌</div>
+                  <h3 className="font-serif text-lg font-semibold text-stone-800 mb-2">{n.title}</h3>
+                  <p className="text-sm text-stone-500 leading-relaxed">{n.message}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
 
-      {/* ══════════════════════════════════════
+      {/* ══════════════════════════════════════════
           FEATURED TEMPLES
-          ══════════════════════════════════════ */}
-      <section className="max-w-7xl mx-auto px-5 md:px-8 py-16 fade-in-section" ref={addToRefs}>
-        <div className="text-center mb-12">
-          <span className="badge-rose mb-3">🛕 Sacred Places</span>
-          <h2 className="section-title mt-2">Featured Temples</h2>
-          <p className="section-sub">Divine places filled with eternal faith and blessings</p>
-          <div className="ornament-line mt-4"><span className="text-rose-200 text-lg">🌸</span></div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-          {temples.slice(0, 3).map((temple, i) => (
-            <div
-              key={temple._id}
-              onClick={() => handleDarshan(temple._id)}
-              className="group relative rounded-3xl overflow-hidden cursor-pointer shadow-card hover:shadow-card-hover transition-all duration-500 hover:-translate-y-2"
-              style={{ height: "380px" }}
-            >
-              <img
-                src={getTempleImage(temple.name)}
-                alt={temple.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-card" />
-
-              <div className="absolute inset-0 flex flex-col justify-end p-7 z-10">
-                <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-400">
-                  <h3 className="font-serif text-2xl font-semibold text-white mb-1 drop-shadow">{temple.name}</h3>
-                  <p className="text-white/70 text-sm mb-4">📍 {temple.location}</p>
-                </div>
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleDarshan(temple._id); }}
-                  className="opacity-0 group-hover:opacity-100 transform translate-y-3 group-hover:translate-y-0 transition-all duration-400
-                             bg-white/90 text-blush-500 text-sm font-medium px-5 py-2.5 rounded-full w-fit
-                             hover:bg-white hover:shadow-soft"
-                >
-                  View Darshan →
-                </button>
-              </div>
+          ══════════════════════════════════════════ */}
+      <section className="py-20 fade-section" ref={addRef}>
+        <div className="section-container">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div>
+              <span className="badge-primary mb-3">🛕 Sacred Places</span>
+              <h2 className="section-heading mt-2">Featured Temples</h2>
+              <p className="section-sub">Divine destinations filled with eternal faith</p>
+              <div className="divider !mx-0 !mt-4" />
             </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-10">
-          <button onClick={() => navigate("/temples")} className="btn-secondary px-8 py-3">
-            View All Temples →
-          </button>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════
-          HOW IT WORKS
-          ══════════════════════════════════════ */}
-      <section className="bg-white py-20 fade-in-section" ref={addToRefs}>
-        <div className="max-w-6xl mx-auto px-5 md:px-8">
-          <div className="text-center mb-14">
-            <span className="badge-rose mb-3">✨ Simple Process</span>
-            <h2 className="section-title mt-2">How It Works</h2>
-            <div className="ornament-line mt-4"><span className="text-rose-200 text-lg">🌸</span></div>
+            <button onClick={() => navigate("/temples")} className="btn-secondary self-start md:self-auto whitespace-nowrap">
+              View All <ChevronRight size={16} />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((step, i) => (
-              <div key={i} className="relative group">
-                {/* Connector line */}
-                {i < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-rose-200 to-transparent z-0 -translate-y-1/2" />
-                )}
-                <div className="card-soft p-7 text-center relative z-10 group-hover:bg-rose-50 transition-colors duration-300">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-100 to-blush-100 flex items-center justify-center mx-auto mb-4 text-2xl shadow-soft group-hover:shadow-soft-md transition-shadow">
-                    {step.icon}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            {temples.slice(0, 3).map((t) => (
+              <div
+                key={t._id}
+                onClick={() => goTemple(t._id)}
+                className="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
+                style={{ height: "400px" }}
+              >
+                <img
+                  src={getImg(t.name)}
+                  alt={t.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+                  style={{ transition: "transform 0.7s ease" }}
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-card-overlay" />
+
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-7 z-10">
+                  <div className="transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="font-serif text-2xl font-bold text-white mb-1.5 drop-shadow">{t.name}</h3>
+                    <p className="flex items-center gap-1.5 text-white/65 text-sm mb-5">
+                      <MapPin size={13} /> {t.location}
+                    </p>
                   </div>
-                  <span className="text-xs font-semibold text-blush-300 tracking-widest uppercase">{step.num}</span>
-                  <h4 className="font-serif text-lg font-semibold text-warm-800 mt-1 mb-2">{step.title}</h4>
-                  <p className="text-sm text-warm-400 leading-relaxed">{step.desc}</p>
+                  <button
+                    onClick={e => { e.stopPropagation(); goTemple(t._id); }}
+                    className="opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300
+                               bg-white text-primary-600 text-sm font-semibold px-5 py-2.5 rounded-xl w-fit
+                               hover:bg-primary-50 shadow-md"
+                  >
+                    Book Darshan →
+                  </button>
                 </div>
               </div>
             ))}
@@ -239,94 +234,117 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          QUERY FORM
-          ══════════════════════════════════════ */}
-      <section className="max-w-2xl mx-auto px-5 md:px-8 py-20 fade-in-section" ref={addToRefs}>
-        <div className="text-center mb-10">
-          <span className="badge-rose mb-3">💬 Get in Touch</span>
-          <h2 className="section-title mt-2">Have Any Question?</h2>
-          <p className="section-sub">Ask before booking your darshan</p>
-          <div className="ornament-line mt-4"><span className="text-rose-200 text-lg">🌸</span></div>
-        </div>
+      {/* ══════════════════════════════════════════
+          HOW IT WORKS — alternating bg
+          ══════════════════════════════════════════ */}
+      <section className="bg-warm-section py-20 fade-section" ref={addRef}>
+        <div className="section-container">
+          <div className="text-center mb-14">
+            <span className="badge-primary mb-3">✨ Simple Process</span>
+            <h2 className="section-heading mt-2">How It Works</h2>
+            <p className="section-sub">Book your darshan in 4 easy steps</p>
+            <div className="divider" />
+          </div>
 
-        <div className="card-base p-8 md:p-10">
-          <form onSubmit={handleQuery} className="flex flex-col gap-4">
-            <input
-              className="input-base"
-              type="text"
-              placeholder="Your Name"
-              value={queryData.name}
-              onChange={(e) => setQueryData({ ...queryData, name: e.target.value })}
-              required
-            />
-            <input
-              className="input-base"
-              type="email"
-              placeholder="Your Email"
-              value={queryData.email}
-              onChange={(e) => setQueryData({ ...queryData, email: e.target.value })}
-              required
-            />
-            <textarea
-              className="input-base resize-none"
-              placeholder="Your Message"
-              rows={4}
-              value={queryData.message}
-              onChange={(e) => setQueryData({ ...queryData, message: e.target.value })}
-              required
-            />
-            <button type="submit" disabled={queryLoading} className="btn-primary w-full py-3.5 text-base mt-2">
-              {queryLoading ? "Sending..." : "Submit Question 🙏"}
-            </button>
-          </form>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((s, i) => (
+              <div key={i} className="relative group">
+                {/* Connector */}
+                {i < steps.length - 1 && (
+                  <div className="hidden lg:block absolute top-9 left-[calc(100%-0px)] w-full h-px z-0"
+                       style={{ background: "linear-gradient(90deg, #E5C0CB, transparent)" }} />
+                )}
+                <div className="card p-7 text-center relative z-10 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                  <div className="w-16 h-16 rounded-2xl bg-primary-50 border border-primary-100 flex items-center justify-center mx-auto mb-5 text-2xl shadow-xs group-hover:shadow-sm transition-shadow">
+                    {s.icon}
+                  </div>
+                  <span className="text-xs font-bold text-primary-400 tracking-widest uppercase">{s.num}</span>
+                  <h4 className="font-serif text-lg font-semibold text-stone-800 mt-1.5 mb-2">{s.title}</h4>
+                  <p className="text-sm text-stone-400 leading-relaxed">{s.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════
-          FOOTER
-          ══════════════════════════════════════ */}
-      <footer className="bg-gradient-footer border-t border-rose-100 fade-in-section" ref={addToRefs}>
-        <div className="max-w-7xl mx-auto px-5 md:px-8 py-14">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+      {/* ══════════════════════════════════════════
+          QUERY FORM
+          ══════════════════════════════════════════ */}
+      <section className="py-20 fade-section" ref={addRef}>
+        <div className="section-container">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="badge-primary mb-3">💬 Get in Touch</span>
+              <h2 className="section-heading mt-2">Have a Question?</h2>
+              <p className="section-sub">Ask us before booking your darshan</p>
+              <div className="divider" />
+            </div>
+
+            <div className="card p-8 md:p-10 shadow-md">
+              <form onSubmit={submitQuery} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="label">Your Name</label>
+                    <input className="input" type="text" placeholder="Full name" value={query.name} onChange={e => setQuery({...query, name: e.target.value})} required />
+                  </div>
+                  <div>
+                    <label className="label">Email Address</label>
+                    <input className="input" type="email" placeholder="you@email.com" value={query.email} onChange={e => setQuery({...query, email: e.target.value})} required />
+                  </div>
+                </div>
+                <div>
+                  <label className="label">Your Message</label>
+                  <textarea className="input resize-none" rows={4} placeholder="Write your question here..." value={query.message} onChange={e => setQuery({...query, message: e.target.value})} required />
+                </div>
+                <button type="submit" disabled={sending} className="btn-primary w-full py-3.5 text-base">
+                  {sending ? "Sending..." : "Submit Question 🙏"}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          FOOTER — dark, proper contrast
+          ══════════════════════════════════════════ */}
+      <footer className="bg-footer-grad text-stone-300 fade-section" ref={addRef}>
+        <div className="section-container py-14">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             {/* Brand */}
-            <div>
-              <div className="flex items-center gap-1.5 mb-4">
-                <span className="font-serif text-2xl font-semibold text-blush-500">Seva</span>
-                <span className="font-serif text-2xl font-semibold text-warm-700">Track</span>
-                <span className="text-xl ml-1">🪷</span>
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">S</span>
+                </div>
+                <span className="font-serif text-xl font-bold text-white">SevaTrack</span>
               </div>
-              <p className="text-sm text-warm-400 leading-relaxed max-w-xs">
-                Digital darshan management system for peaceful and organized temple visits.
+              <p className="text-sm text-stone-400 leading-relaxed max-w-xs">
+                A digital darshan management system for peaceful, organized, and seamless temple visits.
               </p>
             </div>
 
-            {/* Quick Links */}
+            {/* Links */}
             <div>
-              <h4 className="font-sans text-xs font-semibold uppercase tracking-widest text-warm-400 mb-5">Quick Links</h4>
-              {[["Home", "/"], ["Temples", "/temples"], ["My Bookings", "/my-bookings"], ["Login", "/login"]].map(([label, path]) => (
-                <a key={path} href={path} className="block text-sm text-warm-400 hover:text-blush-400 transition-colors mb-3">{label}</a>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-5">Quick Links</h4>
+              {[["Home", "/"], ["Temples", "/temples"], ["My Bookings", "/my-bookings"], ["Login", "/login"]].map(([l, p]) => (
+                <a key={p} href={p} className="block text-sm text-stone-400 hover:text-white transition-colors mb-3">{l}</a>
               ))}
             </div>
 
             {/* Temples */}
             <div>
-              <h4 className="font-sans text-xs font-semibold uppercase tracking-widest text-warm-400 mb-5">Featured Temples</h4>
-              {temples.slice(0, 3).map((t) => (
-                <span
-                  key={t._id}
-                  onClick={() => handleDarshan(t._id)}
-                  className="block text-sm text-warm-400 hover:text-blush-400 transition-colors mb-3 cursor-pointer"
-                >
-                  {t.name}
-                </span>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-5">Temples</h4>
+              {temples.slice(0, 3).map(t => (
+                <span key={t._id} onClick={() => goTemple(t._id)} className="block text-sm text-stone-400 hover:text-white transition-colors mb-3 cursor-pointer">{t.name}</span>
               ))}
             </div>
           </div>
 
-          <div className="border-t border-rose-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-            <p className="text-xs text-warm-300">© {new Date().getFullYear()} SevaTrack. All Rights Reserved.</p>
-            <p className="text-xs text-blush-300 font-medium">Made with 🌸 by LB INFOTECH</p>
+          <div className="border-t border-stone-700 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+            <p className="text-xs text-stone-500">© {new Date().getFullYear()} SevaTrack. All Rights Reserved.</p>
+            <p className="text-xs text-stone-500">Made with 🌸 by <span className="text-primary-400 font-medium">LB INFOTECH</span></p>
           </div>
         </div>
       </footer>

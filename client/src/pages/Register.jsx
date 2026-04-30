@@ -1,63 +1,88 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
+import { BookOpen, ArrowRight } from "lucide-react";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.password) return alert("All fields are required");
-    if (formData.password !== formData.confirmPassword) return alert("Passwords do not match");
+    if (form.password !== form.confirmPassword) return alert("Passwords do not match");
     try {
-      await API.post("/auth/register", { name: formData.name, email: formData.email, password: formData.password });
-      alert("🌸 Shubh Yatra! Registration successful");
+      await API.post("/auth/register", { name: form.name, email: form.email, password: form.password });
+      alert("🌸 Registration successful! Please login.");
       navigate("/login");
-    } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
-    }
+    } catch (err) { alert(err.response?.data?.message || "Registration failed"); }
   };
 
-  return (
-    <div className="min-h-screen bg-rose-25 bg-mesh flex items-center justify-center px-4 py-12">
-      <div className="fixed top-0 right-0 w-96 h-96 bg-rose-100/40 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-96 h-96 bg-blush-100/30 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+  const fields = [
+    { label: "Full Name",        name: "name",            type: "text",     ph: "Your full name" },
+    { label: "Email Address",    name: "email",           type: "email",    ph: "you@email.com" },
+    { label: "Password",         name: "password",        type: "password", ph: "Create a password" },
+    { label: "Confirm Password", name: "confirmPassword", type: "password", ph: "Repeat password" },
+  ];
 
-      <div className="w-full max-w-md relative z-10">
-        <div className="card-base p-8 md:p-10">
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-rose-100 to-blush-100 flex items-center justify-center mx-auto mb-4 shadow-soft animate-float">
-              <img src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="register" className="w-9 h-9" />
+  return (
+    <div className="min-h-screen flex">
+      {/* Left panel */}
+      <div className="hidden lg:flex lg:w-5/12 xl:w-1/2 relative overflow-hidden"
+           style={{ background: "linear-gradient(135deg, #28251F 0%, #1A1714 100%)" }}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url(/ambaji-hero.png)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(201,75,106,0.15) 0%, transparent 60%)" }} />
+        <div className="relative z-10 flex flex-col justify-between p-12 w-full">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-primary-grad flex items-center justify-center shadow-primary">
+              <BookOpen size={18} className="text-white" />
             </div>
-            <h1 className="font-serif text-2xl font-semibold text-warm-800">🌸 Shubh Yatra</h1>
-            <p className="text-sm text-warm-400 mt-1">Apni pavitra yatra shuru kare</p>
+            <span className="font-serif text-2xl font-bold text-white">SevaTrack</span>
+          </div>
+          <div>
+            <p className="font-devanagari text-white/60 text-xl leading-relaxed mb-6">🌸 शुभ यात्रा</p>
+            <h2 className="font-serif text-3xl font-bold text-white leading-tight mb-4">
+              Start Your<br />Spiritual Journey
+            </h2>
+            <p className="text-stone-400 text-sm leading-relaxed max-w-sm">
+              Join thousands of devotees who book their darshan slots digitally.
+            </p>
+          </div>
+          <p className="text-stone-600 text-xs">© {new Date().getFullYear()} SevaTrack</p>
+        </div>
+      </div>
+
+      {/* Right panel */}
+      <div className="flex-1 flex items-center justify-center bg-warm-page px-6 py-12">
+        <div className="w-full max-w-md">
+          <div className="lg:hidden flex items-center gap-2 mb-8">
+            <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center">
+              <BookOpen size={16} className="text-white" />
+            </div>
+            <span className="font-serif text-xl font-bold text-stone-800">SevaTrack</span>
           </div>
 
-          <div className="ornament-line mb-6"><span className="text-rose-200">🌸</span></div>
+          <div className="mb-8">
+            <h1 className="font-serif text-3xl font-bold text-stone-800 mb-2">Create Account 🌸</h1>
+            <p className="text-stone-400 text-sm">Join us and begin your sacred journey</p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {[
-              { label: "Name",             name: "name",            type: "text",     placeholder: "Your full name" },
-              { label: "Email",            name: "email",           type: "email",    placeholder: "your@email.com" },
-              { label: "Password",         name: "password",        type: "password", placeholder: "Create password" },
-              { label: "Confirm Password", name: "confirmPassword", type: "password", placeholder: "Confirm password" },
-            ].map((f) => (
-              <div key={f.name}>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-warm-500 mb-1.5">{f.label}</label>
-                <input className="input-base" type={f.type} name={f.name} placeholder={f.placeholder} value={formData[f.name]} onChange={handleChange} required />
-              </div>
-            ))}
-            <button type="submit" className="btn-primary w-full py-3.5 text-base mt-2">
-              Register 🌸
-            </button>
-          </form>
+          <div className="card p-8 shadow-md">
+            <form onSubmit={submit} className="space-y-4">
+              {fields.map(f => (
+                <div key={f.name}>
+                  <label className="label">{f.label}</label>
+                  <input className="input" type={f.type} name={f.name} placeholder={f.ph} value={form[f.name]} onChange={e => setForm({...form, [f.name]: e.target.value})} required />
+                </div>
+              ))}
+              <button type="submit" className="btn-primary w-full py-3.5 text-base mt-2">
+                Create Account <ArrowRight size={17} />
+              </button>
+            </form>
+          </div>
 
-          <p className="text-center text-sm text-warm-400 mt-5">
+          <p className="text-center text-sm text-stone-400 mt-6">
             Already have an account?{" "}
-            <Link to="/login" className="text-blush-400 font-medium hover:text-blush-500 transition-colors">Login</Link>
+            <Link to="/login" className="text-primary-500 font-semibold hover:text-primary-600 transition-colors">Sign in</Link>
           </p>
         </div>
       </div>

@@ -3,86 +3,97 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import jsPDF from "jspdf";
 import Navbar from "../components/Navbar";
-import { Download, X, ArrowLeft } from "lucide-react";
+import { Download, X, ArrowLeft, Calendar, Hash } from "lucide-react";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => { API.get("/bookings/my").then((r) => setBookings(r.data)).catch(() => {}); }, []);
+  useEffect(() => { API.get("/bookings/my").then(r => setBookings(r.data)).catch(() => {}); }, []);
 
-  const handleCancel = async (id) => {
-    if (!window.confirm("Cancel booking?")) return;
-    try { await API.put(`/bookings/cancel/${id}`); API.get("/bookings/my").then((r) => setBookings(r.data)); }
+  const cancel = async (id) => {
+    if (!window.confirm("Cancel this booking?")) return;
+    try { await API.put(`/bookings/cancel/${id}`); API.get("/bookings/my").then(r => setBookings(r.data)); }
     catch { alert("Cancel failed"); }
   };
 
-  const downloadReceipt = async (data) => {
+  const download = async (data) => {
     const doc = new jsPDF();
     doc.setFontSize(20); doc.setTextColor(200, 0, 0);
     doc.text("SevaTrack Darshan Receipt", 105, 20, { align: "center" });
     doc.setTextColor(0,0,0); doc.setFontSize(12);
     let y = 40;
     const line = (l, v) => { doc.text(`${l}:`, 20, y); doc.text(String(v || "N/A"), 90, y); y += 10; };
-    const slotTime = data.slot?.startTime && data.slot?.endTime ? `${data.slot.startTime} - ${data.slot.endTime}` : "N/A";
+    const t = data.slot?.startTime && data.slot?.endTime ? `${data.slot.startTime} - ${data.slot.endTime}` : "N/A";
     line("Booking ID", data.bookingId); line("Temple", data.slot?.temple?.name);
-    line("Date", new Date(data.slot?.date).toDateString()); line("Time", slotTime);
+    line("Date", new Date(data.slot?.date).toDateString()); line("Time", t);
     line("Members", data.totalMembers); line("Status", data.status);
     doc.save(`SevaTrack_${data.bookingId}.pdf`);
   };
 
-  const statusClass = (s) => s === "booked" ? "status-booked" : s === "used" ? "status-used" : "status-cancelled";
+  const statusCls = s => s === "booked" ? "status-booked" : s === "used" ? "status-used" : "status-cancelled";
 
   return (
-    <div className="min-h-screen bg-rose-25 bg-mesh">
+    <div className="min-h-screen bg-warm-page">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto px-5 md:px-8 py-10">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <button onClick={() => navigate(-1)} className="p-2 rounded-xl text-warm-400 hover:bg-rose-100 hover:text-blush-400 transition-colors">
-            <ArrowLeft size={20} />
+      {/* Header */}
+      <div className="bg-warm-section border-b border-stone-200">
+        <div className="section-container py-10">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-700 transition-colors mb-5">
+            <ArrowLeft size={15} /> Back
           </button>
-          <div>
-            <h1 className="font-serif text-3xl font-semibold text-warm-800">My Bookings</h1>
-            <p className="text-warm-400 text-sm mt-0.5">Your darshan history and upcoming visits</p>
-          </div>
+          <h1 className="font-serif text-3xl font-bold text-stone-800">My Bookings</h1>
+          <p className="text-stone-400 mt-1.5 text-sm">{bookings.length} booking{bookings.length !== 1 ? "s" : ""} found</p>
         </div>
+      </div>
 
+      <div className="section-container py-10">
         {bookings.length === 0 ? (
-          <div className="card-base p-16 text-center">
+          <div className="card p-16 text-center shadow-sm max-w-md mx-auto">
             <div className="text-5xl mb-4">📅</div>
-            <h3 className="font-serif text-xl text-warm-700 mb-2">No bookings yet</h3>
-            <p className="text-warm-400 text-sm mb-6">Start your divine journey by booking a darshan slot</p>
+            <h3 className="font-serif text-xl font-bold text-stone-800 mb-2">No bookings yet</h3>
+            <p className="text-stone-400 text-sm mb-6">Start your divine journey by booking a darshan slot</p>
             <button onClick={() => navigate("/temples")} className="btn-primary px-8 py-3">Book Darshan 🙏</button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {bookings.map((b) => (
-              <div key={b._id} className="card-base p-6 flex flex-col gap-4">
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                  <h3 className="font-serif text-lg font-semibold text-warm-800 leading-tight">{b.slot?.temple?.name}</h3>
-                  <span className={statusClass(b.status)}>{b.status}</span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {bookings.map(b => (
+              <div key={b._id} className="card shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                {/* Status bar */}
+                <div className={`h-1 w-full ${b.status === "booked" ? "bg-emerald-400" : b.status === "used" ? "bg-blue-400" : "bg-red-300"}`} />
 
-                {/* Details */}
-                <div className="space-y-1.5">
-                  <p className="text-sm text-warm-500">📅 {new Date(b.slot?.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
-                  <p className="text-sm text-warm-400 font-mono text-xs">🆔 {b.bookingId}</p>
-                  <p className="text-sm text-warm-500">👥 {b.totalMembers} member{b.totalMembers > 1 ? "s" : ""}</p>
-                </div>
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-serif text-lg font-bold text-stone-800 leading-tight pr-2">{b.slot?.temple?.name}</h3>
+                    <span className={statusCls(b.status)}>{b.status}</span>
+                  </div>
 
-                {/* Buttons */}
-                <div className="flex gap-3 mt-auto pt-2 border-t border-rose-50">
-                  <button onClick={() => downloadReceipt(b)} className="btn-secondary flex-1 py-2.5 text-xs gap-1.5">
-                    <Download size={13} /> Receipt
-                  </button>
-                  {b.status === "booked" && (
-                    <button onClick={() => handleCancel(b._id)} className="btn-ghost flex-1 py-2.5 text-xs gap-1.5 text-warm-400 hover:text-rose-400 hover:border-rose-200">
-                      <X size={13} /> Cancel
+                  <div className="space-y-2 mb-5">
+                    <div className="flex items-center gap-2 text-sm text-stone-500">
+                      <Calendar size={13} className="text-primary-400 flex-shrink-0" />
+                      {new Date(b.slot?.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-stone-400 font-mono">
+                      <Hash size={12} className="text-stone-300 flex-shrink-0" />
+                      {b.bookingId}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-stone-500">
+                      <span className="text-stone-300">👥</span>
+                      {b.totalMembers} member{b.totalMembers > 1 ? "s" : ""}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2.5 pt-4 border-t border-stone-100">
+                    <button onClick={() => download(b)} className="btn-secondary flex-1 py-2.5 text-xs gap-1.5">
+                      <Download size={13} /> Receipt
                     </button>
-                  )}
+                    {b.status === "booked" && (
+                      <button onClick={() => cancel(b._id)} className="btn-danger flex-1 py-2.5 text-xs gap-1.5">
+                        <X size={13} /> Cancel
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

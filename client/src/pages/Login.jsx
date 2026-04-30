@@ -2,76 +2,98 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
+import { BookOpen, ArrowRight } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/login", formData);
+      const res = await API.post("/auth/login", form);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       toast.success("Login Successful 🙏");
       setLoading(true);
-      setTimeout(() => navigate("/"), 1500);
-    } catch {
-      toast.error("Invalid email or password ❌");
-    }
+      setTimeout(() => navigate("/"), 1200);
+    } catch { toast.error("Invalid email or password ❌"); }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-rose-25 bg-mesh flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-rose-200 border-t-blush-400 rounded-full animate-spin mx-auto mb-4" />
-          <p className="font-serif text-warm-600 text-lg">Loading...</p>
-        </div>
+  if (loading) return (
+    <div className="min-h-screen bg-warm-page flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-stone-200 border-t-primary-500 rounded-full animate-spin mx-auto mb-4" />
+        <p className="font-serif text-stone-600 text-lg">Signing you in...</p>
       </div>
-    );
-  }
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-rose-25 bg-mesh flex items-center justify-center px-4 py-12">
-      {/* Background orbs */}
-      <div className="fixed top-0 left-0 w-96 h-96 bg-rose-100/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="fixed bottom-0 right-0 w-96 h-96 bg-blush-100/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
-
-      <div className="w-full max-w-md relative z-10">
-        {/* Card */}
-        <div className="card-base p-8 md:p-10">
-          {/* Icon */}
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-rose-100 to-blush-100 flex items-center justify-center mx-auto mb-4 shadow-soft animate-float">
-              <img src="https://cdn-icons-png.flaticon.com/512/3097/3097130.png" alt="temple" className="w-9 h-9" />
+    <div className="min-h-screen flex">
+      {/* Left panel — decorative */}
+      <div className="hidden lg:flex lg:w-5/12 xl:w-1/2 relative overflow-hidden"
+           style={{ background: "linear-gradient(135deg, #28251F 0%, #1A1714 100%)" }}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url(/somanth-hero.png)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(201,75,106,0.15) 0%, transparent 60%)" }} />
+        <div className="relative z-10 flex flex-col justify-between p-12 w-full">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-primary-grad flex items-center justify-center shadow-primary">
+              <BookOpen size={18} className="text-white" />
             </div>
-            <h1 className="font-serif text-2xl font-semibold text-warm-800">Pranam 🙏</h1>
-            <p className="text-sm text-warm-400 mt-1">Seva Track par aapka swagat hai</p>
+            <span className="font-serif text-2xl font-bold text-white">SevaTrack</span>
+          </div>
+          <div>
+            <p className="font-devanagari text-white/60 text-xl leading-relaxed mb-6">
+              ॐ नमः शिवाय 🙏
+            </p>
+            <h2 className="font-serif text-3xl font-bold text-white leading-tight mb-4">
+              Your Sacred Journey<br />Begins Here
+            </h2>
+            <p className="text-stone-400 text-sm leading-relaxed max-w-sm">
+              Book darshan slots at India's most sacred temples. Simple, peaceful, and organized.
+            </p>
+          </div>
+          <p className="text-stone-600 text-xs">© {new Date().getFullYear()} SevaTrack</p>
+        </div>
+      </div>
+
+      {/* Right panel — form */}
+      <div className="flex-1 flex items-center justify-center bg-warm-page px-6 py-12">
+        <div className="w-full max-w-md">
+          {/* Mobile logo */}
+          <div className="lg:hidden flex items-center gap-2 mb-8">
+            <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center">
+              <BookOpen size={16} className="text-white" />
+            </div>
+            <span className="font-serif text-xl font-bold text-stone-800">SevaTrack</span>
           </div>
 
-          <div className="ornament-line mb-6"><span className="text-rose-200">🌸</span></div>
+          <div className="mb-8">
+            <h1 className="font-serif text-3xl font-bold text-stone-800 mb-2">Welcome back 🙏</h1>
+            <p className="text-stone-400 text-sm">Sign in to continue your darshan journey</p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-warm-500 mb-1.5">Email</label>
-              <input className="input-base" type="email" name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com" required />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-warm-500 mb-1.5">Password</label>
-              <input className="input-base" type="password" name="password" value={formData.password} onChange={handleChange} placeholder="••••••••" required />
-            </div>
-            <button type="submit" className="btn-primary w-full py-3.5 text-base mt-2">
-              Login 🙏
-            </button>
-          </form>
+          <div className="card p-8 shadow-md">
+            <form onSubmit={submit} className="space-y-5">
+              <div>
+                <label className="label">Email Address</label>
+                <input className="input" type="email" name="email" placeholder="you@email.com" value={form.email} onChange={e => setForm({...form, email: e.target.value})} required />
+              </div>
+              <div>
+                <label className="label">Password</label>
+                <input className="input" type="password" name="password" placeholder="••••••••" value={form.password} onChange={e => setForm({...form, password: e.target.value})} required />
+              </div>
+              <button type="submit" className="btn-primary w-full py-3.5 text-base mt-2">
+                Sign In <ArrowRight size={17} />
+              </button>
+            </form>
+          </div>
 
-          <p className="text-center text-sm text-warm-400 mt-5">
+          <p className="text-center text-sm text-stone-400 mt-6">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blush-400 font-medium hover:text-blush-500 transition-colors">Register</Link>
+            <Link to="/register" className="text-primary-500 font-semibold hover:text-primary-600 transition-colors">Create one free</Link>
           </p>
         </div>
       </div>
