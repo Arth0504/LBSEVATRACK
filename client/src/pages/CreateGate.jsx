@@ -1,160 +1,124 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
+import { toast } from "react-toastify";
+import { UserPlus, Building2 } from "lucide-react";
+
+const ACCENT = "#dd2d4a";
 
 const CreateGate = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    temple: "",
-  });
-
+  const [form, setForm] = useState({ name: "", email: "", password: "", temple: "" });
   const [temples, setTemples] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [templesLoading, setTemplesLoading] = useState(true);
 
   useEffect(() => {
-    fetchTemples();
+    API.get("/temples")
+      .then(r => setTemples(r.data))
+      .catch(() => toast.error("Failed to load temples"))
+      .finally(() => setTemplesLoading(false));
   }, []);
-
-  const fetchTemples = async () => {
-    try {
-      const res = await API.get("/temples");
-      setTemples(res.data);
-    } catch (error) {
-      console.log("Temple fetch error");
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!formData.temple) {
-      alert("Please select a temple");
-      return;
-    }
-
+    if (!form.temple) { toast.error("Please select a temple"); return; }
+    setLoading(true);
     try {
-      setLoading(true);
-
-      await API.post("/admin/create-gate", formData);
-
-      alert("Gate created successfully");
-
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        temple: "",
-      });
-
-    } catch (error) {
-      alert(error.response?.data?.message || "Error creating gate");
-    } finally {
-      setLoading(false);
-    }
+      await API.post("/admin/create-gate", form);
+      toast.success("Gate user created successfully ✓");
+      setForm({ name: "", email: "", password: "", temple: "" });
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to create gate user");
+    } finally { setLoading(false); }
   };
 
+  const fields = [
+    { label: "Gate Name",  name: "name",     type: "text",     ph: "e.g. Main Gate Operator" },
+    { label: "Email",      name: "email",    type: "email",    ph: "gate@temple.com" },
+    { label: "Password",   name: "password", type: "password", ph: "Create a strong password" },
+  ];
+
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Create Gate User</h2>
+    <div className="space-y-6">
+      <div className="page-header">
+        <h1 className="page-title">Create Gate User</h1>
+        <p className="page-sub">Add a new gate operator for a temple</p>
+      </div>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <div className="max-w-lg">
+        <div className="card p-8">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#fff0f2", border: "1px solid #ffadb8" }}>
+              <UserPlus size={20} style={{ color: ACCENT }} />
+            </div>
+            <div>
+              <h3 className="font-serif text-lg font-bold text-gray-800">New Gate Account</h3>
+              <p className="text-xs text-gray-400">Gate users can verify entries at the temple</p>
+            </div>
+          </div>
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Gate Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {fields.map(f => (
+              <div key={f.name}>
+                <label className="label">{f.label}</label>
+                <input
+                  className="input"
+                  type={f.type}
+                  name={f.name}
+                  placeholder={f.ph}
+                  value={form[f.name]}
+                  onChange={e => setForm({ ...form, [e.target.name]: e.target.value })}
+                  required
+                />
+              </div>
+            ))}
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Gate Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
+            <div>
+              <label className="label">Assign Temple</label>
+              {templesLoading ? (
+                <div className="input flex items-center gap-2 text-gray-400">
+                  <div className="w-4 h-4 border-2 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: ACCENT }} />
+                  Loading temples...
+                </div>
+              ) : (
+                <select
+                  className="input"
+                  name="temple"
+                  value={form.temple}
+                  onChange={e => setForm({ ...form, temple: e.target.value })}
+                  required
+                >
+                  <option value="">-- Select a temple --</option>
+                  {temples.map(t => (
+                    <option key={t._id} value={t._id}>{t.name} — {t.location}</option>
+                  ))}
+                </select>
+              )}
+            </div>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          style={styles.input}
-        />
+            {form.temple && (
+              <div className="flex items-center gap-2 p-3 rounded-xl text-sm" style={{ background: "#fff0f2", border: "1px solid #ffadb8" }}>
+                <Building2 size={15} style={{ color: ACCENT }} />
+                <span className="text-gray-700">
+                  Assigned to: <strong>{temples.find(t => t._id === form.temple)?.name}</strong>
+                </span>
+              </div>
+            )}
 
-        <select
-          name="temple"
-          value={formData.temple}
-          onChange={handleChange}
-          required
-          style={styles.select}
-        >
-          <option value="">Select Temple</option>
-          {temples.map((t) => (
-            <option key={t._id} value={t._id}>
-              {t.name}
-            </option>
-          ))}
-        </select>
+            <button type="submit" disabled={loading || templesLoading} className="btn-primary w-full py-3.5 text-base gap-2 mt-2">
+              <UserPlus size={17} /> {loading ? "Creating..." : "Create Gate User"}
+            </button>
+          </form>
+        </div>
 
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "Creating..." : "Create Gate"}
-        </button>
-
-      </form>
+        {/* Info card */}
+        <div className="mt-4 p-4 bg-gray-50 rounded-2xl border border-gray-150">
+          <p className="text-xs text-gray-500 leading-relaxed">
+            <strong className="text-gray-700">Note:</strong> Gate users can log in with the provided credentials and verify devotee entries using QR codes or booking IDs at their assigned temple.
+          </p>
+        </div>
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "60px",
-    background: "var(--bg-main)",
-    minHeight: "100vh",
-  },
-  heading: {
-    color: "var(--color-primary)",
-    marginBottom: "30px",
-  },
-  form: {
-    maxWidth: "400px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-  },
-  input: {
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid var(--border-color)",
-  },
-  select: {
-    padding: "10px",
-    borderRadius: "6px",
-    border: "1px solid var(--border-color)",
-  },
-  button: {
-    background: "var(--color-primary)",
-    color: "white",
-    border: "none",
-    padding: "10px",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
 };
 
 export default CreateGate;
