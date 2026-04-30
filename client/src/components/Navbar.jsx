@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, BookOpen } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -15,26 +15,27 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const active = (p) => location.pathname === p;
+  const isActive = (p) => location.pathname === p;
 
   const linkCls = (p) =>
     `text-sm font-medium transition-all duration-200 relative pb-0.5 ${
-      active(p)
-        ? "text-primary-600 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary-500 after:rounded-full"
-        : "text-stone-500 hover:text-stone-800"
+      isActive(p)
+        ? "text-accent after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:rounded-full after:bg-accent"
+        : "text-gray-500 hover:text-gray-900"
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 glass-nav border-b border-stone-200 shadow-xs">
+    <nav className="sticky top-0 z-50 glass-nav border-b border-gray-150 shadow-xs">
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-[68px] flex items-center justify-between">
 
         {/* Logo */}
         <div onClick={() => navigate("/")} className="flex items-center gap-2.5 cursor-pointer group">
-          <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center shadow-primary flex-shrink-0">
-            <BookOpen size={16} className="text-white" />
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 shadow-accent"
+               style={{ background: "linear-gradient(135deg, #dd2d4a, #b8203a)" }}>
+            <span className="text-white text-sm font-bold font-serif">S</span>
           </div>
-          <span className="font-serif text-xl font-bold text-stone-800 group-hover:text-primary-600 transition-colors">
-            Seva<span className="text-primary-500">Track</span>
+          <span className="font-serif text-xl font-bold text-gray-800 group-hover:text-accent transition-colors">
+            Seva<span className="text-accent">Track</span>
           </span>
         </div>
 
@@ -61,7 +62,7 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden p-2 rounded-lg text-stone-500 hover:bg-stone-100 transition-colors"
+          className="md:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
           onClick={() => setOpen(!open)}
         >
           {open ? <X size={20} /> : <Menu size={20} />}
@@ -70,26 +71,26 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-white border-t border-stone-100 px-5 py-4 space-y-1 shadow-md animate-fade-in">
+        <div className="md:hidden bg-white border-t border-gray-100 px-5 py-4 space-y-1 shadow-md animate-fade-in">
           {[
             ["Home", "/"],
             ...(!user || user.role === "user" ? [["Temples", "/temples"]] : []),
-            ...(user?.role === "user" ? [["My Bookings", "/my-bookings"]] : []),
+            ...(user?.role === "user"  ? [["My Bookings", "/my-bookings"]] : []),
             ...(user?.role === "admin" ? [["Dashboard", "/admin"]] : []),
-            ...(user?.role === "gate" ? [["Gate Panel", "/gate"]] : []),
+            ...(user?.role === "gate"  ? [["Gate Panel", "/gate"]] : []),
           ].map(([label, path]) => (
             <Link
               key={path}
               to={path}
               onClick={() => setOpen(false)}
               className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                active(path) ? "bg-primary-50 text-primary-600" : "text-stone-600 hover:bg-stone-50"
+                isActive(path) ? "bg-accent/10 text-accent" : "text-gray-600 hover:bg-gray-50"
               }`}
             >
               {label}
             </Link>
           ))}
-          <div className="pt-3 border-t border-stone-100 flex gap-2">
+          <div className="pt-3 border-t border-gray-100 flex gap-2">
             {!token ? (
               <>
                 <Link to="/login" onClick={() => setOpen(false)} className="btn-ghost flex-1 text-center text-sm py-2.5">Login</Link>

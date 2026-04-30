@@ -33,13 +33,13 @@ const TempleDetails = () => {
   }, [date, allSlots]);
 
   if (!temple) return (
-    <div className="min-h-screen bg-warm-page flex items-center justify-center">
-      <div className="w-10 h-10 border-4 border-stone-200 border-t-primary-500 rounded-full animate-spin" />
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-gray-200 rounded-full animate-spin" style={{ borderTopColor: "#dd2d4a" }} />
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-warm-page">
+    <div className="min-h-screen bg-white bg-animated">
       <Navbar />
 
       {/* Hero */}
@@ -74,8 +74,8 @@ const TempleDetails = () => {
 
         {/* About */}
         <div className="card p-8 shadow-sm">
-          <h2 className="font-serif text-2xl font-bold text-stone-800 mb-4">About This Temple</h2>
-          <p className="text-stone-500 leading-relaxed text-base">{temple.description}</p>
+          <h2 className="font-serif text-2xl font-bold text-gray-800 mb-4">About This Temple</h2>
+          <p className="text-gray-500 leading-relaxed text-base">{temple.description}</p>
         </div>
 
         {/* Aarti Timings */}
@@ -85,10 +85,10 @@ const TempleDetails = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
               {temple.aartiTimings.map(a => (
                 <div key={a._id} className="card p-6 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-                  <div className="w-10 h-10 rounded-xl bg-primary-50 border border-primary-100 flex items-center justify-center mb-4 text-xl">🪔</div>
-                  <h4 className="font-serif text-lg font-semibold text-stone-800 mb-1">{a.name}</h4>
-                  <p className="text-primary-500 font-semibold text-sm mb-1">{a.time}</p>
-                  <p className="text-stone-400 text-xs">{a.description}</p>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 text-xl" style={{ background: "#fff0f2", border: "1px solid #ffadb8" }}>🪔</div>
+                  <h4 className="font-serif text-lg font-semibold text-gray-800 mb-1">{a.name}</h4>
+                  <p className="font-semibold text-sm mb-1" style={{ color: "#dd2d4a" }}>{a.time}</p>
+                  <p className="text-gray-400 text-xs">{a.description}</p>
                 </div>
               ))}
             </div>
@@ -99,11 +99,11 @@ const TempleDetails = () => {
         <div className="card p-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center gap-6">
             <div className="flex-1">
-              <h2 className="font-serif text-2xl font-bold text-stone-800 mb-1">Select Visit Date</h2>
-              <p className="text-stone-400 text-sm">Booking available for the next 2 months</p>
+              <h2 className="font-serif text-2xl font-bold text-gray-800 mb-1">Select Visit Date</h2>
+              <p className="text-gray-400 text-sm">Booking available for the next 2 months</p>
             </div>
             <div className="flex items-center gap-3">
-              <Calendar size={18} className="text-primary-400 flex-shrink-0" />
+              <Calendar size={18} className="flex-shrink-0" style={{ color: "#dd2d4a" }} />
               <input
                 type="date"
                 min={fmt(today)} max={fmt(maxDate)}
@@ -119,15 +119,15 @@ const TempleDetails = () => {
         {date && (
           <div ref={slotsRef}>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="font-serif text-2xl font-bold text-stone-800">Available Slots</h2>
-              <span className="badge-stone">{filtered.length} slots found</span>
+              <h2 className="font-serif text-2xl font-bold text-gray-800">Available Slots</h2>
+              <span className="badge-gray">{filtered.length} slots found</span>
             </div>
 
             {filtered.length === 0 ? (
-              <div className="card p-14 text-center shadow-sm">
+                <div className="card p-14 text-center shadow-sm">
                 <div className="text-4xl mb-3">📅</div>
-                <p className="text-stone-500 font-medium">No slots available for this date</p>
-                <p className="text-stone-400 text-sm mt-1">Try selecting a different date</p>
+                <p className="text-gray-500 font-medium">No slots available for this date</p>
+                <p className="text-gray-400 text-sm mt-1">Try selecting a different date</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -143,12 +143,12 @@ const TempleDetails = () => {
                     <div key={slot._id} className={`card p-6 shadow-sm ${disabled ? "opacity-55" : "hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"}`}>
                       <div className="space-y-2.5 mb-5">
                         <div className="flex items-center gap-2 text-sm text-stone-600">
-                          <Clock size={14} className="text-primary-400 flex-shrink-0" />
-                          <span className="font-medium">{slot.startTime} – {slot.endTime}</span>
+                          <Clock size={14} className="flex-shrink-0" style={{ color: "#dd2d4a" }} />
+                          <span className="font-medium text-gray-700">{slot.startTime} – {slot.endTime}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-stone-600">
-                          <Users size={14} className="text-primary-400 flex-shrink-0" />
-                          <span>{avail} of {slot.capacity} spots available</span>
+                          <Users size={14} className="flex-shrink-0" style={{ color: "#dd2d4a" }} />
+                          <span className="text-gray-600">{avail} of {slot.capacity} spots available</span>
                         </div>
                       </div>
 
@@ -156,9 +156,9 @@ const TempleDetails = () => {
                       <div className="mb-5">
                         <div className="flex justify-between text-xs mb-1.5">
                           <span className={`font-semibold ${densityColor}`}>Crowd: {densityLabel}</span>
-                          <span className="text-stone-400">{pct}% full</span>
+                          <span className="text-gray-400">{pct}% full</span>
                         </div>
-                        <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
                           <div className={`h-full ${barColor} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -168,7 +168,7 @@ const TempleDetails = () => {
                         onClick={() => navigate(`/book/${slot._id}`)}
                         className={`w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                           disabled
-                            ? "bg-stone-100 text-stone-300 cursor-not-allowed"
+                            ? "bg-gray-100 text-gray-300 cursor-not-allowed"
                             : "btn-primary"
                         }`}
                       >

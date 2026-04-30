@@ -33,14 +33,14 @@ const BookSlot = () => {
   };
 
   return (
-    <div className="min-h-screen bg-warm-page">
+    <div className="min-h-screen bg-white bg-animated">
       {/* Full-screen loader */}
       {loading && (
         <div className="fixed inset-0 bg-white/85 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="card p-10 text-center shadow-xl max-w-sm w-full mx-4">
-            <div className="w-14 h-14 border-4 border-stone-100 border-t-primary-500 rounded-full animate-spin mx-auto mb-5" />
-            <h3 className="font-serif text-xl font-bold text-stone-800 mb-1">Processing Booking</h3>
-            <p className="text-stone-400 text-sm">Please wait a moment...</p>
+            <div className="w-14 h-14 border-4 border-gray-100 rounded-full animate-spin mx-auto mb-5" style={{ borderTopColor: "#dd2d4a" }} />
+            <h3 className="font-serif text-xl font-bold text-gray-800 mb-1">Processing Booking</h3>
+            <p className="text-gray-400 text-sm">Please wait a moment...</p>
           </div>
         </div>
       )}
@@ -48,14 +48,14 @@ const BookSlot = () => {
       <Navbar />
 
       {/* Page header */}
-      <div className="bg-warm-section border-b border-stone-200">
+      <div className="bg-gray-50 border-b border-gray-200">
         <div className="section-container py-10">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-700 transition-colors mb-5">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-5">
             <ArrowLeft size={15} /> Back
           </button>
-          <span className="badge-primary mb-3">🙏 Darshan Booking</span>
-          <h1 className="font-serif text-3xl font-bold text-stone-800 mt-2">Book Your Darshan Slot</h1>
-          <p className="text-stone-400 mt-1.5 text-sm">Add up to 5 members for your visit</p>
+          <span className="badge-accent mb-3">🙏 Darshan Booking</span>
+          <h1 className="font-serif text-3xl font-bold text-gray-800 mt-2">Book Your Darshan Slot</h1>
+          <p className="text-gray-400 mt-1.5 text-sm">Add up to 5 members for your visit</p>
         </div>
       </div>
 
@@ -66,16 +66,16 @@ const BookSlot = () => {
           {members.map((m, i) => (
             <div key={i} className="card shadow-sm overflow-hidden">
               {/* Card header */}
-              <div className="flex items-center justify-between px-6 py-4 bg-warm-section border-b border-stone-150">
+              <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-b border-gray-150">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center text-white text-sm font-bold shadow-primary">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold" style={{ background: "linear-gradient(135deg, #dd2d4a, #b8203a)", boxShadow: "0 4px 14px rgba(221,45,74,0.30)" }}>
                     {i + 1}
                   </div>
-                  <h3 className="font-serif text-base font-semibold text-stone-800">Member {i + 1}</h3>
-                  {i === 0 && <span className="badge-primary text-xs">Primary</span>}
+                  <h3 className="font-serif text-base font-semibold text-gray-800">Member {i + 1}</h3>
+                  {i === 0 && <span className="badge-accent text-xs">Primary</span>}
                 </div>
                 {i > 0 && (
-                  <button onClick={() => remove(i)} className="p-2 rounded-lg text-stone-300 hover:text-red-400 hover:bg-red-50 transition-colors">
+                  <button onClick={() => remove(i)} className="p-2 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors">
                     <Trash2 size={15} />
                   </button>
                 )}
@@ -102,12 +102,13 @@ const BookSlot = () => {
                 <div className="sm:col-span-2">
                   <label className="label">Photo (optional)</label>
                   <input
-                    className="input text-sm file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-primary-50 file:text-primary-600 hover:file:bg-primary-100 cursor-pointer"
+                    className="input text-sm file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold cursor-pointer"
+                    style={{ '--file-bg': '#fff0f2', '--file-color': '#dd2d4a' }}
                     type="file" accept="image/*"
                     onChange={e => imgChange(i, e.target.files[0])}
                   />
                   {m.preview && (
-                    <img src={m.preview} alt="preview" className="mt-3 w-20 h-20 rounded-xl object-cover border-2 border-stone-150 shadow-xs" />
+                    <img src={m.preview} alt="preview" className="mt-3 w-20 h-20 rounded-xl object-cover border-2 border-gray-150 shadow-xs" />
                   )}
                 </div>
               </div>
@@ -125,9 +126,9 @@ const BookSlot = () => {
           </div>
 
           {/* Info note */}
-          <div className="card-muted p-4 flex gap-3 items-start">
+          <div className="bg-gray-50 border border-gray-150 rounded-2xl p-4 flex gap-3 items-start">
             <span className="text-lg flex-shrink-0">ℹ️</span>
-            <p className="text-xs text-stone-500 leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               Please arrive 15 minutes before your slot time. Carry a valid ID proof. Show your QR code at the entry gate.
             </p>
           </div>

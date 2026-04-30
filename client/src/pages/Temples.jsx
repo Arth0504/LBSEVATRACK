@@ -19,22 +19,21 @@ const Temples = () => {
   };
 
   return (
-    <div className="min-h-screen bg-warm-page">
+    <div className="min-h-screen bg-white bg-animated">
       <Navbar />
 
-      {/* Page header */}
-      <div className="bg-warm-section border-b border-stone-200">
+      <div className="bg-white border-b border-gray-200">
         <div className="section-container py-12">
-          <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-700 transition-colors mb-6">
+          <button onClick={() => navigate("/")} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-6">
             <ArrowLeft size={16} /> Back to Home
           </button>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <span className="badge-primary mb-3">🛕 Sacred Destinations</span>
-              <h1 className="font-serif text-4xl font-bold text-stone-800 mt-2">Choose Your Temple</h1>
-              <p className="text-stone-400 mt-2">Select a sacred destination and begin your divine journey</p>
+              <span className="badge-accent mb-3">🛕 Sacred Destinations</span>
+              <h1 className="font-serif text-4xl font-bold text-gray-800 mt-2">Choose Your Temple</h1>
+              <p className="text-gray-400 mt-2">Select a sacred destination and begin your divine journey</p>
             </div>
-            <p className="text-sm text-stone-400 font-medium">{temples.length} temples available</p>
+            <p className="text-sm text-gray-400 font-medium">{temples.length} temples available</p>
           </div>
         </div>
       </div>
@@ -44,7 +43,7 @@ const Temples = () => {
         {temples.length === 0 ? (
           <div className="text-center py-24">
             <div className="text-5xl mb-4">🛕</div>
-            <p className="text-stone-400 text-lg">Loading temples...</p>
+            <p className="text-gray-400 text-lg">Loading temples...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
@@ -56,7 +55,7 @@ const Temples = () => {
                   <img src={getImg(t.name)} alt={t.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <div className="absolute bottom-4 left-4">
-                    <span className="badge bg-white/90 text-stone-700 text-xs shadow-sm">
+                    <span className="badge bg-white/90 text-gray-700 text-xs shadow-sm">
                       <MapPin size={11} /> {t.location}
                     </span>
                   </div>
@@ -64,8 +63,8 @@ const Temples = () => {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="font-serif text-xl font-bold text-stone-800 mb-1">{t.name}</h3>
-                  <p className="text-sm text-stone-400 mb-5 line-clamp-2">{t.description || "A sacred temple with divine blessings"}</p>
+                  <h3 className="font-serif text-xl font-bold text-gray-800 mb-1">{t.name}</h3>
+                  <p className="text-sm text-gray-400 mb-5 line-clamp-2">{t.description || "A sacred temple with divine blessings"}</p>
                   <button
                     onClick={e => { e.stopPropagation(); navigate(`/temple/${t._id}`); }}
                     className="btn-primary w-full py-3 text-sm"

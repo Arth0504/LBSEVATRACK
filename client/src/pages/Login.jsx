@@ -22,10 +22,10 @@ const Login = () => {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-warm-page flex items-center justify-center">
+    <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
-        <div className="w-12 h-12 border-4 border-stone-200 border-t-primary-500 rounded-full animate-spin mx-auto mb-4" />
-        <p className="font-serif text-stone-600 text-lg">Signing you in...</p>
+        <div className="w-12 h-12 border-4 border-gray-200 rounded-full animate-spin mx-auto mb-4" style={{ borderTopColor: "#dd2d4a" }} />
+        <p className="font-serif text-gray-600 text-lg">Signing you in...</p>
       </div>
     </div>
   );
@@ -34,13 +34,13 @@ const Login = () => {
     <div className="min-h-screen flex">
       {/* Left panel — decorative */}
       <div className="hidden lg:flex lg:w-5/12 xl:w-1/2 relative overflow-hidden"
-           style={{ background: "linear-gradient(135deg, #28251F 0%, #1A1714 100%)" }}>
+           style={{ background: "linear-gradient(135deg, #1e1e1e 0%, #141414 100%)" }}>
         <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url(/somanth-hero.png)" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(201,75,106,0.15) 0%, transparent 60%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(221,45,74,0.18) 0%, transparent 60%)" }} />
         <div className="relative z-10 flex flex-col justify-between p-12 w-full">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-primary-grad flex items-center justify-center shadow-primary">
-              <BookOpen size={18} className="text-white" />
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #dd2d4a, #b8203a)", boxShadow: "0 4px 14px rgba(221,45,74,0.35)" }}>
+              <span className="text-white font-bold font-serif">S</span>
             </div>
             <span className="font-serif text-2xl font-bold text-white">SevaTrack</span>
           </div>
@@ -51,28 +51,28 @@ const Login = () => {
             <h2 className="font-serif text-3xl font-bold text-white leading-tight mb-4">
               Your Sacred Journey<br />Begins Here
             </h2>
-            <p className="text-stone-400 text-sm leading-relaxed max-w-sm">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
               Book darshan slots at India's most sacred temples. Simple, peaceful, and organized.
             </p>
           </div>
-          <p className="text-stone-600 text-xs">© {new Date().getFullYear()} SevaTrack</p>
+          <p className="text-gray-600 text-xs">© {new Date().getFullYear()} SevaTrack</p>
         </div>
       </div>
 
       {/* Right panel — form */}
-      <div className="flex-1 flex items-center justify-center bg-warm-page px-6 py-12">
+      <div className="flex-1 flex items-center justify-center bg-white px-6 py-12">
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 rounded-lg bg-primary-grad flex items-center justify-center">
-              <BookOpen size={16} className="text-white" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "linear-gradient(135deg, #dd2d4a, #b8203a)" }}>
+              <span className="text-white font-bold font-serif text-sm">S</span>
             </div>
-            <span className="font-serif text-xl font-bold text-stone-800">SevaTrack</span>
+            <span className="font-serif text-xl font-bold text-gray-800">SevaTrack</span>
           </div>
 
           <div className="mb-8">
-            <h1 className="font-serif text-3xl font-bold text-stone-800 mb-2">Welcome back 🙏</h1>
-            <p className="text-stone-400 text-sm">Sign in to continue your darshan journey</p>
+            <h1 className="font-serif text-3xl font-bold text-gray-800 mb-2">Welcome back 🙏</h1>
+            <p className="text-gray-400 text-sm">Sign in to continue your darshan journey</p>
           </div>
 
           <div className="card p-8 shadow-md">
@@ -91,9 +91,9 @@ const Login = () => {
             </form>
           </div>
 
-          <p className="text-center text-sm text-stone-400 mt-6">
+          <p className="text-center text-sm text-gray-400 mt-6">
             Don't have an account?{" "}
-            <Link to="/register" className="text-primary-500 font-semibold hover:text-primary-600 transition-colors">Create one free</Link>
+            <Link to="/register" className="font-semibold transition-colors" style={{ color: "#dd2d4a" }}>Create one free</Link>
           </p>
         </div>
       </div>

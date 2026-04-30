@@ -34,17 +34,17 @@ const MyBookings = () => {
   const statusCls = s => s === "booked" ? "status-booked" : s === "used" ? "status-used" : "status-cancelled";
 
   return (
-    <div className="min-h-screen bg-warm-page">
+    <div className="min-h-screen bg-white bg-animated">
       <Navbar />
 
       {/* Header */}
-      <div className="bg-warm-section border-b border-stone-200">
+      <div className="bg-gray-50 border-b border-gray-200">
         <div className="section-container py-10">
-          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-700 transition-colors mb-5">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-5">
             <ArrowLeft size={15} /> Back
           </button>
-          <h1 className="font-serif text-3xl font-bold text-stone-800">My Bookings</h1>
-          <p className="text-stone-400 mt-1.5 text-sm">{bookings.length} booking{bookings.length !== 1 ? "s" : ""} found</p>
+          <h1 className="font-serif text-3xl font-bold text-gray-800">My Bookings</h1>
+          <p className="text-gray-400 mt-1.5 text-sm">{bookings.length} booking{bookings.length !== 1 ? "s" : ""} found</p>
         </div>
       </div>
 
@@ -52,8 +52,8 @@ const MyBookings = () => {
         {bookings.length === 0 ? (
           <div className="card p-16 text-center shadow-sm max-w-md mx-auto">
             <div className="text-5xl mb-4">📅</div>
-            <h3 className="font-serif text-xl font-bold text-stone-800 mb-2">No bookings yet</h3>
-            <p className="text-stone-400 text-sm mb-6">Start your divine journey by booking a darshan slot</p>
+            <h3 className="font-serif text-xl font-bold text-gray-800 mb-2">No bookings yet</h3>
+            <p className="text-gray-400 text-sm mb-6">Start your divine journey by booking a darshan slot</p>
             <button onClick={() => navigate("/temples")} className="btn-primary px-8 py-3">Book Darshan 🙏</button>
           </div>
         ) : (
@@ -65,26 +65,26 @@ const MyBookings = () => {
 
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-serif text-lg font-bold text-stone-800 leading-tight pr-2">{b.slot?.temple?.name}</h3>
+                    <h3 className="font-serif text-lg font-bold text-gray-800 leading-tight pr-2">{b.slot?.temple?.name}</h3>
                     <span className={statusCls(b.status)}>{b.status}</span>
                   </div>
 
                   <div className="space-y-2 mb-5">
                     <div className="flex items-center gap-2 text-sm text-stone-500">
-                      <Calendar size={13} className="text-primary-400 flex-shrink-0" />
+                      <Calendar size={13} className="flex-shrink-0" style={{ color: "#dd2d4a" }} />
                       {new Date(b.slot?.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-stone-400 font-mono">
-                      <Hash size={12} className="text-stone-300 flex-shrink-0" />
+                      <Hash size={12} className="text-gray-300 flex-shrink-0" />
                       {b.bookingId}
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-stone-500">
-                      <span className="text-stone-300">👥</span>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <span className="text-gray-300">👥</span>
                       {b.totalMembers} member{b.totalMembers > 1 ? "s" : ""}
                     </div>
                   </div>
 
-                  <div className="flex gap-2.5 pt-4 border-t border-stone-100">
+                  <div className="flex gap-2.5 pt-4 border-t border-gray-100">
                     <button onClick={() => download(b)} className="btn-secondary flex-1 py-2.5 text-xs gap-1.5">
                       <Download size={13} /> Receipt
                     </button>
