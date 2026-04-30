@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import API from "../api/axios";
+import { ScanLine, CheckCircle, XCircle, Search } from "lucide-react";
 
 const GateVerify = () => {
   const [bookingId, setBookingId] = useState("");
@@ -9,274 +10,129 @@ const GateVerify = () => {
   const [error, setError] = useState("");
   const qrRef = useRef(null);
 
-  // ================= VERIFY =================
   const handleVerify = async (id) => {
     try {
       setError("");
       const res = await API.post("/gates/verify", { bookingId: id });
       setData(res.data.booking);
-    } catch (error) {
-      setError(error.response?.data?.message || "Verification Failed");
+    } catch (err) {
+      setError(err.response?.data?.message || "Verification Failed");
     }
   };
 
-  // ================= START SCANNER =================
   const startScanner = async () => {
     try {
       const qr = new Html5Qrcode("reader");
       qrRef.current = qr;
-
       const devices = await Html5Qrcode.getCameras();
-      if (!devices || devices.length === 0) {
-        alert("No camera found");
-        return;
-      }
-
-      const cameraId = devices[0].id;
-
-      await qr.start(
-        cameraId,
-        { fps: 10, qrbox: 250 },
-        async (decodedText) => {
-          setBookingId(decodedText);
-          await handleVerify(decodedText);
-
-          if (qrRef.current) {
-            await qrRef.current.stop();
-            await qrRef.current.clear();
-            setScannerStarted(false);
-          }
-        },
-        () => {}
-      );
-
+      if (!devices?.length) { alert("No camera found"); return; }
+      await qr.start(devices[0].id, { fps: 10, qrbox: 250 }, async (decoded) => {
+        setBookingId(decoded);
+        await handleVerify(decoded);
+        if (qrRef.current) { await qrRef.current.stop(); await qrRef.current.clear(); setScannerStarted(false); }
+      }, () => {});
       setScannerStarted(true);
-
-    } catch (err) {
-      alert("Please allow camera permission.");
-    }
+    } catch { alert("Please allow camera permission."); }
   };
 
-  // ================= STOP SCANNER =================
   const stopScanner = async () => {
     try {
-      if (qrRef.current && scannerStarted) {
-        await qrRef.current.stop();
-        await qrRef.current.clear();
-        setScannerStarted(false);
-      }
-    } catch (err) {
-      console.log("Scanner already stopped");
-    }
-  };
-
-  // ================= APPROVE =================
-  const approve = () => {
-    alert("Entry Approved");
-    setData(null);
-    setBookingId("");
-  };
-
-  // ================= REJECT =================
-  const reject = () => {
-    alert("Entry Rejected");
-    setData(null);
-    setBookingId("");
+      if (qrRef.current && scannerStarted) { await qrRef.current.stop(); await qrRef.current.clear(); setScannerStarted(false); }
+    } catch {}
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>Gate Verification</h2>
-
-      {/* MANUAL ENTRY */}
-      <div style={styles.inputBox}>
-        <input
-          type="text"
-          placeholder="Enter Booking ID"
-          value={bookingId}
-          onChange={(e) => setBookingId(e.target.value)}
-          style={styles.input}
-        />
-        <button onClick={() => handleVerify(bookingId)} style={styles.button}>
-          Verify
-        </button>
+    <div className="max-w-2xl mx-auto space-y-6">
+      <div>
+        <h1 className="font-serif text-2xl font-semibold text-warm-800">Gate Verification</h1>
+        <p className="text-warm-400 text-sm mt-1">Scan QR code or enter booking ID manually</p>
       </div>
 
-      {/* SCANNER CONTROL */}
-      <div style={{ marginBottom: "20px" }}>
-        {!scannerStarted ? (
-          <button onClick={startScanner} style={styles.scanBtn}>
-            Start Scanner
+      {/* Manual Entry */}
+      <div className="card-base p-6">
+        <h3 className="font-serif text-base font-semibold text-warm-700 mb-4">Manual Entry</h3>
+        <div className="flex gap-3">
+          <input
+            className="input-base flex-1"
+            type="text"
+            placeholder="Enter Booking ID"
+            value={bookingId}
+            onChange={(e) => setBookingId(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleVerify(bookingId)}
+          />
+          <button onClick={() => handleVerify(bookingId)} className="btn-primary px-5 gap-2">
+            <Search size={16} /> Verify
           </button>
-        ) : (
-          <button onClick={stopScanner} style={styles.stopBtn}>
-            Stop Scanner
-          </button>
-        )}
+        </div>
       </div>
 
-      {/* CAMERA AREA */}
-      <div id="reader" style={{ width: "320px" }}></div>
+      {/* Scanner */}
+      <div className="card-base p-6">
+        <h3 className="font-serif text-base font-semibold text-warm-700 mb-4">QR Scanner</h3>
+        <div className="flex gap-3 mb-4">
+          {!scannerStarted ? (
+            <button onClick={startScanner} className="btn-primary gap-2">
+              <ScanLine size={16} /> Start Scanner
+            </button>
+          ) : (
+            <button onClick={stopScanner} className="btn-ghost gap-2">
+              Stop Scanner
+            </button>
+          )}
+        </div>
+        <div id="reader" className="rounded-2xl overflow-hidden" style={{ width: "100%", maxWidth: "320px" }} />
+      </div>
 
-      {error && <p style={styles.error}>{error}</p>}
+      {/* Error */}
+      {error && (
+        <div className="flex items-center gap-3 p-4 bg-rose-50 border border-rose-200 rounded-2xl text-rose-500 text-sm">
+          <XCircle size={18} /> {error}
+        </div>
+      )}
 
-      {/* RESULT CARD */}
+      {/* Result Card */}
       {data && (
-        <div style={styles.card}>
-          <h3 style={styles.success}>ENTRY VERIFIED</h3>
+        <div className="card-base p-6 border-l-4 border-blush-300">
+          <div className="flex items-center gap-2 mb-5">
+            <CheckCircle size={20} className="text-blush-400" />
+            <h3 className="font-serif text-lg font-semibold text-warm-800">Entry Verified</h3>
+          </div>
 
-          <div style={styles.userSection}>
+          <div className="flex gap-5 mb-5">
             {data.userPhoto && (
-              <img
-                src={data.userPhoto}
-                alt="User"
-                style={styles.userPhoto}
-              />
+              <img src={data.userPhoto} alt="User" className="w-20 h-20 rounded-2xl object-cover border-2 border-rose-100 flex-shrink-0" />
             )}
-
-            <div>
-              <p><strong>Name:</strong> {data.userName}</p>
-              <p><strong>Booking ID:</strong> {data.bookingId}</p>
-              <p><strong>Temple:</strong> {data.templeName}</p>
-              <p><strong>Total Members:</strong> {data.totalMembers}</p>
-              <p>
-                <strong>Adults:</strong> {data.adultCount} |{" "}
-                <strong>Children:</strong> {data.childCount}
-              </p>
+            <div className="space-y-1 text-sm text-warm-600">
+              <p><span className="font-medium text-warm-700">Name:</span> {data.userName}</p>
+              <p><span className="font-medium text-warm-700">Booking ID:</span> <span className="font-mono text-xs">{data.bookingId}</span></p>
+              <p><span className="font-medium text-warm-700">Temple:</span> {data.templeName}</p>
+              <p><span className="font-medium text-warm-700">Members:</span> {data.totalMembers} (Adults: {data.adultCount}, Children: {data.childCount})</p>
             </div>
           </div>
 
-          {/* MEMBERS */}
-          <div style={styles.members}>
-            {data.members.map((m, index) => (
-              <div key={index} style={styles.memberCard}>
-                {m.photo && (
-                  <img src={m.photo} alt="Member" style={styles.memberPhoto} />
-                )}
-                <p>{m.fullName}</p>
-                <p>{m.age} yrs</p>
-                <p>{m.category}</p>
+          {/* Members Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-5">
+            {data.members?.map((m, i) => (
+              <div key={i} className="card-soft p-3 text-center text-xs">
+                {m.photo && <img src={m.photo} alt="Member" className="w-full h-20 object-cover rounded-xl mb-2" />}
+                <p className="font-medium text-warm-700">{m.fullName}</p>
+                <p className="text-warm-400">{m.age} yrs · {m.category}</p>
               </div>
             ))}
           </div>
 
-          {/* BUTTONS */}
-          <div style={styles.buttonGroup}>
-            <button onClick={approve} style={styles.approveBtn}>
-              Approve Entry
+          <div className="flex gap-3">
+            <button onClick={() => { alert("Entry Approved"); setData(null); setBookingId(""); }} className="btn-primary flex-1 py-3">
+              ✓ Approve Entry
             </button>
-            <button onClick={reject} style={styles.rejectBtn}>
-              Reject Entry
+            <button onClick={() => { alert("Entry Rejected"); setData(null); setBookingId(""); }} className="btn-ghost flex-1 py-3 text-rose-400 hover:bg-rose-50 hover:border-rose-200">
+              ✕ Reject Entry
             </button>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "40px",
-    background: "var(--bg-main)",
-    minHeight: "100vh",
-  },
-  heading: {
-    color: "var(--color-primary)",
-    marginBottom: "20px",
-  },
-  inputBox: {
-    display: "flex",
-    gap: "10px",
-    marginBottom: "20px",
-  },
-  input: {
-    padding: "8px",
-    flex: 1,
-    borderRadius: "6px",
-    border: "1px solid var(--border-color)",
-  },
-  button: {
-    background: "var(--color-primary)",
-    color: "white",
-    border: "none",
-    padding: "8px 15px",
-    borderRadius: "6px",
-  },
-  scanBtn: {
-    background: "var(--color-primary-dark)",
-    color: "white",
-    padding: "8px 15px",
-    borderRadius: "6px",
-    border: "none"
-  },
-  stopBtn: {
-    background: "var(--color-primary)",
-    color: "white",
-    padding: "8px 15px",
-    borderRadius: "6px",
-    border: "none"
-  },
-  error: {
-    color: "var(--color-primary)",
-    fontWeight: "bold",
-  },
-  card: {
-    marginTop: "20px",
-    background: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "var(--shadow-md)",
-  },
-  success: {
-    color: "var(--color-primary-dark)",
-  },
-  userSection: {
-    display: "flex",
-    gap: "20px",
-    alignItems: "center",
-  },
-  userPhoto: {
-    width: "120px",
-    height: "120px",
-    borderRadius: "10px",
-    objectFit: "cover",
-  },
-  members: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
-    gap: "10px",
-    marginTop: "20px",
-  },
-  memberCard: {
-    border: "1px solid var(--border-color)",
-    padding: "10px",
-    borderRadius: "6px",
-    textAlign: "center",
-  },
-  memberPhoto: {
-    width: "100%",
-    height: "100px",
-    objectFit: "cover",
-    borderRadius: "6px",
-  },
-  buttonGroup: {
-    marginTop: "20px",
-    display: "flex",
-    gap: "15px",
-  },
-  approveBtn: {
-    background: "green",
-    color: "white",
-    padding: "8px 15px",
-    borderRadius: "6px",
-  },
-  rejectBtn: {
-    background: "red",
-    color: "white",
-    padding: "8px 15px",
-    borderRadius: "6px",
-  },
 };
 
 export default GateVerify;

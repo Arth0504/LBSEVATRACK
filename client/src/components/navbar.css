@@ -13,8 +13,8 @@ html, body { margin: 0; padding: 0; }
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid #E7E5E4;
-  box-shadow: 0 2px 16px rgba(68, 64, 60,0.05);
+  border-bottom: 1px solid #FADAC6;
+  box-shadow: 0 2px 16px rgba(255, 126, 64,0.05);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -26,7 +26,7 @@ html, body { margin: 0; padding: 0; }
   font-family: 'Playfair Display', serif;
   font-size: 23px;
   font-weight: 600;
-  color: #44403C;
+  color: #4A2514;
   cursor: pointer;
   letter-spacing: 0.01em;
   line-height: 1;
@@ -46,7 +46,7 @@ html, body { margin: 0; padding: 0; }
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 400;
-  color: #78716C;
+  color: #9C6953;
   text-decoration: none;
   position: relative;
   padding-bottom: 3px;
@@ -59,61 +59,23 @@ html, body { margin: 0; padding: 0; }
   position: absolute;
   bottom: 0; left: 0;
   width: 0; height: 1.5px;
-  background: #A3B18A;
+  background: #FF7E40;
   border-radius: 2px;
   transition: width 0.3s ease;
 }
 
 .nav-links a:hover,
-.nav-links a.active { color: #44403C; }
+.nav-links a.active { color: #4A2514; }
 
 .nav-links a:hover::after,
 .nav-links a.active::after { width: 100%; }
 
-/* Buttons */
-.btn-primary {
-  background: #44403C;
-  color: #fff !important;
-  padding: 10px 22px;
-  border-radius: 999px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1.5px solid #44403C;
-  cursor: pointer;
-  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 2px 10px rgba(68, 64, 60,0.12);
-}
-.btn-primary:hover {
-  background: #292524;
-  border-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(68, 64, 60,0.16);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1.5px solid #D6D3D1;
-  color: #57534E !important;
-  padding: 9px 20px;
-  border-radius: 999px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.btn-outline:hover {
-  background: #F5F5F4;
-  border-color: #A8A29E;
-  color: #44403C !important;
-  transform: translateY(-1px);
-}
+/* Using global button styles */
 
 .btn-logout {
-  background: #FAFAF9;
-  border: 1.5px solid #E7E5E4;
-  color: #78716C;
+  background: #FFF8F3;
+  border: 1.5px solid #FADAC6;
+  color: #9C6953;
   padding: 10px 20px;
   border-radius: 999px;
   font-family: 'DM Sans', sans-serif;
@@ -123,9 +85,9 @@ html, body { margin: 0; padding: 0; }
   transition: all 0.25s ease;
 }
 .btn-logout:hover {
-  background: #F5F5F4;
-  border-color: #D6D3D1;
-  color: #57534E;
+  background: #FFEFE5;
+  border-color: #F2C4A2;
+  color: #73412A;
 }
 
 /* Mobile toggle */
@@ -142,7 +104,7 @@ html, body { margin: 0; padding: 0; }
 .nav-mobile-toggle span {
   display: block;
   width: 22px; height: 1.5px;
-  background: #78716C;
+  background: #9C6953;
   border-radius: 2px;
   transition: all 0.25s ease;
 }

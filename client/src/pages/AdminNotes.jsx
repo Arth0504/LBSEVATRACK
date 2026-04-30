@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../api/axios";
-import "./adminNotes.css";
+
 
 const AdminNotes = () => {
   const [title, setTitle] = useState("");

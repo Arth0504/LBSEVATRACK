@@ -10,7 +10,7 @@
   font-family: 'Playfair Display', serif;
   font-size: 26px;
   font-weight: 600;
-  color: #44403C;
+  color: #4A2514;
   margin-bottom: 26px;
 }
 
@@ -19,24 +19,24 @@
   background: #FFFFFF;
   padding: 22px;
   border-radius: 18px;
-  border-top: 3px solid #EAECE5;
-  box-shadow: 0 2px 14px rgba(68, 64, 60,0.07);
-  border-left: 1px solid #E7E5E4;
-  border-right: 1px solid #E7E5E4;
-  border-bottom: 1px solid #E7E5E4;
+  border-top: 3px solid #FFDAC4;
+  box-shadow: 0 2px 14px rgba(255, 126, 64,0.07);
+  border-left: 1px solid #FADAC6;
+  border-right: 1px solid #FADAC6;
+  border-bottom: 1px solid #FADAC6;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .booking-card:hover {
-  box-shadow: 0 8px 28px rgba(68, 64, 60,0.11);
+  box-shadow: 0 8px 28px rgba(255, 126, 64,0.11);
   transform: translateY(-3px);
 }
 
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; }
 
-.card-header h3 { font-family: 'Playfair Display', serif; color: #44403C; font-size: 18px; font-weight: 600; }
+.card-header h3 { font-family: 'Playfair Display', serif; color: #4A2514; font-size: 18px; font-weight: 600; }
 
-.card-body { font-size: 13px; color: #78716C; line-height: 1.75; font-weight: 300; }
+.card-body { font-size: 13px; color: #9C6953; line-height: 1.75; font-weight: 300; }
 
 /* Status — warm tinted */
 .status {
@@ -48,14 +48,14 @@
   text-transform: uppercase;
 }
 
-.status.booked    { background: #F4F5F2; color: #78716C; border: 1px solid #EAECE5; }
-.status.cancelled { background: #FAFAF9; color: #A8A29E; border: 1px solid #E7E5E4; }
-.status.used      { background: #FAFAF9; color: #78716C; border: 1px solid #E7E5E4; }
+.status.booked    { background: #FFF1E8; color: #9C6953; border: 1px solid #FFDAC4; }
+.status.cancelled { background: #FFF8F3; color: #C99B85; border: 1px solid #FADAC6; }
+.status.used      { background: #FFF8F3; color: #9C6953; border: 1px solid #FADAC6; }
 
 .card-buttons { margin-top: 16px; display: flex; justify-content: space-between; gap: 8px; }
 
 .download-btn {
-  background: #44403C;
+  background: #4A2514;
   color: #fff;
   border: none;
   padding: 8px 16px;
@@ -65,15 +65,15 @@
   font-size: 13px;
   font-weight: 500;
   transition: background 0.25s ease;
-  box-shadow: 0 2px 8px rgba(68, 64, 60,0.12);
+  box-shadow: 0 2px 8px rgba(255, 126, 64,0.12);
 }
 
-.download-btn:hover { background: #292524; }
+.download-btn:hover { background: #2A1105; }
 
 .cancel-btn {
-  background: #FAFAF9;
-  color: #78716C;
-  border: 1.5px solid #E7E5E4;
+  background: #FFF8F3;
+  color: #9C6953;
+  border: 1.5px solid #FADAC6;
   padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
@@ -83,7 +83,7 @@
   transition: all 0.25s ease;
 }
 
-.cancel-btn:hover { background: #F5F5F4; color: #57534E; border-color: #D6D3D1; }
+.cancel-btn:hover { background: #FFEFE5; color: #73412A; border-color: #F2C4A2; }
 
 .back-btn {
   margin-bottom: 16px;
@@ -93,12 +93,12 @@
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
-  color: #78716C;
+  color: #9C6953;
   display: inline-flex;
   align-items: center;
   gap: 5px;
   transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.back-btn:hover { color: #44403C; transform: translateX(-2px); }
+.back-btn:hover { color: #4A2514; transform: translateX(-2px); }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import API from "../api/axios";
-import "./bookingModal.css";
+
 
 const BookingModal = ({ slot, onClose }) => {
   const [members, setMembers] = useState([

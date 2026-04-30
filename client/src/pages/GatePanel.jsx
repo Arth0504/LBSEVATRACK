@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import API from "../api/axios";
-import "./gate.css";
+
 
 const GatePanel = () => {
   const [bookingId, setBookingId] = useState("");

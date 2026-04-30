@@ -15,7 +15,7 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(72px, 14vw, 120px);
   font-weight: 600;
-  color: #E7E5E4;
+  color: #FADAC6;
   line-height: 1;
   margin-bottom: 6px;
   letter-spacing: 0.04em;
@@ -25,14 +25,14 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(20px, 2.8vw, 28px);
   font-weight: 600;
-  color: #44403C;
+  color: #4A2514;
   margin-bottom: 10px;
 }
 
 .notfound-container p {
   font-size: 15px;
   max-width: 340px;
-  color: #A8A29E;
+  color: #C99B85;
   line-height: 1.75;
 }
 
@@ -41,19 +41,19 @@
   padding: 13px 32px;
   border: none;
   border-radius: 999px;
-  background: #44403C;
+  background: #4A2514;
   color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 2px 12px rgba(68, 64, 60,0.14);
+  box-shadow: 0 2px 12px rgba(255, 126, 64,0.14);
 }
 
 .home-btn:hover {
-  background: #292524;
+  background: #2A1105;
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(68, 64, 60,0.18);
+  box-shadow: 0 4px 18px rgba(255, 126, 64,0.18);
 }
 

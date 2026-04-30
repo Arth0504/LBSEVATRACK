@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
-import "./manageTemples.css";
+
 
 const ManageTemples = () => {
   const [temples, setTemples] = useState([]);
