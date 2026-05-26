@@ -2,6 +2,7 @@ const Booking = require("../models/Booking");
 const Slot = require("../models/Slot");
 const QRCode = require("qrcode");
 const sendEmail = require("../utils/sendEmail");
+const { getPublicUploadUrl } = require("../utils/publicUrl");
 
 // ================= CREATE BOOKING =================
 exports.createBooking = async (req, res) => {
@@ -56,9 +57,7 @@ exports.createBooking = async (req, res) => {
         fullName: m.fullName,
         age: m.age,
         gender: m.gender,
-        photo: file
-          ? `https://lbsevatrack.onrender.com/uploads/${file.filename}`
-          : null,
+        photo: file ? getPublicUploadUrl(req, file.filename) : null,
         category: m.age < 18 ? "child" : "adult",
       };
     });

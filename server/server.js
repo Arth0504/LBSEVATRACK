@@ -5,36 +5,82 @@ require("dotenv").config();
 
 const app = express();
 
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err.name, err.message);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection:", err?.message || err);
+});
+
+app.set("trust proxy", 1);
+
 // ================= CORS =================
-const allowedOrigins = [
-  "https://lbsevatrack.vercel.app",
+function parseOriginsList(str) {
+  if (!str || typeof str !== "string") return [];
+  return str
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+const defaultOrigins = [
   "http://localhost:5173",
+  "http://127.0.0.1:5173",
   "http://localhost:3000",
+  "http://127.0.0.1:3000",
   "http://localhost:4173",
+  "http://127.0.0.1:4173",
 ];
 
+const envOrigins = parseOriginsList(process.env.ALLOWED_ORIGINS || "");
+const clientUrl = (process.env.CLIENT_URL || "").trim();
+const merged = new Set([
+  ...defaultOrigins,
+  ...envOrigins,
+  ...(clientUrl ? [clientUrl] : []),
+]);
+
+function isLocalDevOrigin(origin) {
+  if (!origin) return false;
+  try {
+    const u = new URL(origin);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return false;
+    return u.hostname === "localhost" || u.hostname === "127.0.0.1";
+  } catch {
+    return false;
+  }
+}
+
+function isOriginAllowed(origin) {
+  if (!origin) return true;
+  if (merged.has(origin)) return true;
+  if (isLocalDevOrigin(origin)) return true;
+  return false;
+}
+
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+  origin(origin, callback) {
+    if (isOriginAllowed(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      console.warn(`[CORS] Blocked origin: ${origin || "(none)"}`);
+      callback(null, false);
     }
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Content-Length"],
+  optionsSuccessStatus: 204,
+  maxAge: 86400,
 };
 
+// cors() handles OPTIONS preflight for registered routes in Express v5.
 app.use(cors(corsOptions));
-
-// ================= MIDDLEWARE =================
-app.use(express.json());
-
-// 🔥 STATIC UPLOADS FOLDER
+app.use(express.json({ limit: "10mb" }));
 app.use("/uploads", express.static("uploads"));
 
-// ================= ROUTE IMPORTS =================
 const authRoutes = require("./routes/authRoutes");
 const templeRoutes = require("./routes/templeRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
@@ -45,7 +91,6 @@ const slotRoutes = require("./routes/slotRoutes");
 const queryRoutes = require("./routes/queryRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 
-// ================= ROUTES =================
 app.use("/api/auth", authRoutes);
 app.use("/api/temples", templeRoutes);
 app.use("/api/bookings", bookingRoutes);
@@ -56,30 +101,71 @@ app.use("/api/slots", slotRoutes);
 app.use("/api/query", queryRoutes);
 app.use("/api/notes", noteRoutes);
 
-// ================= ROOT TEST =================
 app.get("/", (req, res) => {
-  res.send("SevaTrack API Running...");
+  res.type("text").send("SevaTrack API Running...");
 });
 
-// ================= DATABASE =================
+app.use((req, res) => {
+  res.status(404).json({ message: "Not found", path: req.originalUrl });
+});
+
+app.use((err, req, res, _next) => {
+  if (err.name === "CastError") {
+    return res.status(400).json({ message: "Invalid resource identifier" });
+  }
+  if (err.code === 11000) {
+    return res.status(400).json({ message: "Duplicate value" });
+  }
+  if (err.name === "ValidationError") {
+    return res.status(400).json({
+      message: Object.values(err.errors)
+        .map((val) => val.message)
+        .join(", "),
+    });
+  }
+
+  const status = Number(err.status) || Number(err.statusCode) || 500;
+  const message = status >= 500 ? "Internal server error" : err.message || "Request failed";
+
+  if (status >= 500) {
+    console.error(`${req.method} ${req.originalUrl} failed:`, err.message);
+  }
+
+  res.status(status).json({ message });
+});
+
 const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  console.error(" MONGO_URI is missing in environment variables");
-  process.exit(1);
-}
-
-mongoose
-  .connect(MONGO_URI) 
-  .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((err) => {
-    console.error("MongoDB Connection Error:", err);
-    process.exit(1);
-  });
-
-// ================= SERVER =================
+const JWT_SECRET = process.env.JWT_SECRET;
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+if (!MONGO_URI) {
+  console.error("MONGO_URI is missing in environment variables");
+}
+if (!JWT_SECRET) {
+  console.error("JWT_SECRET is missing in environment variables. Authentication will fail.");
+}
+
+function startServer() {
+  const server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+
+  server.on("error", (err) => {
+    console.error("Server listen error:", err.message);
+  });
+}
+
+if (MONGO_URI) {
+  mongoose
+    .connect(MONGO_URI)
+    .then(() => {
+      console.log("MongoDB Connected Successfully");
+      startServer();
+    })
+    .catch((err) => {
+      console.error("MongoDB Connection Error:", err.message);
+      startServer();
+    });
+} else {
+  startServer();
+}

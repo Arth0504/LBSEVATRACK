@@ -20,23 +20,32 @@ const templeSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     location: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
+      default: "",
+      trim: true,
     },
     darshanStart: {
       type: String,
       required: true,
+      trim: true,
     },
     darshanEnd: {
       type: String,
       required: true,
+      trim: true,
     },
-    aartiTimings: [aartiSchema],
+    aartiTimings: {
+      type: [aartiSchema],
+      default: [],
+    },
   },
   { timestamps: true }
 );

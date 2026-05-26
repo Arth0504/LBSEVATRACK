@@ -4,6 +4,9 @@ const User = require("../models/User");
 const EntryLog = require("../models/EntryLog");
 const Activity = require("../models/Activity");
 const bcrypt = require("bcryptjs");
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 const sendEmail = require("../utils/sendEmail"); // 📧 EMAIL
 
 
@@ -282,12 +285,19 @@ exports.toggleBlockUser = async (req, res) => {
 // ================= CREATE GATE =================
 exports.createGate = async (req, res) => {
   try {
-    const { name, email, password, temple } = req.body;
+    const { password, temple } = req.body;
+    const name = typeof req.body.name === "string" ? req.body.name.trim() : "";
+    const email =
+      typeof req.body.email === "string"
+        ? req.body.email.trim().toLowerCase()
+        : "";
 
     if (!name || !email || !password || !temple)
       return res.status(400).json({ message: "All fields required" });
 
-    const existing = await User.findOne({ email });
+    const existing = await User.findOne({
+      email: { $regex: `^${escapeRegex(email)}$`, $options: "i" },
+    });
     if (existing)
       return res.status(400).json({ message: "Email already exists" });
 

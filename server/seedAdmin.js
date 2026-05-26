@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const User = require("./models/User");
@@ -8,21 +7,26 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 const seedAdmin = async () => {
   try {
-    const adminExists = await User.findOne({ email: "admin@sevatrack.com" });
+    const adminEmail = "admin@sevatrack.com";
+    const adminExists = await User.findOne({
+      email: { $regex: `^${escapeRegex(adminEmail)}$`, $options: "i" },
+    });
 
     if (adminExists) {
       console.log("Admin already exists");
       process.exit();
     }
 
-    const hashedPassword = await bcrypt.hash("admin123", 10);
-
     await User.create({
       name: "Super Admin",
-      email: "admin@sevatrack.com",
-      password: hashedPassword,
+      email: adminEmail,
+      password: "admin123",
       role: "admin",
     });
 

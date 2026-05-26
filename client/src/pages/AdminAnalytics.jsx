@@ -116,7 +116,7 @@ const AdminAnalytics = () => {
           {[
             { label: "Total Bookings", value: totalStats.bookings, bg: "#fff0f2", color: ACCENT, border: "#ffadb8" },
             { label: "Total Visitors",  value: totalStats.visitors,  bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
-            { label: "Cancelled",       value: totalStats.cancelled, bg: "#fff7ed", color: "#ea580c", border: "#fed7aa" },
+            { label: "Cancelled",       value: totalStats.cancelled, bg: "#fff9f6", color: "#9f766d", border: "#e7d1c7" },
             { label: "Total Members",   value: totalStats.members,   bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
           ].map(s => (
             <div key={s.label} className="card p-5">

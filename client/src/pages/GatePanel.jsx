@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import API from "../api/axios";
-
 
 const GatePanel = () => {
   const [bookingId, setBookingId] = useState("");
@@ -11,18 +10,21 @@ const GatePanel = () => {
   const [error, setError] = useState("");
   const [activity, setActivity] = useState(null);
 
-  useEffect(() => {
-    fetchTodayActivity();
-  }, []);
-
-  const fetchTodayActivity = async () => {
+  const fetchTodayActivity = useCallback(async () => {
     try {
       const res = await API.get("/admin/gate-activity");
       setActivity(res.data);
-    } catch (err) {
+    } catch {
       console.log("Activity fetch failed");
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      void fetchTodayActivity();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [fetchTodayActivity]);
 
   const handleVerify = async () => {
     try {

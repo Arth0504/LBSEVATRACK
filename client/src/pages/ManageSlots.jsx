@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import API from "../api/axios";
 import { Plus, Pencil, Trash2, Save, X } from "lucide-react";
 
@@ -15,14 +15,31 @@ const ManageSlots = () => {
   const timeOpts = times();
   const today = new Date().toISOString().split("T")[0];
 
-  useEffect(() => { API.get("/temples").then(r => setTemples(r.data)).catch(() => {}); }, []);
-  useEffect(() => { if (temple) fetchSlots(); else setSlots([]); }, [temple]);
+  useEffect(() => {
+    API.get("/temples")
+      .then((r) => setTemples(r.data))
+      .catch(() => {
+        void 0;
+      });
+  }, []);
 
-  const fetchSlots = async () => {
+  const fetchSlots = useCallback(async () => {
+    if (!temple) return;
     setLoading(true);
-    try { const r = await API.get(`/slots/temple/${temple}`); setSlots(r.data); }
-    catch {} finally { setLoading(false); }
-  };
+    try {
+      const r = await API.get(`/slots/temple/${temple}`);
+      setSlots(r.data);
+    } catch {
+      void 0;
+    } finally {
+      setLoading(false);
+    }
+  }, [temple]);
+
+  useEffect(() => {
+    if (temple) fetchSlots();
+    else setSlots([]);
+  }, [temple, fetchSlots]);
 
   const create = async (e) => {
     e.preventDefault();

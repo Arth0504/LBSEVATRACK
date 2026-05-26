@@ -1,12 +1,8 @@
 import { useState } from "react";
 import API from "../api/axios";
 
-
 const BookingModal = ({ slot, onClose }) => {
-  const [members, setMembers] = useState([
-    { fullName: "", age: "", gender: "male" }
-  ]);
-
+  const [members, setMembers] = useState([{ fullName: "", age: "", gender: "male" }]);
   const [loading, setLoading] = useState(false);
 
   const addMember = () => {
@@ -25,45 +21,37 @@ const BookingModal = ({ slot, onClose }) => {
       if (loading) return;
       setLoading(true);
 
-      // VALIDATION
-      for (let m of members) {
-        if (!m.fullName || !m.age) {
-          alert("Fill all details ❌");
+      for (const member of members) {
+        if (!member.fullName || !member.age) {
+          alert("Fill all details");
           setLoading(false);
           return;
         }
       }
 
-      // 🔥 FIX: FormData use kar
       const formData = new FormData();
       formData.append("slotId", slot._id);
 
-      const memberData = members.map((m) => ({
-        fullName: m.fullName,
-        age: Number(m.age),
-        gender: m.gender,
+      const memberData = members.map((member) => ({
+        fullName: member.fullName,
+        age: Number(member.age),
+        gender: member.gender,
       }));
 
       formData.append("members", JSON.stringify(memberData));
 
-      console.log("📤 Modal Sending:", memberData);
-
       await API.post("/bookings", formData);
 
-      alert("🙏 Booking Successful!");
+      alert("Booking successful");
       onClose();
-
     } catch (error) {
-      console.log("❌ Modal Error:", error.response?.data);
-
       const msg = error.response?.data?.message;
 
       if (msg?.includes("already")) {
-        alert("⚠️ You already booked this slot");
+        alert("You already booked this slot");
       } else {
-        alert(msg || "Booking Failed ❌");
+        alert(msg || "Booking failed");
       }
-
     } finally {
       setLoading(false);
     }
@@ -76,36 +64,25 @@ const BookingModal = ({ slot, onClose }) => {
 
         {members.map((member, index) => (
           <div key={index} className="member-form">
-
             <input
               type="text"
               placeholder="Full Name"
               value={member.fullName}
-              onChange={(e) =>
-                handleChange(index, "fullName", e.target.value)
-              }
+              onChange={(e) => handleChange(index, "fullName", e.target.value)}
             />
 
             <input
               type="number"
               placeholder="Age"
               value={member.age}
-              onChange={(e) =>
-                handleChange(index, "age", e.target.value)
-              }
+              onChange={(e) => handleChange(index, "age", e.target.value)}
             />
 
-            <select
-              value={member.gender}
-              onChange={(e) =>
-                handleChange(index, "gender", e.target.value)
-              }
-            >
+            <select value={member.gender} onChange={(e) => handleChange(index, "gender", e.target.value)}>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
             </select>
-
           </div>
         ))}
 
@@ -120,9 +97,7 @@ const BookingModal = ({ slot, onClose }) => {
             {loading ? "Booking..." : "Confirm Booking"}
           </button>
 
-          <button onClick={onClose}>
-            Cancel
-          </button>
+          <button onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>

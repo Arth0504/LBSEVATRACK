@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import { QRCodeCanvas } from "qrcode.react";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
-import { Download, X, ArrowLeft, Calendar, Hash, Users, BookOpen, QrCode } from "lucide-react";
+import { Download, X, ArrowLeft, Calendar, Hash, Users, BookOpen, QrCode, AlertCircle } from "lucide-react";
 
 const ACCENT = "#dd2d4a";
 
@@ -13,6 +13,7 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const [fullscreenQR, setFullscreenQR] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,77 +46,454 @@ const MyBookings = () => {
     });
   };
 
+  const getTheme = (templeName) => {
+    const t = (templeName || "").toLowerCase();
+    if (t.includes("dwarka")) {
+      return {
+        bg: [255, 251, 235], // amber-50
+        border: [217, 119, 6], // amber-600 (gold)
+        headerBg: [30, 58, 138], // blue-900
+        textDark: [30, 58, 138],
+        textLight: [217, 119, 6],
+        accent: [253, 230, 138], // amber-200
+        hindiMsg: "Faith is yours, Service is ours"
+      };
+    } else if (t.includes("ambaji")) {
+      return {
+        bg: [255, 241, 242], // rose-50
+        border: [225, 29, 72], // rose-600
+        headerBg: [136, 19, 55], // rose-900 (maroon)
+        textDark: [136, 19, 55],
+        textLight: [225, 29, 72],
+        accent: [254, 205, 211],
+        hindiMsg: "Mother's Grace, Always on All"
+      };
+    } else if (t.includes("somnath")) {
+      return {
+        bg: [240, 253, 244], // green-50
+        border: [34, 197, 94], // green-500
+        headerBg: [20, 83, 45], // green-900
+        textDark: [20, 83, 45],
+        textLight: [34, 197, 94],
+        accent: [187, 247, 208],
+        hindiMsg: "Every Name: Shivaya"
+      };
+    }
+    // Default Saffron
+    return {
+      bg: [255, 247, 237],
+      border: [245, 158, 11],
+      headerBg: [234, 88, 12],
+      textDark: [120, 53, 15],
+      textLight: [180, 83, 9],
+      accent: [253, 230, 138],
+      hindiMsg: "Your sacred journey begins here"
+    };
+  };
+
+  const getCircularImage = async (base64OrUrl) => {
+    return new Promise((resolve) => {
+      if (!base64OrUrl) return resolve(null);
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const size = Math.min(img.width, img.height);
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, size, size);
+        resolve(canvas.toDataURL("image/png"));
+      };
+      img.onerror = () => resolve(null);
+      img.src = base64OrUrl;
+    });
+  };
+
+  const drawPage = async (doc, data, theme, member, isMaster, pageIdx) => {
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 12;
+    const ticketWidth = pageWidth - (margin * 2);
+    const ticketHeight = pageHeight - (margin * 2);
+    let y = margin;
+    const startX = margin;
+
+    // 1. Draw outer ticket shape (full page bleed)
+    doc.setFillColor(...theme.bg);
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(0.8);
+    doc.rect(startX, y, ticketWidth, ticketHeight, "FD");
+
+    // Motif borders
+    doc.setLineWidth(0.3);
+    doc.rect(startX + 3, y + 3, ticketWidth - 6, ticketHeight - 6, "S");
+    doc.rect(startX + 5, y + 5, ticketWidth - 10, ticketHeight - 10, "S");
+    
+    // Corner accents
+    const cs = 12;
+    doc.setLineWidth(0.8);
+    doc.line(startX + 8, y + 8 + cs, startX + 8, y + 8);
+    doc.line(startX + 8, y + 8, startX + 8 + cs, y + 8);
+    doc.line(startX + ticketWidth - 8, y + 8 + cs, startX + ticketWidth - 8, y + 8);
+    doc.line(startX + ticketWidth - 8, y + 8, startX + ticketWidth - 8 - cs, y + 8);
+    doc.line(startX + 8, y + ticketHeight - 8 - cs, startX + 8, y + ticketHeight - 8);
+    doc.line(startX + 8, y + ticketHeight - 8, startX + 8 + cs, y + ticketHeight - 8);
+    doc.line(startX + ticketWidth - 8, y + ticketHeight - 8 - cs, startX + ticketWidth - 8, y + ticketHeight - 8);
+    doc.line(startX + ticketWidth - 8, y + ticketHeight - 8, startX + ticketWidth - 8 - cs, y + ticketHeight - 8);
+
+    // 2. Header Archway (Individual Pass only)
+    if (!isMaster) {
+       doc.setFillColor(...theme.headerBg);
+       doc.rect(startX, y, ticketWidth, 95, "F");
+       // Inner motif inside the dark arch
+       doc.setDrawColor(...theme.border);
+       doc.setLineWidth(0.3);
+       doc.rect(startX + 3, y + 3, ticketWidth - 6, 92, "S");
+       doc.rect(startX + 5, y + 5, ticketWidth - 10, 90, "S");
+       
+       // Upward curve cutout effect at the bottom of the arch block
+       doc.setFillColor(...theme.bg);
+       doc.ellipse(pageWidth/2, y + 95, ticketWidth/2, 15, 'F');
+       doc.setDrawColor(...theme.border);
+       doc.setLineWidth(0.5);
+       doc.ellipse(pageWidth/2, y + 95, ticketWidth/2, 15, 'S');
+       // Clean up bottom edge of the stroke that bled out
+       doc.setFillColor(...theme.bg);
+       doc.rect(startX, y + 95, ticketWidth, 16, "F");
+       // Re-draw outer borders that were erased
+       doc.setDrawColor(...theme.border);
+       doc.setLineWidth(0.8);
+       doc.line(startX, y + 95, startX, y + 112);
+       doc.line(startX + ticketWidth, y + 95, startX + ticketWidth, y + 112);
+       doc.setLineWidth(0.3);
+       doc.line(startX+3, y+95, startX+3, y+112);
+       doc.line(startX+ticketWidth-3, y+95, startX+ticketWidth-3, y+112);
+       doc.line(startX+5, y+95, startX+5, y+112);
+       doc.line(startX+ticketWidth-5, y+95, startX+ticketWidth-5, y+112);
+    }
+
+    // Header Text
+    y += 20;
+    doc.setTextColor(isMaster ? theme.textDark[0] : 255, isMaster ? theme.textDark[1] : 255, isMaster ? theme.textDark[2] : 255);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text("SEVATRACK", pageWidth / 2, y, { align: "center" });
+
+    y += 15;
+    doc.setFontSize(isMaster ? 28 : 26);
+    doc.setFont("times", "bold");
+    doc.text(isMaster ? "Family Darshan" : "Darshan", pageWidth / 2, y, { align: "center" });
+    if (isMaster) {
+       y += 12;
+       doc.text("Booking", pageWidth / 2, y, { align: "center" });
+    } else {
+       y += 10;
+       doc.text("Pravesh Pass", pageWidth / 2, y, { align: "center" });
+    }
+
+    y += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "italic");
+    doc.setTextColor(isMaster ? theme.textLight[0] : 255, isMaster ? theme.textLight[1] : 255, isMaster ? theme.textLight[2] : 255);
+    doc.text(isMaster ? `— ${theme.hindiMsg} —` : "Your sacred journey begins here", pageWidth / 2, y, { align: "center" });
+
+    // Status Badge
+    let badgeColor = [245, 158, 11]; // gold
+    if (data.status === "used") badgeColor = [59, 130, 246]; // blue
+    if (data.status === "cancelled") badgeColor = [239, 68, 68]; // red
+
+    if (!isMaster) {
+      y += 12;
+      doc.setFillColor(...badgeColor);
+      doc.roundedRect((pageWidth/2) - 18, y, 36, 8, 4, 4, "F");
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "bold");
+      doc.text("VALID", pageWidth/2, y + 5.5, { align: "center" });
+      y += 20;
+    } else {
+      y += 20;
+    }
+
+    // 3. Photo Section (Individual)
+    if (!isMaster && member) {
+       const imgSize = 40;
+       const imgX = (pageWidth / 2) - (imgSize / 2);
+       const imgY = y - 5; // Overlap the arch perfectly
+       
+       if (member.photo) {
+         const circData = await getCircularImage(member.photo);
+         if (circData) {
+           doc.addImage(circData, "PNG", imgX, imgY, imgSize, imgSize);
+         }
+       } else {
+           doc.setFillColor(...theme.accent);
+           doc.circle(pageWidth/2, imgY + (imgSize/2), imgSize/2, "F");
+       }
+       
+       // Draw gold border around circular photo
+       doc.setDrawColor(...theme.border);
+       doc.setLineWidth(2);
+       doc.circle(pageWidth/2, imgY + (imgSize/2), imgSize/2, "S");
+       doc.setDrawColor(255, 255, 255);
+       doc.setLineWidth(0.5);
+       doc.circle(pageWidth/2, imgY + (imgSize/2), (imgSize/2) - 1, "S");
+
+       y += imgSize + 10;
+       doc.setTextColor(...theme.textDark);
+       doc.setFontSize(22);
+       doc.setFont("times", "bold");
+       doc.text(member.fullName || "Devotee", pageWidth/2, y, { align: "center" });
+
+       y += 6;
+       doc.setTextColor(...theme.textDark);
+       doc.setFontSize(10);
+       doc.setFont("helvetica", "bold");
+       const ageGender = [];
+       if (member.age) ageGender.push(`${member.age} Yrs`);
+       if (member.gender) ageGender.push(member.gender.charAt(0).toUpperCase() + member.gender.slice(1));
+       if (member.category) ageGender.push(member.category.charAt(0).toUpperCase() + member.category.slice(1));
+       doc.text(ageGender.join(" • ") || "Primary Member", pageWidth/2, y, { align: "center" });
+       y += 12;
+    }
+
+    // 4. Booking Details Grid
+    const boxY = y;
+    
+    if (isMaster) {
+      doc.setFillColor(theme.headerBg[0], theme.headerBg[1], theme.headerBg[2]);
+      doc.roundedRect(startX + 8, boxY, ticketWidth - 16, 45, 3, 3, "F");
+      // Inner motif
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(startX + 10, boxY + 2, ticketWidth - 20, 41, 2, 2, "S");
+      
+      doc.setTextColor(...theme.border);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "bold");
+      
+      doc.text("TEMPLE", startX + 18, boxY + 10);
+      doc.text("DATE", startX + 85, boxY + 10);
+      doc.text("SLOT TIME", startX + 135, boxY + 10);
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(10);
+      const templeName = data.slot?.temple?.name || "Temple Darshan";
+      doc.text(templeName, startX + 18, boxY + 15, { maxWidth: 65 });
+      doc.text(new Date(data.slot?.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }), startX + 85, boxY + 15);
+      const t = data.slot?.startTime && data.slot?.endTime ? `${data.slot.startTime} - ${data.slot.endTime}` : "N/A";
+      doc.text(t, startX + 135, boxY + 15);
+
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.2);
+      doc.line(startX + 18, boxY + 22, startX + ticketWidth - 26, boxY + 22);
+
+      doc.setTextColor(...theme.border);
+      doc.setFontSize(7);
+      doc.text("BOOKING ID", startX + 18, boxY + 30);
+      doc.text("TOTAL MEMBERS", startX + 135, boxY + 30);
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(11);
+      doc.setFont("courier", "bold");
+      doc.text(data.bookingId, startX + 18, boxY + 36);
+      doc.setFont("helvetica", "bold");
+      doc.text(String(data.totalMembers), startX + 135, boxY + 36);
+      
+      y += 55;
+    } else {
+      // Individual grid
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(startX + 12, boxY, ticketWidth - 24, 38, 3, 3, "S");
+      
+      doc.setTextColor(...theme.textLight);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "bold");
+      
+      doc.text("TEMPLE", startX + 18, boxY + 9);
+      doc.text("DATE", startX + 110, boxY + 9);
+      
+      doc.setTextColor(...theme.textDark);
+      doc.setFontSize(9);
+      const templeName = data.slot?.temple?.name || "Temple Darshan";
+      doc.text(templeName, startX + 18, boxY + 14, { maxWidth: 85 });
+      doc.text(new Date(data.slot?.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }), startX + 110, boxY + 14);
+      
+      doc.setDrawColor(...theme.accent);
+      doc.setLineWidth(0.3);
+      doc.line(startX + 18, boxY + 19, startX + ticketWidth - 30, boxY + 19);
+
+      doc.setTextColor(...theme.textLight);
+      doc.setFontSize(7);
+      doc.text("SLOT TIME", startX + 18, boxY + 26);
+      doc.text("BOOKING ID", startX + 110, boxY + 26);
+      
+      doc.setTextColor(...theme.textDark);
+      doc.setFontSize(9);
+      const t = data.slot?.startTime && data.slot?.endTime ? `${data.slot.startTime} - ${data.slot.endTime}` : "N/A";
+      doc.text(t, startX + 18, boxY + 31);
+      doc.setFont("courier", "bold");
+      doc.text(data.bookingId, startX + 110, boxY + 31);
+
+      y += 48;
+
+      // Pass Type Bar
+      doc.setFillColor(...theme.headerBg);
+      doc.roundedRect(startX + 12, y, ticketWidth - 24, 16, 2, 2, "F");
+      // inner motif
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(startX + 14, y + 2, ticketWidth - 28, 12, 1, 1, "S");
+
+      doc.setTextColor(...theme.border);
+      doc.setFontSize(6);
+      doc.setFont("helvetica", "bold");
+      doc.text("PASS TYPE", pageWidth / 2, y + 6, { align: "center" });
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(10);
+      doc.text("Individual Entry Pass", pageWidth / 2, y + 11.5, { align: "center" });
+      y += 22;
+    }
+
+    // 5. Devotees List (Master only)
+    if (isMaster && data.members?.length > 0) {
+      doc.setTextColor(...theme.textDark);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("VERIFIED MEMBERS", pageWidth / 2, y, { align: "center" });
+      
+      // Decorative line
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.5);
+      doc.line(startX + 20, y - 1, (pageWidth/2) - 25, y - 1);
+      doc.line((pageWidth/2) + 25, y - 1, startX + ticketWidth - 20, y - 1);
+      
+      y += 12;
+
+      for (let mIdx = 0; mIdx < data.members.length; mIdx++) {
+        const m = data.members[mIdx];
+        const smSize = 18;
+        
+        if (m.photo) {
+          const circData = await getCircularImage(m.photo);
+          if (circData) {
+            doc.addImage(circData, "PNG", startX + 15, y - 9, smSize, smSize);
+          }
+        }
+        // Frame
+        doc.setDrawColor(...theme.border);
+        doc.setLineWidth(0.8);
+        doc.circle(startX + 15 + (smSize/2), y - 9 + (smSize/2), smSize/2, "S");
+        
+        doc.setTextColor(...theme.textDark);
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text(m.fullName, startX + 42, y);
+
+        doc.setTextColor(...theme.textLight);
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "normal");
+        doc.text(`${m.age} Yrs • ${m.gender.toUpperCase()} • ${m.category || 'Adult'}`, startX + 42, y + 5);
+        
+        // Status badge per member
+        doc.setFillColor(...theme.textDark); // Use theme dark instead of pure green to match style
+        doc.roundedRect(startX + ticketWidth - 50, y - 3, 30, 7, 3, 3, "F");
+        doc.setTextColor(...theme.border);
+        doc.setFontSize(7);
+        doc.setFont("helvetica", "bold");
+        doc.text("VERIFIED", startX + ticketWidth - 35, y + 1.8, { align: "center" });
+
+        // Divider
+        if (mIdx < data.members.length - 1) {
+            doc.setDrawColor(...theme.accent);
+            doc.setLineWidth(0.2);
+            doc.line(startX + 15, y + 12, startX + ticketWidth - 15, y + 12);
+        }
+
+        y += 20;
+      }
+    }
+
+    // 6. QR Code Section (Individual only)
+    if (!isMaster) {
+      y = margin + 175; // Fixed position
+
+      doc.setFillColor(255, 255, 255);
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.8);
+
+      const qrSize = 55;
+      const qrX = (pageWidth - qrSize) / 2;
+      doc.rect(qrX - 3, y, qrSize + 6, qrSize + 6, "FD"); // thick white border effect
+
+      const qrId = `qr-${data._id}-member-${pageIdx - 1}`;
+      const qrCanvas = document.getElementById(qrId) || document.getElementById(`qr-${data._id}`);
+      if (qrCanvas) {
+        const qrImage = qrCanvas.toDataURL("image/png", 1.0);
+        doc.addImage(qrImage, "PNG", qrX, y + 3, qrSize, qrSize);
+      }
+
+      y += qrSize + 15;
+      
+      // Scan indicator motifs
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.5);
+      doc.line(qrX - 15, y - 2, qrX - 5, y - 2);
+      doc.line(qrX - 10, y - 4, qrX - 5, y - 2);
+      doc.line(qrX - 10, y, qrX - 5, y - 2);
+      
+      doc.line(qrX + qrSize + 5, y - 2, qrX + qrSize + 15, y - 2);
+      doc.line(qrX + qrSize + 10, y - 4, qrX + qrSize + 5, y - 2);
+      doc.line(qrX + qrSize + 10, y, qrX + qrSize + 5, y - 2);
+      
+      doc.setTextColor(...theme.textDark);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text("Scan at Entry Gate", pageWidth / 2, y, { align: "center" });
+    }
+
+    // Footer
+    y = ticketHeight + margin - 12;
+    doc.setTextColor(isMaster ? theme.textDark[0] : 255, isMaster ? theme.textDark[1] : 255, isMaster ? theme.textDark[2] : 255);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    if (isMaster) {
+      doc.text("Keep this summary for reference", pageWidth / 2, y, { align: "center" });
+    } else {
+      doc.setFillColor(...theme.headerBg);
+      doc.rect(startX, y - 6, ticketWidth, 18, "F");
+      // Inner border
+      doc.setDrawColor(...theme.border);
+      doc.setLineWidth(0.3);
+      doc.rect(startX + 3, y - 3, ticketWidth - 6, 12, "S");
+      
+      doc.setTextColor(255, 255, 255);
+      doc.text("Please present this pass at the entry gate", pageWidth / 2, y + 4, { align: "center" });
+    }
+  };
+
   const download = async (data) => {
     const doc = new jsPDF();
+    const theme = getTheme(data.slot?.temple?.name);
     
-    // Header
-    doc.setFontSize(22); doc.setTextColor(221, 45, 74);
-    doc.text("SevaTrack Darshan Receipt", 105, 20, { align: "center" });
-    
-    // Booking details
-    doc.setTextColor(0, 0, 0); doc.setFontSize(12);
-    let y = 40;
-    const line = (l, v) => { doc.text(`${l}:`, 20, y); doc.text(String(v || "N/A"), 90, y); y += 10; };
-    const t = data.slot?.startTime && data.slot?.endTime ? `${data.slot.startTime} - ${data.slot.endTime}` : "N/A";
-    
-    line("Booking ID", data.bookingId);
-    line("Temple", data.slot?.temple?.name);
-    line("Location", data.slot?.temple?.location);
-    line("Date", new Date(data.slot?.date).toDateString());
-    line("Time", t);
-    line("Members", data.totalMembers);
-    line("Status", data.status);
-    
-    y += 5; doc.line(20, y, 190, y); y += 10;
-    
-    // Devotee details
-    doc.setFontSize(14); doc.text("Devotee Details", 20, y); y += 10;
-    doc.setFontSize(12);
-    doc.text("Name", 20, y); doc.text("Age", 80, y); doc.text("Gender", 120, y); doc.text("Category", 160, y);
-    y += 5; doc.line(20, y, 190, y); y += 8;
-    
-    data.members?.forEach(m => {
-      doc.text(m.fullName, 20, y);
-      doc.text(String(m.age), 80, y);
-      doc.text(m.gender, 120, y);
-      doc.text(m.category || "adult", 160, y);
-      y += 8;
-    });
-    
-    // QR Code section
-    y += 10;
-    doc.setFontSize(14); doc.setTextColor(221, 45, 74);
-    doc.text("Scan QR Code at Entry Gate", 105, y, { align: "center" });
-    y += 5;
-    
-    // Generate QR code and add to PDF
-    const qrCanvas = document.getElementById(`qr-${data._id}`);
-    if (qrCanvas) {
-      const qrImage = qrCanvas.toDataURL("image/png");
-      doc.addImage(qrImage, "PNG", 75, y, 60, 60);
-      y += 65;
+    // Page 1: Master Receipt
+    await drawPage(doc, data, theme, null, true, 0);
+
+    // Page 2+: Individual Passes
+    if (data.members && data.members.length > 0) {
+       for (let idx = 0; idx < data.members.length; idx++) {
+          doc.addPage();
+          await drawPage(doc, data, theme, data.members[idx], false, idx + 1);
+       }
     }
-    
-    // Instructions
-    y += 5;
-    doc.setFillColor(255, 240, 242);
-    doc.rect(15, y - 5, 180, 35, "F");
-    doc.setFontSize(12); doc.setTextColor(0, 0, 0);
-    doc.text("Important Instructions:", 20, y);
-    y += 8;
-    doc.setFontSize(11);
-    [
-      "Please arrive 15 minutes before your slot time.",
-      "Carry a valid government-issued ID proof.",
-      "Show this QR code at the entry gate for verification.",
-      "Keep this receipt safe until your visit is complete."
-    ].forEach(t => {
-      doc.text("• " + t, 20, y);
-      y += 6;
-    });
-    
-    doc.save(`SevaTrack_${data.bookingId}.pdf`);
-    toast.success("Receipt downloaded ✓");
+
+    doc.save(`SevaTrack_Passes_${data.bookingId}.pdf`);
+    toast.success("Temple Passes downloaded ✓");
   };
 
   const statusBar = (s) => s === "booked" ? "bg-emerald-400" : s === "used" ? "bg-blue-400" : "bg-red-300";
@@ -197,6 +575,8 @@ const MyBookings = () => {
                           size={100}
                           level="H"
                           includeMargin={false}
+                          fgColor="#000000"
+                          bgColor="#FFFFFF"
                         />
                       </div>
                       <button
@@ -221,14 +601,16 @@ const MyBookings = () => {
                   </div>
                 </div>
 
-                {/* Hidden QR canvas for PDF export */}
+                {/* Hidden high-res QR canvas for PDF export */}
                 <div className="hidden">
                   <QRCodeCanvas
                     id={`qr-${b._id}`}
                     value={generateQRData(b)}
-                    size={200}
-                    level="H"
+                    size={1024}
+                    level="M"
                     includeMargin={true}
+                    fgColor="#000000"
+                    bgColor="#FFFFFF"
                   />
                 </div>
               </div>
@@ -240,112 +622,214 @@ const MyBookings = () => {
       {/* Full Receipt Modal */}
       {selectedBooking && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.40)", backdropFilter: "blur(4px)" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xl"
           onClick={() => setSelectedBooking(null)}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto animate-fade-in"
+            className="relative w-full max-w-[420px] max-h-[95vh] overflow-y-auto overflow-x-hidden rounded-[2rem] bg-[#f8f9fa] shadow-2xl flex flex-col animate-fade-in"
             onClick={e => e.stopPropagation()}
+            style={{
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.1) inset"
+            }}
           >
-            {/* Modal header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white">
-              <h3 className="font-serif text-lg font-bold text-gray-800">Booking Receipt</h3>
-              <button onClick={() => setSelectedBooking(null)} className="p-2 rounded-xl text-gray-400 hover:bg-gray-100 transition-colors">
-                <X size={18} />
+            {/* Header/Temple Branding */}
+            <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6 pb-12 rounded-t-[2rem] overflow-hidden">
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+              
+              {/* Close Button */}
+              <button 
+                onClick={() => setSelectedBooking(null)} 
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              >
+                <X size={16} />
               </button>
+
+              <div className="flex items-center justify-between mb-4 mt-2">
+                <div>
+                  <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Boarding Pass</p>
+                  <h3 className="font-serif text-2xl font-bold text-white tracking-wide">{selectedBooking.slot?.temple?.name}</h3>
+                </div>
+                {/* Logo Placeholder */}
+                <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-inner">
+                   <BookOpen size={20} className="text-white/80" />
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono font-medium text-white/70 px-2 py-1 bg-black/30 rounded border border-white/10">ID: {selectedBooking.bookingId}</span>
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded border ${
+                  selectedBooking.status === 'booked' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 
+                  selectedBooking.status === 'used' ? 'bg-blue-500/20 text-blue-300 border-blue-500/30' : 
+                  'bg-red-500/20 text-red-300 border-red-500/30'
+                }`}>
+                  {selectedBooking.status}
+                </span>
+              </div>
             </div>
 
-            {/* Modal body */}
-            <div className="p-6 space-y-6">
-              {/* QR Code */}
-              <div className="text-center">
-                <div className="inline-block p-4 bg-gray-50 rounded-2xl border border-gray-200">
-                  <QRCodeCanvas
-                    value={generateQRData(selectedBooking)}
-                    size={180}
-                    level="H"
-                    includeMargin={true}
-                  />
-                </div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mt-3 flex items-center justify-center gap-1.5">
-                  <QrCode size={12} /> Scan this code at the entry gate
-                </p>
-              </div>
+            {/* Ticket Cutout/Perforated Line Effect */}
+            <div className="relative h-6 bg-[#f8f9fa] -mt-6 rounded-t-[2rem] z-10 flex items-center justify-between px-[-1rem]">
+                {/* Circles for cutout */}
+                <div className="absolute left-0 -ml-3 w-6 h-6 rounded-full bg-black/60 shadow-[inset_-3px_0_5px_rgba(0,0,0,0.1)]"></div>
+                <div className="w-full border-t-2 border-dashed border-gray-300 mx-6"></div>
+                <div className="absolute right-0 -mr-3 w-6 h-6 rounded-full bg-black/60 shadow-[inset_3px_0_5px_rgba(0,0,0,0.1)]"></div>
+            </div>
 
-              {/* Booking details */}
-              <div className="space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-500">Booking ID</span>
-                  <span className="text-sm font-mono font-semibold text-gray-800">{selectedBooking.bookingId}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-500">Temple</span>
-                  <span className="text-sm font-semibold text-gray-800">{selectedBooking.slot?.temple?.name}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-500">Location</span>
-                  <span className="text-sm text-gray-600">{selectedBooking.slot?.temple?.location}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-500">Date</span>
-                  <span className="text-sm font-semibold text-gray-800">
-                    {new Date(selectedBooking.slot?.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
-                  </span>
-                </div>
-                {selectedBooking.slot?.startTime && (
-                  <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-sm text-gray-500">Time</span>
-                    <span className="text-sm font-semibold text-gray-800">{selectedBooking.slot.startTime} – {selectedBooking.slot.endTime}</span>
-                  </div>
-                )}
-                <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-500">Total Members</span>
-                  <span className="text-sm font-semibold text-gray-800">{selectedBooking.totalMembers}</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-sm text-gray-500">Status</span>
-                  <span className={statusCls(selectedBooking.status)}>{selectedBooking.status}</span>
-                </div>
-              </div>
-
-              {/* Members list */}
-              {selectedBooking.members?.length > 0 && (
+            {/* Details Section */}
+            <div className="px-6 py-2 bg-[#f8f9fa] z-10">
+              
+              <div className="grid grid-cols-2 gap-y-5 gap-x-4 mb-6">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-3">Members</p>
-                  <div className="space-y-2">
-                    {selectedBooking.members.map((m, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                        <div>
-                          <p className="text-sm font-medium text-gray-800">{m.fullName}</p>
-                          <p className="text-xs text-gray-400">{m.age} yrs · {m.gender} · {m.category || "adult"}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Date</p>
+                  <p className="text-sm font-bold text-gray-800">
+                    {new Date(selectedBooking.slot?.date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Time</p>
+                  <p className="text-sm font-bold text-gray-800">{selectedBooking.slot?.startTime ? `${selectedBooking.slot.startTime} - ${selectedBooking.slot.endTime}` : 'N/A'}</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Location</p>
+                  <p className="text-sm font-semibold text-gray-700 leading-tight line-clamp-2">{selectedBooking.slot?.temple?.location}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Members</p>
+                  <p className="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+                    <Users size={14} className="text-gray-400" /> {selectedBooking.totalMembers}
+                  </p>
+                </div>
+              </div>
+
+              {/* Devotees */}
+              {selectedBooking.members?.length > 0 && (
+                <div className="mb-6">
+                   <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 border-b border-gray-200 pb-2">Devotees</p>
+                   <div className="space-y-3">
+                     {selectedBooking.members.map((m, i) => (
+                        <div key={i} className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-bold text-xs">
+                               {m.fullName.charAt(0).toUpperCase()}
+                             </div>
+                             <div>
+                               <p className="text-sm font-bold text-gray-800">{m.fullName}</p>
+                               <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{m.age}Y • {m.gender} • {m.category || "Adult"}</p>
+                             </div>
+                          </div>
+                          {m.photo && (
+                            <img src={m.photo} alt={m.fullName} className="w-10 h-10 rounded-lg object-cover border border-gray-200 shadow-sm" />
+                          )}
                         </div>
-                        {m.photo && (
-                          <img src={m.photo} alt={m.fullName} className="w-10 h-10 rounded-lg object-cover border border-gray-200" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                     ))}
+                   </div>
                 </div>
               )}
+            </div>
 
-              {/* Instructions */}
-              <div className="p-4 rounded-xl" style={{ background: "#fff0f2", border: "1px solid #ffadb8" }}>
-                <p className="text-xs font-semibold mb-2" style={{ color: ACCENT }}>Important Instructions:</p>
-                <ul className="text-xs text-gray-600 space-y-1 leading-relaxed">
-                  <li>• Arrive 15 minutes before your slot time</li>
-                  <li>• Carry valid government-issued ID proof</li>
-                  <li>• Show this QR code at the entry gate</li>
-                  <li>• Keep this receipt until your visit is complete</li>
-                </ul>
+            {/* Another Perforated Line for QR Section */}
+            <div className="relative h-6 bg-[#f8f9fa] z-10 flex items-center justify-between">
+                <div className="absolute left-0 -ml-3 w-6 h-6 rounded-full bg-black/60 shadow-[inset_-3px_0_5px_rgba(0,0,0,0.1)]"></div>
+                <div className="w-full border-t-2 border-dashed border-gray-300 mx-6"></div>
+                <div className="absolute right-0 -mr-3 w-6 h-6 rounded-full bg-black/60 shadow-[inset_3px_0_5px_rgba(0,0,0,0.1)]"></div>
+            </div>
+
+            {/* QR Code Section - The Stub */}
+            <div className="bg-[#f8f9fa] p-6 pt-2 pb-8 rounded-b-[2rem] flex flex-col items-center z-10">
+              
+              <div className="bg-white p-4 sm:p-5 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 w-full flex flex-col items-center">
+                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4 flex items-center gap-2">
+                    <QrCode size={12} /> Gate Verification
+                 </p>
+                 
+                 {/* QR Canvas Container with Pure White Background and High Contrast */}
+                 <div className="bg-white p-3 rounded-xl w-full flex justify-center">
+                   <QRCodeCanvas
+                      value={generateQRData(selectedBooking)}
+                      size={320}
+                      level="M"
+                      includeMargin={true}
+                      fgColor="#000000"
+                      bgColor="#FFFFFF"
+                      style={{ width: "100%", height: "auto", maxWidth: "320px", imageRendering: "pixelated" }}
+                    />
+                 </div>
+                 
+                 {/* Hidden QRs for multi-page individual PDF passes */}
+                 <div className="hidden">
+                    <QRCodeCanvas
+                      id={`qr-${selectedBooking._id}-master`}
+                      value={JSON.stringify({ bookingId: selectedBooking.bookingId })}
+                      size={1024} level="M" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
+                    />
+                    {selectedBooking.members?.map((m, idx) => (
+                      <QRCodeCanvas
+                        key={m._id || idx}
+                        id={`qr-${selectedBooking._id}-member-${idx}`}
+                        value={JSON.stringify({ bookingId: selectedBooking.bookingId, memberId: m._id || m.fullName })}
+                        size={1024} level="M" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
+                      />
+                    ))}
+                 </div>
+                 
+                 <p className="text-xs text-gray-500 mt-4 text-center px-4">
+                    Present this QR code at the entry gate scanner for instant verification.
+                 </p>
               </div>
 
-              {/* Download button */}
-              <button onClick={() => download(selectedBooking)} className="btn-primary w-full py-3 gap-2">
-                <Download size={16} /> Download PDF Receipt
-              </button>
+              <div className="w-full mt-6 flex gap-3">
+                 <button 
+                    onClick={() => setFullscreenQR(selectedBooking)}
+                    className="flex-1 bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-xl text-sm font-bold shadow-sm border border-gray-200 transition-colors flex justify-center items-center gap-2"
+                  >
+                    <QrCode size={16} /> Fullscreen
+                  </button>
+                  <button 
+                    onClick={() => download(selectedBooking)}
+                    className="flex-1 bg-gray-900 hover:bg-gray-800 text-white py-3 rounded-xl text-sm font-bold shadow-md transition-colors flex justify-center items-center gap-2"
+                  >
+                    <Download size={16} /> Download
+                  </button>
+              </div>
+
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Fullscreen QR Modal */}
+      {fullscreenQR && (
+        <div 
+          className="fixed inset-0 z-[60] flex flex-col items-center justify-center p-6 bg-white animate-fade-in"
+          onClick={() => setFullscreenQR(null)}
+        >
+          <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto" onClick={e => e.stopPropagation()}>
+            <h2 className="text-3xl font-bold mb-8 text-gray-900 tracking-tight">Scan at Gate</h2>
+            <div className="p-4 bg-white border-4 border-gray-100 rounded-3xl shadow-2xl w-full aspect-square flex items-center justify-center">
+              <QRCodeCanvas
+                value={generateQRData(fullscreenQR)}
+                size={360}
+                level="M"
+                includeMargin={true}
+                fgColor="#000000"
+                bgColor="#FFFFFF"
+                style={{ width: "100%", height: "100%", imageRendering: "pixelated", background: "#FFFFFF" }}
+              />
+            </div>
+            <div className="mt-8 text-center space-y-2">
+              <p className="text-gray-500 font-medium uppercase tracking-widest text-xs">Booking ID</p>
+              <p className="text-2xl font-mono font-bold text-gray-900">{fullscreenQR.bookingId}</p>
+            </div>
+            <p className="mt-4 text-emerald-600 font-semibold text-sm bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
+              Brighten your screen for faster scanning
+            </p>
+          </div>
+          <button 
+            onClick={() => setFullscreenQR(null)} 
+            className="mb-8 p-4 bg-gray-100 rounded-full text-gray-800 hover:bg-gray-200 transition-colors shadow-sm"
+          >
+            <X size={24} />
+          </button>
         </div>
       )}
     </div>

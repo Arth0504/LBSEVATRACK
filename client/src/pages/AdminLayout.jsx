@@ -14,8 +14,22 @@ const AdminLayout = () => {
   const [showDrop, setShowDrop] = useState(false);
 
   useEffect(() => {
-    setDate(new Date().toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" }));
-    API.get("/admin/activities").then(r => setNotifs(r.data)).catch(() => {});
+    const id = requestAnimationFrame(() => {
+      setDate(
+        new Date().toLocaleDateString(undefined, {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
+    });
+    API.get("/admin/activities")
+      .then((r) => setNotifs(r.data))
+      .catch(() => {
+        void 0;
+      });
+    return () => cancelAnimationFrame(id);
   }, []);
 
   const menu = [
@@ -33,24 +47,24 @@ const AdminLayout = () => {
   const logout = () => { localStorage.clear(); navigate("/login"); };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-gradient-to-br from-sacred-25 via-white to-gold-50/30">
 
       {/* ── Sidebar ── */}
-      <aside className="w-[230px] flex-shrink-0 flex flex-col" style={{ background: "linear-gradient(180deg, #1e1e1e 0%, #141414 100%)" }}>
-
+      <aside className="w-[230px] flex-shrink-0 flex flex-col border-r border-sacred-200/80 bg-sidebar-bg shadow-sm">
         {/* Logo */}
         <div
-          className="px-5 py-5 cursor-pointer flex items-center gap-3 border-b"
-          style={{ borderColor: "rgba(255,255,255,0.07)" }}
+          className="px-5 py-5 cursor-pointer flex items-center gap-3 border-b border-sacred-200/60"
           onClick={() => navigate("/admin")}
         >
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-               style={{ background: "linear-gradient(135deg, #dd2d4a, #b8203a)", boxShadow: "0 4px 14px rgba(221,45,74,0.35)" }}>
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-accent"
+            style={{ background: "linear-gradient(135deg, #9f766d, #654a45)" }}
+          >
             <span className="text-white font-bold font-serif text-base">S</span>
           </div>
           <div>
-            <p className="font-serif text-base font-bold text-white leading-tight">SevaTrack</p>
-            <p className="text-xs text-gray-500 leading-tight">Admin Panel</p>
+            <p className="font-serif text-base font-bold text-stone-800 leading-tight">SevaTrack</p>
+            <p className="text-xs text-stone-500 leading-tight">Admin Panel</p>
           </div>
         </div>
 
@@ -69,14 +83,8 @@ const AdminLayout = () => {
         </nav>
 
         {/* Logout */}
-        <div className="px-3 py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <div
-            onClick={logout}
-            className="nav-item"
-            style={{ color: "#9e9e9e" }}
-            onMouseEnter={e => { e.currentTarget.style.background = "rgba(221,45,74,0.15)"; e.currentTarget.style.color = "#ff7a8a"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = ""; e.currentTarget.style.color = "#9e9e9e"; }}
-          >
+        <div className="px-3 py-4 border-t border-sacred-200/60">
+          <div onClick={logout} className="nav-item text-stone-600 hover:text-sacred-800">
             <LogOut size={16} />
             <span>Logout</span>
           </div>
@@ -101,17 +109,16 @@ const AdminLayout = () => {
             >
               <Bell size={16} />
               {notifs.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full" style={{ background: "#dd2d4a" }} />
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-sacred-500 ring-2 ring-white" />
               )}
             </button>
 
             {showDrop && (
               <div className="absolute top-11 right-0 w-72 bg-white rounded-2xl shadow-xl border border-gray-150 overflow-hidden z-50 animate-fade-in">
-                <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between"
-                     style={{ background: "#fff0f2" }}>
-                  <h4 className="font-semibold text-sm" style={{ color: "#dd2d4a" }}>Notifications</h4>
+                <div className="px-4 py-3 border-b border-sacred-100 flex items-center justify-between bg-gold-50/80">
+                  <h4 className="font-semibold text-sm text-sacred-800">Notifications</h4>
                   {notifs.length > 0 && (
-                    <span className="text-xs px-2 py-0.5 rounded-full text-white" style={{ background: "#dd2d4a" }}>
+                    <span className="text-xs px-2 py-0.5 rounded-full text-white bg-sacred-600">
                       {notifs.length}
                     </span>
                   )}
@@ -130,15 +137,14 @@ const AdminLayout = () => {
               <Settings size={16} />
             </button>
 
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center cursor-pointer"
-                 style={{ background: "#fff0f2", border: "1px solid #ffadb8", color: "#dd2d4a" }}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center cursor-pointer border border-sacred-200 bg-gold-50 text-sacred-700">
               <UserCircle size={20} />
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <main className="flex-1 overflow-y-auto p-6 bg-white/60">
           <Outlet />
         </main>
       </div>
