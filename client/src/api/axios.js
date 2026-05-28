@@ -17,10 +17,6 @@ API.interceptors.request.use((req) => {
 API.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (!err.response) {
-      err.userMessage =
-        "Cannot reach the API. For local development, run the server on port 5000. For hosted builds, set VITE_API_URL.";
-    }
     return Promise.reject(err);
   }
 );
