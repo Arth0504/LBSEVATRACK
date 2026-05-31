@@ -18,13 +18,14 @@ import AdminLayout from "./pages/AdminLayout";
 import ManageTemples from "./pages/ManageTemples";
 import ManageSlots from "./pages/ManageSlots";
 import ManageUsers from "./pages/ManageUsers";
-import CreateGate from "./pages/CreateGate";
+import ManageGatekeepers from "./pages/ManageGatekeepers";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminQueries from "./pages/AdminQueries";
 import GateLayout from "./pages/GateLayout";
 import GateVerify from "./pages/GateVerify";
 import GateBookings from "./pages/GateBookings";
 import GateActivity from "./pages/GateActivity";
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -40,14 +41,15 @@ function App() {
 
         <Route path="/book/:slotId" element={<ProtectedRoute><BookSlot /></ProtectedRoute>} />
         <Route path="/my-bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
         <Route path="/admin" element={<ProtectedRoute role="admin"><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboard />} />
           <Route path="temples" element={<ManageTemples />} />
           <Route path="slots" element={<ManageSlots />} />
           <Route path="users" element={<ManageUsers />} />
-          <Route path="create-gate" element={<CreateGate />} />
-          <Route path="analytics" element={<AdminAnalytics />} />
+          <Route path="gatekeepers" element={<ManageGatekeepers />} />
+          <Route path="reports" element={<AdminAnalytics />} />
           <Route path="queries" element={<AdminQueries />} />
           <Route path="notes" element={<AdminNotes />} />
         </Route>

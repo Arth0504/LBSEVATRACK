@@ -10,6 +10,7 @@ const ManageSlots = () => {
   const [form, setForm] = useState({ date: "", startTime: "", endTime: "", capacity: "" });
   const [editId, setEditId] = useState(null);
   const [editData, setEditData] = useState({ capacity: "", status: "" });
+  const [filterTab, setFilterTab] = useState("all");
 
   const times = () => { const t = []; for (let h = 0; h < 24; h++) for (let m = 0; m < 60; m += 30) t.push(`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`); return t; };
   const timeOpts = times();
@@ -27,7 +28,7 @@ const ManageSlots = () => {
     if (!temple) return;
     setLoading(true);
     try {
-      const r = await API.get(`/slots/temple/${temple}`);
+      const r = await API.get(`/slots/temple/${temple}?role=admin`);
       setSlots(r.data);
     } catch {
       void 0;
@@ -64,6 +65,26 @@ const ManageSlots = () => {
   };
 
   const statusCls = s => s === "active" ? "status-booked" : s === "full" ? "status-used" : "status-cancelled";
+
+  const filteredSlots = slots.filter(s => {
+    if (filterTab === "all") return true;
+    if (filterTab === "expired") return s.isExpired;
+    
+    const slotDate = new Date(s.date).toISOString().split('T')[0];
+    const todayStr = new Date().toISOString().split('T')[0];
+    const tomorrowDate = new Date();
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+    const tomorrowStr = tomorrowDate.toISOString().split('T')[0];
+    
+    if (filterTab === "today") return slotDate === todayStr;
+    if (filterTab === "tomorrow") return slotDate === tomorrowStr;
+    if (filterTab === "week") {
+       const nextWeek = new Date();
+       nextWeek.setDate(nextWeek.getDate() + 7);
+       return new Date(s.date) >= new Date(todayStr) && new Date(s.date) <= nextWeek;
+    }
+    return true;
+  });
 
   return (
     <div className="space-y-6">
@@ -117,9 +138,32 @@ const ManageSlots = () => {
 
       {/* Table */}
       <div className="card shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-stone-100 flex items-center justify-between">
-          <h3 className="font-serif text-lg font-bold text-stone-800">Slots</h3>
-          {slots.length > 0 && <span className="badge-stone">{slots.length} slots</span>}
+        <div className="px-6 py-4 border-b border-stone-100 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2">
+            <h3 className="font-serif text-lg font-bold text-stone-800">Slots</h3>
+            {filteredSlots.length > 0 && <span className="badge-stone">{filteredSlots.length} slots</span>}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: "all", label: "All" },
+              { id: "today", label: "Today" },
+              { id: "tomorrow", label: "Tomorrow" },
+              { id: "week", label: "This Week" },
+              { id: "expired", label: "Expired" }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setFilterTab(tab.id)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                  filterTab === tab.id
+                    ? "bg-primary-50 text-primary-600 border border-primary-200"
+                    : "bg-stone-50 text-stone-500 border border-stone-200 hover:bg-stone-100"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {loading ? (
@@ -141,7 +185,7 @@ const ManageSlots = () => {
                 </tr>
               </thead>
               <tbody>
-                {slots.map(s => (
+                {filteredSlots.map(s => (
                   <tr key={s._id} className="hover:bg-stone-50 transition-colors">
                     <td className="table-cell text-stone-600">{new Date(s.date).toLocaleDateString()}</td>
                     <td className="table-cell text-stone-600 font-medium">{s.startTime} – {s.endTime}</td>

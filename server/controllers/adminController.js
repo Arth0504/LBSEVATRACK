@@ -10,6 +10,53 @@ function escapeRegex(value) {
 const sendEmail = require("../utils/sendEmail"); // 📧 EMAIL
 
 
+// ================= LIVE DASHBOARD STATS (PHASE 1) =================
+exports.getLiveDashboardStats = async (req, res) => {
+  try {
+    const now = new Date();
+    
+    // Today boundaries
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const endOfToday = new Date(startOfToday);
+    endOfToday.setDate(endOfToday.getDate() + 1);
+    
+    // Yesterday boundaries
+    const startOfYesterday = new Date(startOfToday);
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+    const endOfYesterday = startOfToday;
+    
+    // Month boundaries
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const [
+      todayBookings, todayEntries, todayActiveSlots,
+      yesterdayBookings, yesterdayEntries,
+      monthBookings, monthEntries
+    ] = await Promise.all([
+      // Today
+      Booking.countDocuments({ createdAt: { $gte: startOfToday, $lt: endOfToday } }),
+      EntryLog.countDocuments({ createdAt: { $gte: startOfToday, $lt: endOfToday } }),
+      Slot.countDocuments({ date: { $gte: startOfToday, $lt: endOfToday }, status: "active" }),
+      // Yesterday
+      Booking.countDocuments({ createdAt: { $gte: startOfYesterday, $lt: endOfYesterday } }),
+      EntryLog.countDocuments({ createdAt: { $gte: startOfYesterday, $lt: endOfYesterday } }),
+      // Month
+      Booking.countDocuments({ createdAt: { $gte: startOfMonth, $lt: endOfMonth } }),
+      EntryLog.countDocuments({ createdAt: { $gte: startOfMonth, $lt: endOfMonth } })
+    ]);
+
+    res.json({
+      today: { bookings: todayBookings, entries: todayEntries, activeSlots: todayActiveSlots },
+      yesterday: { bookings: yesterdayBookings, entries: yesterdayEntries },
+      month: { bookings: monthBookings, entries: monthEntries }
+    });
+  } catch (error) {
+    console.error("Live Dashboard Error:", error);
+    res.status(500).json({ message: "Live Dashboard Error" });
+  }
+};
+
 // ================= DASHBOARD =================
 exports.getDashboardStats = async (req, res) => {
   try {
@@ -282,6 +329,16 @@ exports.toggleBlockUser = async (req, res) => {
 };
 
 
+// ================= GET GATEKEEPERS =================
+exports.getGatekeepers = async (req, res) => {
+  try {
+    const gates = await User.find({ role: "gate" }).populate("temple", "name location").select("-password");
+    res.json(gates);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch gatekeepers" });
+  }
+};
+
 // ================= CREATE GATE =================
 exports.createGate = async (req, res) => {
   try {
@@ -319,6 +376,63 @@ exports.createGate = async (req, res) => {
     res.status(201).json({ message: "Gate created", gate });
   } catch (error) {
     res.status(500).json({ message: "Gate creation failed" });
+  }
+};
+
+
+// ================= UPDATE GATE =================
+exports.updateGate = async (req, res) => {
+  try {
+    const { name, email, password, temple } = req.body;
+    const gateId = req.params.id;
+
+    const gate = await User.findOne({ _id: gateId, role: "gate" });
+    if (!gate) return res.status(404).json({ message: "Gatekeeper not found" });
+
+    if (name) gate.name = name.trim();
+    if (email) {
+      const emailTrimmed = email.trim().toLowerCase();
+      const existing = await User.findOne({ email: emailTrimmed, _id: { $ne: gateId } });
+      if (existing) return res.status(400).json({ message: "Email already in use" });
+      gate.email = emailTrimmed;
+    }
+    if (temple) gate.temple = temple;
+    if (password) {
+      gate.password = await bcrypt.hash(password, 10);
+    }
+
+    await gate.save();
+
+    await Activity.create({
+      message: `Gatekeeper updated (${gate.name})`,
+      type: "gate",
+    });
+
+    res.json({ message: "Gatekeeper updated successfully", gate });
+  } catch (error) {
+    console.error("Gate update error:", error);
+    res.status(500).json({ message: "Gate update failed" });
+  }
+};
+
+
+// ================= DELETE GATE =================
+exports.deleteGate = async (req, res) => {
+  try {
+    const gateId = req.params.id;
+    const gate = await User.findOne({ _id: gateId, role: "gate" });
+    if (!gate) return res.status(404).json({ message: "Gatekeeper not found" });
+
+    await gate.deleteOne();
+
+    await Activity.create({
+      message: `Gatekeeper deleted (${gate.name})`,
+      type: "gate",
+    });
+
+    res.json({ message: "Gatekeeper deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Gate deletion failed" });
   }
 };
 

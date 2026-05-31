@@ -206,3 +206,42 @@ exports.updateProfilePhoto = async (req, res, next) => {
     next(error);
   }
 };
+
+// ================= UPDATE PROFILE =================
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const { name, mobile, password } = req.body;
+    const userId = req.user?._id || req.user?.id;
+    const user = userId ? await User.findById(userId) : null;
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (name) user.name = name.trim();
+    if (mobile) user.mobile = mobile.trim();
+    
+    if (password) {
+      if (password.length < 6) {
+        return res.status(400).json({ message: "Password must be at least 6 characters" });
+      }
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    await user.save();
+
+    res.json({
+      message: "Profile updated successfully",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        role: user.role,
+        profilePhoto: user.profilePhoto,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

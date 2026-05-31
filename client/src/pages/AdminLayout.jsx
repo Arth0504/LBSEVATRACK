@@ -37,8 +37,8 @@ const AdminLayout = () => {
     { name: "Temples",      icon: <Building2 size={16} />,       path: "/admin/temples" },
     { name: "Slots",        icon: <Calendar size={16} />,        path: "/admin/slots" },
     { name: "Users",        icon: <Users size={16} />,           path: "/admin/users" },
-    { name: "Create Gate",  icon: <UserPlus size={16} />,        path: "/admin/create-gate" },
-    { name: "Analytics",    icon: <BarChart3 size={16} />,       path: "/admin/analytics" },
+    { name: "Gatekeepers",  icon: <UserPlus size={16} />,        path: "/admin/gatekeepers" },
+    { name: "Reports",      icon: <BarChart3 size={16} />,       path: "/admin/reports" },
     { name: "Queries",      icon: <MessageSquare size={16} />,   path: "/admin/queries" },
     { name: "Notice Board", icon: <Bell size={16} />,            path: "/admin/notes" },
   ];
@@ -137,7 +137,7 @@ const AdminLayout = () => {
               <Settings size={16} />
             </button>
 
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center cursor-pointer border border-sacred-200 bg-gold-50 text-sacred-700">
+            <div onClick={() => navigate("/profile")} className="w-9 h-9 rounded-xl flex items-center justify-center cursor-pointer border border-sacred-200 bg-gold-50 text-sacred-700 hover:bg-gold-100 transition-colors">
               <UserCircle size={20} />
             </div>
           </div>

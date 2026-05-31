@@ -90,6 +90,7 @@ const receiptRoutes = require("./routes/receiptRoutes");
 const slotRoutes = require("./routes/slotRoutes");
 const queryRoutes = require("./routes/queryRoutes");
 const noteRoutes = require("./routes/noteRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/temples", templeRoutes);
@@ -100,6 +101,7 @@ app.use("/api/receipts", receiptRoutes);
 app.use("/api/slots", slotRoutes);
 app.use("/api/query", queryRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/reports", reportRoutes);
 
 app.get("/", (req, res) => {
   res.type("text").send("SevaTrack API Running...");

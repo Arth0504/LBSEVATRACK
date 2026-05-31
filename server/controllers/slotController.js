@@ -87,12 +87,31 @@ exports.createSlot = async (req, res) => {
 exports.getSlotsByTemple = async (req, res) => {
   try {
     const templeId = req.params.templeId;
+    const { filter, role } = req.query;
 
     const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    let slots = await Slot.find({ temple: templeId })
+    let query = { temple: templeId };
+
+    if (filter === "today") {
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      query.date = { $gte: today, $lt: tomorrow };
+    } else if (filter === "tomorrow") {
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dayAfter = new Date(tomorrow);
+      dayAfter.setDate(dayAfter.getDate() + 1);
+      query.date = { $gte: tomorrow, $lt: dayAfter };
+    } else if (filter === "week") {
+      const nextWeek = new Date(today);
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      query.date = { $gte: today, $lt: nextWeek };
+    }
+
+    let slots = await Slot.find(query)
       .sort({ date: 1, startTime: 1 })
       .populate("temple", "name location");
 
@@ -102,16 +121,34 @@ exports.getSlotsByTemple = async (req, res) => {
       const slotDate = new Date(slot.date);
       slotDate.setHours(0, 0, 0, 0);
 
-      // 🔥 AUTO CLOSE IF DATE PASSED
-      if (slotDate < today && slot.status !== "closed") {
+      let isExpired = false;
+
+      // 🔥 AUTO CLOSE IF DATE PASSED OR TIME PASSED
+      if (slotDate < today) {
+        isExpired = true;
+      } else if (slotDate.getTime() === today.getTime()) {
+        const [endH, endM] = slot.endTime.split(":").map(Number);
+        const slotEndTime = new Date(today);
+        slotEndTime.setHours(endH, endM, 0, 0);
+        if (now > slotEndTime) {
+          isExpired = true;
+        }
+      }
+
+      if (isExpired && slot.status !== "closed") {
         slot.status = "closed";
         await slot.save();
       }
 
       // 🔥 AUTO FULL CHECK
-      if (slot.bookedCount >= slot.capacity && slot.status !== "closed") {
+      if (!isExpired && slot.bookedCount >= slot.capacity && slot.status !== "closed") {
         slot.status = "full";
         await slot.save();
+      }
+
+      // Hide expired/closed slots for normal devotees
+      if (role !== "admin" && slot.status === "closed") {
+        continue;
       }
 
       const percentage =
@@ -127,6 +164,7 @@ exports.getSlotsByTemple = async (req, res) => {
         ...slot._doc,
         crowdLevel,
         percentage: percentage.toFixed(2),
+        isExpired
       });
     }
 

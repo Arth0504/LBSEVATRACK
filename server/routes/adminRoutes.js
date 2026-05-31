@@ -8,6 +8,13 @@ const adminController = require("../controllers/adminController");
 
 // ================= DASHBOARD =================
 router.get(
+  "/live-dashboard",
+  protect,
+  authorizeRoles("admin"),
+  adminController.getLiveDashboardStats
+);
+
+router.get(
   "/dashboard",
   protect,
   authorizeRoles("admin"),
@@ -97,12 +104,35 @@ router.delete(
   adminController.deleteUser
 );
 
-// ================= CREATE GATE =================
+
+
+router.get(
+  "/gatekeepers",
+  protect,
+  authorizeRoles("admin"),
+  adminController.getGatekeepers
+);
+
+// ================= GATEKEEPER MANAGEMENT =================
 router.post(
   "/create-gate",
   protect,
   authorizeRoles("admin"),
   adminController.createGate
+);
+
+router.put(
+  "/gate/:id",
+  protect,
+  authorizeRoles("admin"),
+  adminController.updateGate
+);
+
+router.delete(
+  "/gate/:id",
+  protect,
+  authorizeRoles("admin"),
+  adminController.deleteGate
 );
 
 module.exports = router;

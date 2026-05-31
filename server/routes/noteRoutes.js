@@ -7,6 +7,7 @@ const { protect } = require("../middleware/authMiddleware");
 const {
   createNote,
   getNotes,
+  updateNote,
   deleteNote,
 } = require("../controllers/noteController");
 
@@ -15,6 +16,9 @@ router.post("/", protect, createNote);
 
 // User view
 router.get("/", getNotes);
+
+// Admin update
+router.put("/:id", protect, updateNote);
 
 // Admin delete
 router.delete("/:id", protect, deleteNote);

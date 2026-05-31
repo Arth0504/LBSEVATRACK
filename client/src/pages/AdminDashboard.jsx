@@ -6,12 +6,12 @@ import { TrendingUp, Users, XCircle, Lock, CheckCircle, UserCheck, RefreshCw } f
 const ACCENT = "#dd2d4a";
 
 const statConfig = [
-  { key: "totalBookingsToday", label: "Today's Bookings", icon: <TrendingUp size={18} />,  bg: "#fff0f2", color: "#dd2d4a", border: "#ffadb8" },
-  { key: "totalVisitorsToday", label: "Visitors Today",   icon: <Users size={18} />,       bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
-  { key: "cancelledToday",     label: "Cancelled Today",  icon: <XCircle size={18} />,     bg: "#fff9f6", color: "#9f766d", border: "#e7d1c7" },
-  { key: "fullSlots",          label: "Full Slots",       icon: <Lock size={18} />,        bg: "#fefce8", color: "#ca8a04", border: "#fde68a" },
-  { key: "activeSlots",        label: "Active Slots",     icon: <CheckCircle size={18} />, bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
-  { key: "totalMembersToday",  label: "Members Today",    icon: <UserCheck size={18} />,   bg: "#faf5ff", color: "#9333ea", border: "#e9d5ff" },
+  { key: "todayBookings", label: "Today's Bookings", icon: <TrendingUp size={18} />,  bg: "#fff0f2", color: "#dd2d4a", border: "#ffadb8" },
+  { key: "todayEntries",  label: "Today's Verified", icon: <Users size={18} />,       bg: "#f0fdf4", color: "#16a34a", border: "#bbf7d0" },
+  { key: "yesterdayBookings", label: "Yesterday Bookings", icon: <UserCheck size={18} />, bg: "#faf5ff", color: "#9333ea", border: "#e9d5ff" },
+  { key: "yesterdayEntries", label: "Yesterday Verified", icon: <CheckCircle size={18} />, bg: "#eff6ff", color: "#2563eb", border: "#bfdbfe" },
+  { key: "monthBookings", label: "Monthly Bookings", icon: <Lock size={18} />,        bg: "#fefce8", color: "#ca8a04", border: "#fde68a" },
+  { key: "monthEntries",  label: "Monthly Verified",  icon: <TrendingUp size={18} />, bg: "#fff9f6", color: "#9f766d", border: "#e7d1c7" },
 ];
 
 const AdminDashboard = () => {
@@ -33,11 +33,20 @@ const AdminDashboard = () => {
       if (first.current) setLoading(true);
       else setRefreshing(true);
       const [s, b, c] = await Promise.all([
-        API.get("/admin/dashboard"),
+        API.get("/admin/live-dashboard"),
         API.get("/admin/recent-bookings"),
         API.get("/admin/cancelled-bookings"),
       ]);
-      setStats(s.data); setBookings(b.data); setCancelled(c.data);
+      const flatStats = {
+         todayBookings: s.data.today.bookings,
+         todayEntries: s.data.today.entries,
+         todayActiveSlots: s.data.today.activeSlots,
+         yesterdayBookings: s.data.yesterday.bookings,
+         yesterdayEntries: s.data.yesterday.entries,
+         monthBookings: s.data.month.bookings,
+         monthEntries: s.data.month.entries,
+      };
+      setStats(flatStats); setBookings(b.data); setCancelled(c.data);
       if (first.current) { toast.success("Dashboard loaded ✓"); first.current = false; }
     } catch { toast.error("Failed to load dashboard"); }
     finally { setLoading(false); setRefreshing(false); }

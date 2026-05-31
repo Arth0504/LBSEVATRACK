@@ -16,6 +16,22 @@ const noteSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+
+    expiryDate: {
+      type: Date,
+      default: null,
+    },
+
+    isPinned: {
+      type: Boolean,
+      default: false,
+    },
+
+    temple: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Temple",
+      default: null,
+    },
   },
   { timestamps: true }
 );
