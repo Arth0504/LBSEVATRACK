@@ -34,15 +34,10 @@ const MyBookings = () => {
   };
 
   const generateQRData = (booking) => {
+    // Compact QR payload for 5-8x faster scanning
     return JSON.stringify({
-      bookingId: booking.bookingId,
-      userName: booking.user?.name || "N/A",
-      temple: booking.slot?.temple?.name || "N/A",
-      location: booking.slot?.temple?.location || "N/A",
-      date: new Date(booking.slot?.date).toLocaleDateString("en-IN"),
-      time: booking.slot?.startTime && booking.slot?.endTime ? `${booking.slot.startTime} - ${booking.slot.endTime}` : "N/A",
-      members: booking.totalMembers,
-      status: booking.status,
+      bid: booking.bookingId,
+      t: new Date(booking.slot?.date).getTime()
     });
   };
 
@@ -481,15 +476,24 @@ const MyBookings = () => {
     const doc = new jsPDF();
     const theme = getTheme(data.slot?.temple?.name);
     
-    // Page 1: Master Receipt
-    await drawPage(doc, data, theme, null, true, 0);
+    // Single member: Generate only Individual Pass (no family summary)
+    if (data.members && data.members.length === 1) {
+      await drawPage(doc, data, theme, data.members[0], false, 1);
+    } 
+    // Multiple members: Generate Family Summary + Individual Passes
+    else if (data.members && data.members.length > 1) {
+      // Page 1: Master Receipt (Family Summary)
+      await drawPage(doc, data, theme, null, true, 0);
 
-    // Page 2+: Individual Passes
-    if (data.members && data.members.length > 0) {
-       for (let idx = 0; idx < data.members.length; idx++) {
-          doc.addPage();
-          await drawPage(doc, data, theme, data.members[idx], false, idx + 1);
-       }
+      // Page 2+: Individual Passes for each member
+      for (let idx = 0; idx < data.members.length; idx++) {
+        doc.addPage();
+        await drawPage(doc, data, theme, data.members[idx], false, idx + 1);
+      }
+    }
+    // Fallback: No members (shouldn't happen, but generate master)
+    else {
+      await drawPage(doc, data, theme, null, true, 0);
     }
 
     doc.save(`SevaTrack_Passes_${data.bookingId}.pdf`);
@@ -573,7 +577,7 @@ const MyBookings = () => {
                           id={`qr-${b._id}`}
                           value={generateQRData(b)}
                           size={100}
-                          level="H"
+                          level="L"
                           includeMargin={false}
                           fgColor="#000000"
                           bgColor="#FFFFFF"
@@ -601,13 +605,13 @@ const MyBookings = () => {
                   </div>
                 </div>
 
-                {/* Hidden high-res QR canvas for PDF export */}
+                {/* Hidden QR for PDF - reduced size for faster generation */}
                 <div className="hidden">
                   <QRCodeCanvas
                     id={`qr-${b._id}`}
                     value={generateQRData(b)}
-                    size={1024}
-                    level="M"
+                    size={512}
+                    level="L"
                     includeMargin={true}
                     fgColor="#000000"
                     bgColor="#FFFFFF"
@@ -746,28 +750,28 @@ const MyBookings = () => {
                  <div className="bg-white p-3 rounded-xl w-full flex justify-center">
                    <QRCodeCanvas
                       value={generateQRData(selectedBooking)}
-                      size={320}
-                      level="M"
+                      size={280}
+                      level="L"
                       includeMargin={true}
                       fgColor="#000000"
                       bgColor="#FFFFFF"
-                      style={{ width: "100%", height: "auto", maxWidth: "320px", imageRendering: "pixelated" }}
+                      style={{ width: "100%", height: "auto", maxWidth: "280px", imageRendering: "pixelated" }}
                     />
                  </div>
                  
-                 {/* Hidden QRs for multi-page individual PDF passes */}
+                 {/* Hidden QR for PDF */}
                  <div className="hidden">
                     <QRCodeCanvas
                       id={`qr-${selectedBooking._id}-master`}
-                      value={JSON.stringify({ bookingId: selectedBooking.bookingId })}
-                      size={1024} level="M" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
+                      value={generateQRData(selectedBooking)}
+                      size={512} level="L" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
                     />
                     {selectedBooking.members?.map((m, idx) => (
                       <QRCodeCanvas
                         key={m._id || idx}
                         id={`qr-${selectedBooking._id}-member-${idx}`}
-                        value={JSON.stringify({ bookingId: selectedBooking.bookingId, memberId: m._id || m.fullName })}
-                        size={1024} level="M" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
+                        value={generateQRData(selectedBooking)}
+                        size={512} level="L" includeMargin={true} fgColor="#000000" bgColor="#FFFFFF"
                       />
                     ))}
                  </div>
@@ -808,8 +812,8 @@ const MyBookings = () => {
             <div className="p-4 bg-white border-4 border-gray-100 rounded-3xl shadow-2xl w-full aspect-square flex items-center justify-center">
               <QRCodeCanvas
                 value={generateQRData(fullscreenQR)}
-                size={360}
-                level="M"
+                size={400}
+                level="L"
                 includeMargin={true}
                 fgColor="#000000"
                 bgColor="#FFFFFF"

@@ -4,7 +4,8 @@ const EntryLog = require("../models/EntryLog");
 // ================= VERIFY BOOKING =================
 exports.verifyBooking = async (req, res) => {
   try {
-    const { bookingId } = req.body;
+    // Backward compatible: handle both old (bookingId) and new (bid) formats
+    const bookingId = req.body.bookingId || req.body.bid;
 
     if (!bookingId) {
       return res.status(400).json({ message: "Booking ID required" });

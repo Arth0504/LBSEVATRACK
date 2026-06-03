@@ -142,7 +142,8 @@ const GateVerify = () => {
   const parseQRData = (decodedText) => {
     try {
       const parsed = JSON.parse(decodedText);
-      return parsed.bookingId || decodedText;
+      // Backward compatible: support both old (bookingId) and new (bid) formats
+      return parsed.bid || parsed.bookingId || decodedText;
     } catch {
       return decodedText;
     }
@@ -217,9 +218,15 @@ const GateVerify = () => {
     
     const currentTime = performance.now();
     const elapsedMs = scanStartedAtRef.current ? Math.round(currentTime - scanStartedAtRef.current) : null;
+    
     setLastScanMs(elapsedMs);
-    console.info(`[QR-Detect] Successful decode at ${currentTime.toFixed(2)}ms`);
-    console.info(`QR detected in ${elapsedMs ?? "unknown"}ms${elapsedMs && elapsedMs <= TARGET_SCAN_MS ? " (target met)" : ""}`);
+    
+    // Performance telemetry
+    console.group("⚡ QR Scan Performance");
+    console.log(`🔍 Total Scan Time: ${elapsedMs ?? "N/A"}ms`);
+    console.log(`✅ Target Met (<1000ms): ${elapsedMs && elapsedMs <= TARGET_SCAN_MS ? "YES" : "NO"}`);
+    console.log(`📊 Payload Size: ${decodedText.length} bytes`);
+    console.groupEnd();
 
     if (window.navigator?.vibrate) {
       window.navigator.vibrate([200]);
@@ -228,8 +235,13 @@ const GateVerify = () => {
     setId(extractedId);
     await destroyScanner();
     setScannerState("stopped");
-    verify(extractedId);
-  }, [destroyScanner, setScannerState, verify]);
+    
+    const apiStartTime = performance.now();
+    verify(extractedId).finally(() => {
+      const apiTime = Math.round(performance.now() - apiStartTime);
+      console.log(`🔐 API Verification: ${apiTime}ms`);
+    });
+  }, [destroyScanner, setScannerState, verify, addDebugLog]);
 
   const buildScanner = () => {
     const scanner = new Html5Qrcode(SCANNER_ELEMENT_ID, {
