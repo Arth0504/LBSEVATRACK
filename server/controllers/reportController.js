@@ -43,7 +43,7 @@ const getDateBoundaries = (filter, customStart, customEnd) => {
 // ===============================
 exports.getReportData = async (req, res) => {
   try {
-    const { filter, templeId, customStart, customEnd } = req.query;
+    const { filter = "custom", templeId, customStart, customEnd } = req.query;
     const { start, end } = getDateBoundaries(filter, customStart, customEnd);
 
     const bookingQuery = { createdAt: { $gte: start, $lte: end } };
@@ -54,15 +54,10 @@ exports.getReportData = async (req, res) => {
       const slots = await Slot.find({ temple: templeId }).select("_id");
       const slotIds = slots.map((s) => s._id);
       bookingQuery.slot = { $in: slotIds };
-      
-      // For entry logs, we need to join or we can filter bookings first
     }
 
     // 1. Total Bookings and Members
     const bookings = await Booking.find(bookingQuery).populate("slot");
-    
-    // If temple filter is applied, we only consider bookings for those slots.
-    // However, it's easier to aggregate:
     
     let totalBookings = 0;
     let totalMembers = 0;
@@ -112,27 +107,41 @@ exports.getReportData = async (req, res) => {
     const formattedTempleWise = Object.keys(templeWise).map(tId => ({
       templeId: tId,
       templeName: templeNames[tId] || "Unknown Temple",
-      ...templeWise[tId]
+      bookings: templeWise[tId].bookings || 0,
+      members: templeWise[tId].members || 0,
+      verified: templeWise[tId].verified || 0
     }));
 
     const formattedSlotWise = Object.keys(slotWise).map(key => ({
       slotTime: key,
-      ...slotWise[key]
+      bookings: slotWise[key].bookings || 0,
+      members: slotWise[key].members || 0,
+      verified: slotWise[key].verified || 0
     }));
 
+    // ✅ FIXED: Always return consistent structure even when empty
     res.json({
       summary: {
-        totalBookings,
-        totalMembers,
-        verifiedEntries,
-        pendingEntries
+        totalBookings: totalBookings || 0,
+        totalMembers: totalMembers || 0,
+        verifiedEntries: verifiedEntries || 0,
+        pendingEntries: pendingEntries || 0
       },
       templeWise: formattedTempleWise,
-      slotWise: formattedSlotWise
+      slotWise: formattedSlotWise,
+      dateRange: {
+        start: start.toISOString(),
+        end: end.toISOString()
+      }
     });
 
   } catch (error) {
     console.error("Report Generation Error:", error);
-    res.status(500).json({ message: "Error generating report data" });
+    res.status(500).json({ 
+      message: "Error generating report data",
+      summary: { totalBookings: 0, totalMembers: 0, verifiedEntries: 0, pendingEntries: 0 },
+      templeWise: [],
+      slotWise: []
+    });
   }
 };

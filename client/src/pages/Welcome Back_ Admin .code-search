@@ -1,0 +1,9 @@
+# Query: Welcome Back, Admin 
+# ContextLines: 1
+
+1 result - 1 file
+
+client\src\pages\AdminLayout.jsx:
+   99            <div>
+  100:             <h2 className="font-serif text-base font-semibold text-gray-800">Welcome Back, Admin </h2>
+  101              <p className="text-xs text-gray-400">{date}</p>
