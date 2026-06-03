@@ -4,7 +4,7 @@
   "installCommand": "npm install --prefix client",
   "devCommand": "cd client && npm run dev",
   "framework": null,
-  "routes": [
-    { "src": "/(.*)", "dest": "/" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
