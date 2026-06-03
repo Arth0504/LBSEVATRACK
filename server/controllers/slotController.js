@@ -82,33 +82,34 @@ exports.createSlot = async (req, res) => {
 };
 
 // ===============================
-// GET SLOTS (AUTO CLOSE PAST DATE)
+// GET SLOTS (SMART EXPIRY DETECTION)
 // ===============================
 exports.getSlotsByTemple = async (req, res) => {
   try {
     const templeId = req.params.templeId;
     const { filter, role } = req.query;
 
-    const now = new Date();
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // 🇮🇳 Get current time in Asia/Kolkata timezone
+    const nowIST = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const todayIST = new Date(nowIST);
+    todayIST.setHours(0, 0, 0, 0);
 
     let query = { temple: templeId };
 
     if (filter === "today") {
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      query.date = { $gte: today, $lt: tomorrow };
+      const tomorrowIST = new Date(todayIST);
+      tomorrowIST.setDate(tomorrowIST.getDate() + 1);
+      query.date = { $gte: todayIST, $lt: tomorrowIST };
     } else if (filter === "tomorrow") {
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const dayAfter = new Date(tomorrow);
-      dayAfter.setDate(dayAfter.getDate() + 1);
-      query.date = { $gte: tomorrow, $lt: dayAfter };
+      const tomorrowIST = new Date(todayIST);
+      tomorrowIST.setDate(tomorrowIST.getDate() + 1);
+      const dayAfterIST = new Date(tomorrowIST);
+      dayAfterIST.setDate(dayAfterIST.getDate() + 1);
+      query.date = { $gte: tomorrowIST, $lt: dayAfterIST };
     } else if (filter === "week") {
-      const nextWeek = new Date(today);
-      nextWeek.setDate(nextWeek.getDate() + 7);
-      query.date = { $gte: today, $lt: nextWeek };
+      const nextWeekIST = new Date(todayIST);
+      nextWeekIST.setDate(nextWeekIST.getDate() + 7);
+      query.date = { $gte: todayIST, $lt: nextWeekIST };
     }
 
     let slots = await Slot.find(query)
@@ -118,30 +119,38 @@ exports.getSlotsByTemple = async (req, res) => {
     const updatedSlots = [];
 
     for (let slot of slots) {
-      const slotDate = new Date(slot.date);
-      slotDate.setHours(0, 0, 0, 0);
+      // Convert slot date to IST timezone for comparison
+      const slotDateIST = new Date(slot.date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+      slotDateIST.setHours(0, 0, 0, 0);
 
       let isExpired = false;
 
-      // 🔥 AUTO CLOSE IF DATE PASSED OR TIME PASSED
-      if (slotDate < today) {
+      // ✅ FIXED: Proper datetime comparison with IST timezone
+      if (slotDateIST < todayIST) {
+        // Past date
         isExpired = true;
-      } else if (slotDate.getTime() === today.getTime()) {
+      } else if (slotDateIST.getTime() === todayIST.getTime()) {
+        // Today - check if end time has passed
         const [endH, endM] = slot.endTime.split(":").map(Number);
-        const slotEndTime = new Date(today);
-        slotEndTime.setHours(endH, endM, 0, 0);
-        if (now > slotEndTime) {
+        const slotEndTimeIST = new Date(slotDateIST);
+        slotEndTimeIST.setHours(endH, endM, 0, 0);
+        
+        // Compare full datetime in IST
+        if (nowIST >= slotEndTimeIST) {
           isExpired = true;
         }
       }
 
+      // ✅ FIXED: Only auto-expire if status is still 'active' or 'full'
+      // Don't override admin-set 'closed' status back to active
       if (isExpired && slot.status !== "closed") {
         slot.status = "closed";
         await slot.save();
       }
 
-      // 🔥 AUTO FULL CHECK
-      if (!isExpired && slot.bookedCount >= slot.capacity && slot.status !== "closed") {
+      // ✅ FIXED: Auto-full ONLY if not manually closed by admin
+      // This allows admin to keep slots 'active' even when full
+      if (!isExpired && slot.bookedCount >= slot.capacity && slot.status === "active") {
         slot.status = "full";
         await slot.save();
       }
@@ -186,12 +195,27 @@ exports.updateSlot = async (req, res) => {
     if (!slot)
       return res.status(404).json({ message: "Slot not found" });
 
-    if (capacity !== undefined) slot.capacity = capacity;
+    // ✅ FIXED: Validate status values
+    const validStatuses = ["active", "full", "closed"];
+    if (status && !validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status. Must be: active, full, or closed" });
+    }
+
+    if (capacity !== undefined) {
+      if (capacity < slot.bookedCount) {
+        return res.status(400).json({ 
+          message: `Cannot reduce capacity below booked count (${slot.bookedCount})` 
+        });
+      }
+      slot.capacity = capacity;
+    }
+    
+    // ✅ FIXED: Admin can now reliably set any status
     if (status) slot.status = status;
 
     await slot.save();
 
-    res.json({ message: "Slot updated", slot });
+    res.json({ message: "Slot updated successfully", slot });
 
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -20,13 +20,13 @@ exports.createBooking = async (req, res) => {
       return res.status(404).json({ message: "Slot not found" });
 
     // VALIDATION
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const todayIST = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    todayIST.setHours(0, 0, 0, 0);
 
-    const slotDate = new Date(slot.date);
-    slotDate.setHours(0, 0, 0, 0);
+    const slotDateIST = new Date(slot.date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    slotDateIST.setHours(0, 0, 0, 0);
 
-    if (slotDate < today)
+    if (slotDateIST < todayIST)
       return res.status(400).json({ message: "Cannot book past slot" });
 
     if (!members || members.length === 0)
@@ -77,7 +77,7 @@ exports.createBooking = async (req, res) => {
 
     // UPDATE SLOT
     slot.bookedCount += processedMembers.length;
-    if (slot.bookedCount >= slot.capacity) slot.status = "full";
+    if (slot.bookedCount >= slot.capacity && slot.status === "active") slot.status = "full";
     await slot.save();
 
     // FAST RESPONSE
@@ -160,7 +160,9 @@ exports.cancelBooking = async (req, res) => {
     await booking.save();
 
     booking.slot.bookedCount -= booking.totalMembers;
-    booking.slot.status = "active";
+    if (booking.slot.status === "full") {
+      booking.slot.status = "active";
+    }
     await booking.slot.save();
 
     res.json({ message: "Booking cancelled" });

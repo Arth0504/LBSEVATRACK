@@ -171,7 +171,9 @@ exports.adminCancelBooking = async (req, res) => {
     booking.slot.bookedCount -= booking.totalMembers;
 
     if (booking.slot.bookedCount < booking.slot.capacity) {
-      booking.slot.status = "active";
+      if (booking.slot.status === "full") {
+        booking.slot.status = "active";
+      }
     }
 
     await booking.slot.save();
